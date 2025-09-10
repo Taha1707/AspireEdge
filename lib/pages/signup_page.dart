@@ -1,0 +1,387 @@
+import 'package:auth_reset_pass/pages/login_page.dart';
+import 'package:flutter/material.dart';
+import '../services/authentication.dart';
+import '../services/validation.dart';
+
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  final userid_controller = TextEditingController();
+  final name_controller = TextEditingController();
+  final email_controller = TextEditingController();
+  final password_controller = TextEditingController();
+  final phone_controller = TextEditingController();
+
+  String? userid = "";
+  String? name = "";
+  String? email = "";
+  String? password = "";
+  String? phone = "";
+  String? tier;
+
+  bool _isObscure = true;
+  bool isRegisterLoading = false;
+
+  final List<String> tierOptions = [
+    "Class 8",
+    "Matric",
+    "Intermediate",
+    "Graduation"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      extendBodyBehindAppBar: true,
+      body: Stack(
+        children: [
+          // Gradient background
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF4C1D95), Color(0xFF0EA5E9)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+
+          // Foreground form
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/login_banner.jpeg"),
+                fit: BoxFit.cover,
+                opacity: 0.25,
+              ),
+            ),
+            child: SafeArea(
+              child: Center(
+                child: Form(
+                  key: _formKey,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.3),
+                          width: 1,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
+                          ),
+                        ],
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              "Sign Up",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 26,
+                                letterSpacing: 2,
+                              ),
+                            ),
+
+                            const SizedBox(height: 10),
+
+                            const Text(
+                              "Create your account",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 16,
+                                letterSpacing: 1,
+                              ),
+                            ),
+
+                            const SizedBox(height: 25),
+
+                            // User ID
+                            _buildTextField(
+                              controller: userid_controller,
+                              label: "User ID",
+                              icon: Icons.badge_outlined,
+                              onSaved: (val) => userid = val,
+                            ),
+
+                            const SizedBox(height: 15),
+
+                            // Name
+                            _buildTextField(
+                              controller: name_controller,
+                              label: "Name",
+                              icon: Icons.person_outline,
+                              onSaved: (val) => name = val,
+                            ),
+
+                            const SizedBox(height: 15),
+
+                            // Email
+                            _buildTextField(
+                              controller: email_controller,
+                              label: "Email",
+                              icon: Icons.email_outlined,
+                              validator: validateEmail,
+                              onSaved: (val) => email = val,
+                            ),
+
+                            const SizedBox(height: 15),
+
+                            // Password
+                            TextFormField(
+                              controller: password_controller,
+                              obscureText: _isObscure,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                labelText: "Password",
+                                hintText: "Enter Password",
+                                hintStyle: const TextStyle(color: Colors.white70),
+                                labelStyle: const TextStyle(color: Colors.white),
+                                prefixIcon: const Icon(
+                                  Icons.password_outlined,
+                                  color: Colors.white,
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _isObscure
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isObscure = !_isObscure;
+                                    });
+                                  },
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  const BorderSide(color: Colors.white70),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                  const BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              validator: validatePassword,
+                              onSaved: (val) => password = val,
+                            ),
+
+                            const SizedBox(height: 15),
+
+                            // Phone
+                            _buildTextField(
+                              controller: phone_controller,
+                              label: "Phone",
+                              icon: Icons.phone_outlined,
+                              keyboardType: TextInputType.phone,
+                              onSaved: (val) => phone = val,
+                            ),
+
+                            const SizedBox(height: 15),
+
+                            // Tier dropdown
+                            DropdownButtonFormField<String>(
+                              value: tier,
+                              dropdownColor: Colors.black87,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                labelText: "Tier",
+                                labelStyle:
+                                const TextStyle(color: Colors.white),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  const BorderSide(color: Colors.white70),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                  const BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              items: tierOptions.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value,
+                                      style:
+                                      const TextStyle(color: Colors.white)),
+                                );
+                              }).toList(),
+                              onChanged: (val) {
+                                setState(() {
+                                  tier = val;
+                                });
+                              },
+                              validator: (val) =>
+                              val == null ? "Please select tier" : null,
+                            ),
+
+                            const SizedBox(height: 10),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Already have an account? ",
+                                  style: TextStyle(color: Colors.white70),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                                  },
+                                  child: const Text(
+                                    "Login",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 25),
+
+                            isRegisterLoading
+                                ? const CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            )
+                                : Container(
+                              width: double.infinity,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFF2196F3),
+                                    Color(0xFF0D47A1),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                              ),
+                              child: ElevatedButton(
+                                onPressed: _signupUser,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.transparent,
+                                  shadowColor: Colors.transparent,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: const Text(
+                                  "REGISTER",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 2,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required IconData icon,
+    String? Function(String?)? validator,
+    void Function(String?)? onSaved,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
+    return TextFormField(
+      controller: controller,
+      style: const TextStyle(color: Colors.white),
+      keyboardType: keyboardType,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: const TextStyle(color: Colors.white),
+        hintStyle: const TextStyle(color: Colors.white70),
+        prefixIcon: Icon(icon, color: Colors.white),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.white70),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      validator: validator,
+      onSaved: onSaved,
+    );
+  }
+
+  void _signupUser() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      setState(() {
+        isRegisterLoading = true;
+      });
+
+      var result = await AuthenticationHelper().signUp(
+        email: email.toString(),
+        password: password.toString(),
+      );
+
+      setState(() {
+        isRegisterLoading = false;
+      });
+
+      if (result == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Registered Successfully")));
+        clearData();
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(result.toString())));
+      }
+    }
+  }
+
+  void clearData() {
+    userid_controller.clear();
+    name_controller.clear();
+    email_controller.clear();
+    password_controller.clear();
+    phone_controller.clear();
+    tier = null;
+  }
+}

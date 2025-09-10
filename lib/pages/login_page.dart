@@ -1,4 +1,5 @@
 import 'package:auth_reset_pass/pages/home_page.dart';
+import 'package:auth_reset_pass/pages/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -41,19 +42,6 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        title: const Text(
-          "Login",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            letterSpacing: 2,
-          ),
-        ),
-      ),
       body: Stack(
         children: [
           Container(
@@ -101,9 +89,32 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+
+                          Text(
+                            "Login",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 26,
+                              letterSpacing: 2,
+                            ),
+                          ),
+
+                          SizedBox(height: 10,),
+
+                          Text(
+                            "Please login to continue",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              letterSpacing: 2,
+                            ),
+                          ),
+
+                          const SizedBox(height: 25),
+
                           TextFormField(
                             controller: email_controller,
-                            maxLength: 50,
                             style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               labelText: "Email",
@@ -137,7 +148,6 @@ class _LoginPageState extends State<LoginPage> {
                           TextFormField(
                             obscureText: _isObscure,
                             controller: password_controller,
-                            maxLength: 8,
                             style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               labelText: "Password",
@@ -176,6 +186,29 @@ class _LoginPageState extends State<LoginPage> {
                                 password = value;
                               });
                             },
+                          ),
+
+                          const SizedBox(height: 10),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "Don't have an account? ",
+                                style: TextStyle(color: Colors.white70),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpPage()));
+                                },
+                                child: const Text(
+                                  "Sign up",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
 
                           const SizedBox(height: 25),
