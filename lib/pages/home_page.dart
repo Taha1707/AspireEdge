@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return AuthGuard(
       child: Scaffold(
-        drawer: SideDrawer(),
+        drawer: UserDrawer(onMenuItemSelected: (String p1) {  },),
         appBar: AppBar(
           actions: <Widget>[
             IconButton(
