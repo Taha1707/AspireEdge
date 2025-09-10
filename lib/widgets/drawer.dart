@@ -49,6 +49,10 @@ class UserDrawer extends StatelessWidget {
             ),
             const Divider(color: Colors.white24),
 
+            // 0) Home
+            _sectionHeader("Home"),
+            _menuItem(context, Icons.home, "Home"),
+
             // 1) Career Bank
             _sectionHeader("Career Bank"),
             _menuItem(context, Icons.work, "Career Bank"),
