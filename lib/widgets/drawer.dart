@@ -1,3 +1,4 @@
+import 'package:auth_reset_pass/pages/career_bank.dart';
 import 'package:flutter/material.dart';
 import '../pages/testimonials.dart';
 
@@ -56,14 +57,18 @@ class UserDrawer extends StatelessWidget {
 
             // 1) Career Bank
             _sectionHeader("Career Bank"),
-            _menuItem(context, Icons.work, "Career Bank"),
+            _menuItem(
+              context,
+              Icons.work,
+              "Career Bank",
+              page: const CareerBankPage(),
+            ),
 
             // 2) Admission and Coaching Tools
             _sectionHeader("Admission & Coaching"),
             _subMenuItem(context, Icons.school, "Stream Selector"),
             _subMenuItem(context, Icons.article, "CV Tips"),
             _subMenuItem(context, Icons.record_voice_over, "Interview Preparation"),
-            _subMenuItem(context, Icons.book, "Content"),
 
             // 3) Resources Hub
             _sectionHeader("Resources Hub"),
