@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "634662837924",
+    "project_id": "aspireedge-436d1",
+    "storage_bucket": "aspireedge-436d1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634662837924:android:18c26772713f5330d85031",
+        "android_client_info": {
+          "package_name": "com.example.auth_reset_pass"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxruPexpn-RTPS7hkkRdGTew15bs6y-K8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
