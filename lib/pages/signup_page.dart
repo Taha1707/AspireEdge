@@ -151,7 +151,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                             // Tier dropdown
                             DropdownButtonFormField<String>(
-                              initialValue: tier,
+                              value: tier,
                               dropdownColor: Colors.black87,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
