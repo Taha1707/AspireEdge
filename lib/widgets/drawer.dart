@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../pages/testimonials.dart';
+import '../pages/contact_page.dart';
 
 class UserDrawer extends StatelessWidget {
   final Function(String) onMenuItemSelected;
@@ -92,7 +93,7 @@ class UserDrawer extends StatelessWidget {
 
             // 8) Contact
             _sectionHeader("Contact"),
-            _menuItem(context, Icons.contact_mail, "Contact"),
+            _menuItem(context, Icons.contact_mail, "Contact", page: const ContactUsPage()),
           ],
         ),
       ),
