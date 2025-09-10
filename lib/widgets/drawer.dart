@@ -1,143 +1,110 @@
 import 'package:flutter/material.dart';
+import '../routes/routes.dart';
 
-class UserDrawer extends StatelessWidget {
-  final Function(String) onMenuItemSelected;
-
-  const UserDrawer({super.key, required this.onMenuItemSelected});
+class SideDrawer extends StatelessWidget {
+  const SideDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 270,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.indigo.shade900, Colors.blueGrey.shade900],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.4),
-            blurRadius: 10,
-            offset: const Offset(3, 0),
-          )
-        ],
-      ),
-      child: SafeArea(
+    return Drawer(
+      child: Container(
+        color: Colors.grey[600],
         child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          children: [
-            // Drawer title
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: Center(
-                child: Text(
-                  "Explore",
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.9),
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-              ),
-            ),
-            const Divider(color: Colors.white24),
+          padding: EdgeInsets.zero,
+          children: <Widget>[
 
-            // 1) Career Bank
-            _sectionHeader("Career Bank"),
-            _menuItem(context, Icons.work, "Career Bank"),
+            drawerHeader(),
 
-            // 2) Admission and Coaching Tools
-            _sectionHeader("Admission & Coaching"),
-            _subMenuItem(context, Icons.school, "Stream Selector"),
-            _subMenuItem(context, Icons.article, "CV Tips"),
-            _subMenuItem(context, Icons.record_voice_over, "Interview Preparation"),
-            _subMenuItem(context, Icons.book, "Content"),
+            SizedBox(height: 10,),
 
-            // 3) Resources Hub
-            _sectionHeader("Resources Hub"),
-            _menuItem(context, Icons.folder, "Resources Hub"),
+            drawerBody(icon: Icons.home, text: "Home", onTap: ()=>{
+              Navigator.pushReplacementNamed(context, PageRoutes.userHome)
+            }),
 
-            // 4) Career Quiz
-            _sectionHeader("Career Quiz"),
-            _menuItem(context, Icons.quiz, "Career Quiz"),
+            SizedBox(height: 10,),
 
-            // 5) Multimedia Guidance
-            _sectionHeader("Multimedia Guidance"),
-            _menuItem(context, Icons.video_library, "Multimedia Guidance"),
+            drawerBody(icon: Icons.login, text: "Login", onTap: ()=> {
+              Navigator.pushReplacementNamed(context, PageRoutes.userLogin)
+            }),
 
-            // 6) Testimonials
-            _sectionHeader("Testimonials"),
-            _menuItem(context, Icons.people, "Testimonials"),
+            const Divider(),
+            ListTile(
+              title: Text("App Version - 1.0.0", style: TextStyle(color: Colors.white)),
+              subtitle: Text("copyright © 2025", style: TextStyle(color: Colors.white)),
+            )
 
-            // 7) Feedback
-            _sectionHeader("Feedback"),
-            _menuItem(context, Icons.feedback, "Feedback"),
-
-            // 8) Contact
-            _sectionHeader("Contact"),
-            _menuItem(context, Icons.contact_mail, "Contact"),
           ],
         ),
       ),
     );
   }
 
-  // Big section headers
-  Widget _sectionHeader(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, top: 15, bottom: 6),
-      child: Text(
-        title,
-        style: TextStyle(
-          color: Colors.lightBlueAccent.shade100,
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
+
+  Widget drawerHeader() {
+    return SizedBox(
+      height: 250,
+      child: DrawerHeader(
+        margin: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/banner.gif"),
+              fit: BoxFit.fill
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            CircleAvatar(
+              radius: 60,
+              backgroundColor: Colors.black,
+              child: CircleAvatar(
+                radius: 55,
+                backgroundImage: AssetImage("assets/images/avatar.jpg"),
+              ),
+            ),
+
+            SizedBox(height: 20,),
+
+            Container(
+              padding: EdgeInsets.all(10),
+              color: Colors.black,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text("Side-Bar", style: TextStyle(color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22),),
+                ],
+              ),
+            ),
+
+
+          ],
         ),
       ),
     );
   }
 
-  // Main menu item
-  Widget _menuItem(BuildContext context, IconData icon, String title) {
+  Widget drawerBody({
+    required IconData icon,
+    required String text,
+    required GestureTapCallback onTap
+  }) {
     return ListTile(
-      leading: Icon(icon, color: Colors.lightBlueAccent),
-      title: Text(
-        title,
-        style: const TextStyle(color: Colors.white, fontSize: 15),
+      title: Row(
+        children: [
+          Icon(icon, color: Colors.white),
+          Padding(padding: EdgeInsets.only(left: 16),
+            child: Text(text, style: TextStyle(color: Colors.white),),
+          ),
+        ],
       ),
-      onTap: () {
-        onMenuItemSelected(title);
-        Navigator.pop(context);
-      },
-      hoverColor: Colors.blueGrey.withOpacity(0.2),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      onTap: onTap,
     );
   }
 
-  // Sub menu items (indented)
-  Widget _subMenuItem(BuildContext context, IconData icon, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 30),
-      child: ListTile(
-        leading: Icon(icon, color: Colors.cyanAccent.shade200, size: 20),
-        title: Text(
-          title,
-          style: const TextStyle(color: Colors.white70, fontSize: 14),
-        ),
-        onTap: () {
-          onMenuItemSelected(title);
-          Navigator.pop(context);
-        },
-        hoverColor: Colors.blueGrey.withOpacity(0.25),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-    );
-  }
+
 }

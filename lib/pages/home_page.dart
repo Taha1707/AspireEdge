@@ -2,11 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../services/authentication.dart';
 import '../widgets/auth_guard.dart';
-import '../widgets/drawer.dart';
+import 'login_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-  static const String routeName = '/HomePage';
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -33,13 +32,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return AuthGuard(
       child: Scaffold(
+<<<<<<< HEAD
         drawer: UserDrawer(onMenuItemSelected: (String p1) {  },),
+=======
+>>>>>>> 446694636a11a3161c47114b46ce7a3f09d61dfe
         appBar: AppBar(
           actions: <Widget>[
             IconButton(
               onPressed: () async{
                 await AuthenticationHelper().signOut();
-                Navigator.pushReplacementNamed(context, "/LoginPage");
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
               },
               icon: Icon(Icons.logout_outlined),
             )

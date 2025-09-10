@@ -1,158 +1,92 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/auth_guard.dart';
-
-class LaunchingPage extends StatefulWidget {
-  const LaunchingPage({super.key});
-  static const String routeName = '/LaunchingPage';
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<LaunchingPage> createState() => _LaunchingPageState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _LaunchingPageState extends State<LaunchingPage> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _fade;
 
-  // agr dubara load karny k bd login page chaiye to ye code chalao
+  static const String _title = 'AspireEdge';
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..forward();
+    _fade = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+  }
 
-    final user = FirebaseAuth.instance.currentUser;
-    if(user != null){
-      setState(() {
-        Future.delayed(Duration.zero, () async{
-          Navigator.pushReplacementNamed(context, "/HomePage");
-        });
-      });
-    }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Animation<double> _charOpacity(int index, int total) {
+    final start = (index / total) * 0.8; // stagger start up to 80% of timeline
+    final end = start + 0.6; // each char fades over 60% of timeline
+    return CurvedAnimation(
+      parent: _controller,
+      curve: Interval(start.clamp(0.0, 1.0), end.clamp(0.0, 1.0),
+          curve: Curves.easeOut),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    // Mobile friendly check
-    final isMobile = screenWidth < 650;
-
-    return AuthGuard(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("Welcome  to  Watch-Hub"),
-          backgroundColor: Colors.grey[700],
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(20, 40, 20, 20),
-          child: isMobile
-              ? Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: 220,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/launching_banner.jpg"),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              SizedBox(height: 20),
-      
-              Text(
-                "Welcome to Watch Hub — your gateway to timeless elegance and precision. Discover a curated selection of premium watches, from classic heritage designs to modern masterpieces, all in one place. Whether you're a collector or a first-time buyer, our platform is designed to give you the best experience in style and functionality. To begin your journey and unlock the full features of Watch Hub, please log in and explore what awaits you.",
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.justify,
-              ),
-              SizedBox(height: 20),
-      
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, "/LoginPage");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white54,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-                  child: Text(
-                    "LOGIN NOW",
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      letterSpacing: 4,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-              : Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 280,
-                width: 400,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/launching_banner.jpg"),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              SizedBox(width: 30),
-      
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Welcome to Watch Hub — your gateway to timeless elegance and precision. Discover a curated selection of premium watches, from classic heritage designs to modern masterpieces, all in one place. Whether you're a collector or a first-time buyer, our platform is designed to give you the best experience in style and functionality. To begin your journey and unlock the full features of Watch Hub, please log in and explore what awaits you.",
-                      style: TextStyle(fontSize: 16),
-                      textAlign: TextAlign.justify,
-                    ),
-                    SizedBox(height: 20),
-      
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(context, "/LoginPage");
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white54,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        child: Text(
-                          "LOGIN NOW",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            letterSpacing: 4,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+    return Scaffold(
+      body: Container(
+        alignment: Alignment.center,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF4C1D95), Color(0xFF0EA5E9)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(_title.length, (i) {
+                final anim = _charOpacity(i, _title.length);
+                return FadeTransition(
+                  opacity: anim,
+                  child: Text(
+                    _title[i],
+                    style: const TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.2,
+                      color: Colors.white,
+                    ),
+                  ),
+                );
+              }),
+            ),
+            const SizedBox(height: 8),
+            FadeTransition(
+              opacity: _fade,
+              child: const Text(
+                'Guiding your career journey',
+                style: TextStyle(color: Colors.white70),
+              ),
+            ),
+            const SizedBox(height: 24),
+            const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              backgroundColor: Colors.white24,
+            ),
+          ],
         ),
       ),
     );
