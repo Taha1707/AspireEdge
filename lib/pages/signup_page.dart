@@ -1,4 +1,7 @@
+import 'package:auth_reset_pass/pages/home_page.dart';
 import 'package:auth_reset_pass/pages/login_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../services/authentication.dart';
 import '../services/validation.dart';
@@ -13,13 +16,12 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
 
-  final userid_controller = TextEditingController();
   final name_controller = TextEditingController();
   final email_controller = TextEditingController();
   final password_controller = TextEditingController();
   final phone_controller = TextEditingController();
 
-  String? userid = "";
+
   String? name = "";
   String? email = "";
   String? password = "";
@@ -57,13 +59,6 @@ class _SignUpPageState extends State<SignUpPage> {
           // Foreground form
           Container(
             padding: const EdgeInsets.all(20),
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/login_banner.jpeg"),
-                fit: BoxFit.cover,
-                opacity: 0.25,
-              ),
-            ),
             child: SafeArea(
               child: Center(
                 child: Form(
@@ -115,15 +110,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                             const SizedBox(height: 25),
 
-                            // User ID
-                            _buildTextField(
-                              controller: userid_controller,
-                              label: "User ID",
-                              icon: Icons.badge_outlined,
-                              onSaved: (val) => userid = val,
-                            ),
 
-                            const SizedBox(height: 15),
 
                             // Name
                             _buildTextField(
@@ -348,6 +335,8 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+// ...
+
   void _signupUser() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -366,8 +355,33 @@ class _SignUpPageState extends State<SignUpPage> {
       });
 
       if (result == null) {
+        // ✅ Get current user
+        User? user = FirebaseAuth.instance.currentUser;
+
+        if (user != null) {
+          // ✅ Add user info into Firestore
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(user!.uid)
+              .set({
+            "userId": user.uid,
+            "name": name,
+            "email": email,
+            "phone": phone,
+            "tier": tier,
+            "createdAt": FieldValue.serverTimestamp(),
+          });
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Registered Successfully")));
+          const SnackBar(content: Text("Registered Successfully")),
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+
         clearData();
       } else {
         ScaffoldMessenger.of(context)
@@ -376,8 +390,8 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
+
   void clearData() {
-    userid_controller.clear();
     name_controller.clear();
     email_controller.clear();
     password_controller.clear();

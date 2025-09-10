@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
     if (user != null) {
       setState(() {
         Future.delayed(Duration.zero, () async {
-          Navigator.pushReplacementNamed(context, "/HomePage");
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage()));
         });
       });
     }
@@ -56,12 +56,6 @@ class _LoginPageState extends State<LoginPage> {
 
           Container(
             padding: const EdgeInsets.all(20),
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/login_banner.jpeg"),
-                fit: BoxFit.cover,
-              ),
-            ),
             child: SafeArea(
               child: Center(
                 child: Form(

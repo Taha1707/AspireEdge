@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../pages/testimonials.dart';
 
 class UserDrawer extends StatelessWidget {
   final Function(String) onMenuItemSelected;
@@ -76,9 +77,14 @@ class UserDrawer extends StatelessWidget {
             _sectionHeader("Multimedia Guidance"),
             _menuItem(context, Icons.video_library, "Multimedia Guidance"),
 
-            // 6) Testimonials
+            // 6) Testimonials (with navigation)
             _sectionHeader("Testimonials"),
-            _menuItem(context, Icons.people, "Testimonials"),
+            _menuItem(
+              context,
+              Icons.people,
+              "Testimonials",
+              page: const TestimonialsPage(),
+            ),
 
             // 7) Feedback
             _sectionHeader("Feedback"),
@@ -108,8 +114,8 @@ class UserDrawer extends StatelessWidget {
     );
   }
 
-  // Main menu item
-  Widget _menuItem(BuildContext context, IconData icon, String title) {
+  // Main menu item (with optional navigation page)
+  Widget _menuItem(BuildContext context, IconData icon, String title, {Widget? page}) {
     return ListTile(
       leading: Icon(icon, color: Colors.lightBlueAccent),
       title: Text(
@@ -118,7 +124,13 @@ class UserDrawer extends StatelessWidget {
       ),
       onTap: () {
         onMenuItemSelected(title);
-        Navigator.pop(context);
+        Navigator.pop(context); // close drawer
+        if (page != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => page),
+          );
+        }
       },
       hoverColor: Colors.blueGrey.withOpacity(0.2),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
