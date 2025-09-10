@@ -50,22 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBXYLGA5dTmLonWzwnw86xL4OgYK-1COe4',
-    appId: '1:985221152437:web:210d9c37cb8d23330688fc',
-    messagingSenderId: '985221152437',
-    projectId: 'watch-hub-e6f06',
-    authDomain: 'watch-hub-e6f06.firebaseapp.com',
-    databaseURL: 'https://watch-hub-e6f06-default-rtdb.firebaseio.com',
-    storageBucket: 'watch-hub-e6f06.firebasestorage.app',
-    measurementId: 'G-89V914WV4Y',
+    apiKey: 'AIzaSyBckylogCog3_DGgF6A3S45cEIOTXJmtc8',
+    appId: '1:634662837924:web:b244e7bdd9ba7a1dd85031',
+    messagingSenderId: '634662837924',
+    projectId: 'aspireedge-436d1',
+    authDomain: 'aspireedge-436d1.firebaseapp.com',
+    storageBucket: 'aspireedge-436d1.firebasestorage.app',
+    measurementId: 'G-5MFVF1PPBH',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCLeCbCgAO3kC_1kXw7nbYQTvMZO8D9fQA',
-    appId: '1:985221152437:android:2570cebf198201450688fc',
-    messagingSenderId: '985221152437',
-    projectId: 'watch-hub-e6f06',
-    databaseURL: 'https://watch-hub-e6f06-default-rtdb.firebaseio.com',
-    storageBucket: 'watch-hub-e6f06.firebasestorage.app',
+    apiKey: 'AIzaSyBxruPexpn-RTPS7hkkRdGTew15bs6y-K8',
+    appId: '1:634662837924:android:18c26772713f5330d85031',
+    messagingSenderId: '634662837924',
+    projectId: 'aspireedge-436d1',
+    storageBucket: 'aspireedge-436d1.firebasestorage.app',
   );
+
 }
