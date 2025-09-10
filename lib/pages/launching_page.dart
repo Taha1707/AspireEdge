@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_page.dart'; // <-- make sure this import path matches your project
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,11 +18,21 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     )..forward();
+
     _fade = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+
+    // Navigate after animation + delay
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    });
   }
 
   @override
@@ -31,8 +42,8 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Animation<double> _charOpacity(int index, int total) {
-    final start = (index / total) * 0.8; // stagger start up to 80% of timeline
-    final end = start + 0.6; // each char fades over 60% of timeline
+    final start = (index / total) * 0.8;
+    final end = start + 0.6;
     return CurvedAnimation(
       parent: _controller,
       curve: Interval(start.clamp(0.0, 1.0), end.clamp(0.0, 1.0),
