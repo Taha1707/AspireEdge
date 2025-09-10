@@ -377,7 +377,7 @@ class _SignUpPageState extends State<SignUpPage> {
           // ✅ Add user info into Firestore
           await FirebaseFirestore.instance
               .collection("users")
-              .doc(user!.uid)
+              .doc(user.uid)
               .set({
             "userId": user.uid,
             "name": name,
