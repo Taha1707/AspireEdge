@@ -18,7 +18,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final name_controller = TextEditingController();
   final email_controller = TextEditingController();
-  final password_controller = TextEditingController();
   final phone_controller = TextEditingController();
 
 
@@ -37,6 +36,8 @@ class _SignUpPageState extends State<SignUpPage> {
     "Intermediate",
     "Graduation"
   ];
+
+  final password_controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             _buildTextField(
                               controller: name_controller,
                               label: "Name",
+                              hint: "Enter Name",
                               icon: Icons.person_outline,
                               onSaved: (val) => name = val,
                             ),
@@ -126,12 +128,71 @@ class _SignUpPageState extends State<SignUpPage> {
                             _buildTextField(
                               controller: email_controller,
                               label: "Email",
+                              hint: "Enter Email",
                               icon: Icons.email_outlined,
                               validator: validateEmail,
                               onSaved: (val) => email = val,
                             ),
 
+
                             const SizedBox(height: 15),
+
+                            // Phone
+                            _buildTextField(
+                              controller: phone_controller,
+                              label: "Phone",
+                              hint: "Enter Phone Number",
+                              icon: Icons.phone_outlined,
+                              keyboardType: TextInputType.phone,
+                              onSaved: (val) => phone = val,
+                            ),
+
+                            const SizedBox(height: 15),
+
+                            // Tier dropdown
+                            DropdownButtonFormField<String>(
+                              value: tier,
+                              dropdownColor: Colors.black87,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                labelText: "Tier",
+                                prefixIcon: Icon(Icons.school_outlined),
+                                prefixIconColor: Colors.white,
+                                labelStyle:
+                                const TextStyle(color: Colors.white),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                  const BorderSide(color: Colors.white70),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                  const BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              items: tierOptions.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value,
+                                      style:
+                                      const TextStyle(color: Colors.white, fontSize: 16)),
+                                );
+                              }).toList(),
+                              onChanged: (val) {
+                                setState(() {
+                                  tier = val;
+                                });
+                              },
+                              validator: (val) =>
+                              val == null ? "Please select tier" : null,
+                            ),
+
+
+                            const SizedBox(height: 10),
+
+
+
 
                             // Password
                             TextFormField(
@@ -175,57 +236,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               onSaved: (val) => password = val,
                             ),
 
-                            const SizedBox(height: 15),
-
-                            // Phone
-                            _buildTextField(
-                              controller: phone_controller,
-                              label: "Phone",
-                              icon: Icons.phone_outlined,
-                              keyboardType: TextInputType.phone,
-                              onSaved: (val) => phone = val,
-                            ),
-
-                            const SizedBox(height: 15),
-
-                            // Tier dropdown
-                            DropdownButtonFormField<String>(
-                              value: tier,
-                              dropdownColor: Colors.black87,
-                              style: const TextStyle(color: Colors.white),
-                              decoration: InputDecoration(
-                                labelText: "Tier",
-                                labelStyle:
-                                const TextStyle(color: Colors.white),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                  const BorderSide(color: Colors.white70),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                  const BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              items: tierOptions.map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value,
-                                      style:
-                                      const TextStyle(color: Colors.white)),
-                                );
-                              }).toList(),
-                              onChanged: (val) {
-                                setState(() {
-                                  tier = val;
-                                });
-                              },
-                              validator: (val) =>
-                              val == null ? "Please select tier" : null,
-                            ),
 
                             const SizedBox(height: 10),
+
 
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -307,6 +320,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
+    required String hint,
     required IconData icon,
     String? Function(String?)? validator,
     void Function(String?)? onSaved,
@@ -318,6 +332,7 @@ class _SignUpPageState extends State<SignUpPage> {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: label,
+        hintText: hint,
         labelStyle: const TextStyle(color: Colors.white),
         hintStyle: const TextStyle(color: Colors.white70),
         prefixIcon: Icon(icon, color: Colors.white),
