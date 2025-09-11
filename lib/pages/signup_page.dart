@@ -1,5 +1,6 @@
 import 'package:auth_reset_pass/pages/home_page.dart';
 import 'package:auth_reset_pass/pages/login_page.dart';
+import 'package:auth_reset_pass/services/auth&role_check_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String? email = "";
   String? password = "";
   String? phone = "";
+  String? role = "user";
   String? tier;
 
   bool _isObscure = true;
@@ -34,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
     "Class 8",
     "Matric",
     "Intermediate",
-    "Professional"
+    "Graduation"
   ];
 
   final password_controller = TextEditingController();
@@ -151,7 +153,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                             // Tier dropdown
                             DropdownButtonFormField<String>(
-                              value: tier,
+                              initialValue: tier,
                               dropdownColor: Colors.black87,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
@@ -384,6 +386,7 @@ class _SignUpPageState extends State<SignUpPage> {
             "email": email,
             "phone": phone,
             "tier": tier,
+            "role": role,
             "createdAt": FieldValue.serverTimestamp(),
           });
         }
@@ -394,7 +397,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => Auth_Role_Check()),
         );
 
         clearData();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/auth&role_check_page.dart';
 import 'login_page.dart'; // <-- make sure this import path matches your project
 
 class SplashScreen extends StatefulWidget {
@@ -30,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
+        MaterialPageRoute(builder: (context) => const Auth_Role_Check()),
       );
     });
   }
