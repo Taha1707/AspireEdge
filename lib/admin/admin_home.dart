@@ -208,7 +208,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
             style: GoogleFonts.poppins(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.orangeAccent,
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 12),
@@ -217,7 +217,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Colors.orange, Colors.deepOrangeAccent],
+                colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
