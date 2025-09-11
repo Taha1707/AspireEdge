@@ -1,6 +1,7 @@
 import 'package:auth_reset_pass/pages/career_bank.dart';
 import 'package:flutter/material.dart';
 import '../pages/testimonials.dart';
+import '../pages/contact_page.dart';
 
 class UserDrawer extends StatelessWidget {
   final Function(String) onMenuItemSelected;
@@ -27,7 +28,7 @@ class UserDrawer extends StatelessWidget {
             color: Colors.black.withOpacity(0.4),
             blurRadius: 10,
             offset: const Offset(3, 0),
-          )
+          ),
         ],
       ),
       child: SafeArea(
@@ -68,7 +69,11 @@ class UserDrawer extends StatelessWidget {
             _sectionHeader("Admission & Coaching"),
             _subMenuItem(context, Icons.school, "Stream Selector"),
             _subMenuItem(context, Icons.article, "CV Tips"),
-            _subMenuItem(context, Icons.record_voice_over, "Interview Preparation"),
+            _subMenuItem(
+              context,
+              Icons.record_voice_over,
+              "Interview Preparation",
+            ),
 
             // 3) Resources Hub
             _sectionHeader("Resources Hub"),
@@ -97,7 +102,12 @@ class UserDrawer extends StatelessWidget {
 
             // 8) Contact
             _sectionHeader("Contact"),
-            _menuItem(context, Icons.contact_mail, "Contact"),
+            _menuItem(
+              context,
+              Icons.contact_mail,
+              "Contact",
+              page: const ContactUsPage(),
+            ),
           ],
         ),
       ),
@@ -120,7 +130,12 @@ class UserDrawer extends StatelessWidget {
   }
 
   // Main menu item (with optional navigation page)
-  Widget _menuItem(BuildContext context, IconData icon, String title, {Widget? page}) {
+  Widget _menuItem(
+    BuildContext context,
+    IconData icon,
+    String title, {
+    Widget? page,
+  }) {
     return ListTile(
       leading: Icon(icon, color: Colors.lightBlueAccent),
       title: Text(
