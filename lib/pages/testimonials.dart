@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 
 class TestimonialsPage extends StatelessWidget {
   const TestimonialsPage({super.key});
@@ -163,23 +166,61 @@ class TestimonialsPage extends StatelessWidget {
 
                       final testimonials = snapshot.data!.docs;
 
+                      final width = MediaQuery.of(context).size.width;
+                      final isGrid = width > 900;
+                      final crossAxisCount = width > 1200 ? 3 : 2;
+
+                      if (!isGrid) {
+                        return AnimationLimiter(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            itemCount: testimonials.length,
+                            itemBuilder: (context, index) {
+                              final data = testimonials[index].data()
+                                  as Map<String, dynamic>;
+                              final name = data['name'] ?? 'Anonymous';
+                              final story = data['story'] ?? '';
+                              final imageUrl = data['imageUrl'] ?? '';
+
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                duration: const Duration(milliseconds: 800),
+                                child: SlideAnimation(
+                                  verticalOffset: 80.0,
+                                  child: FadeInAnimation(
+                                    child: _buildTestimonialCard(
+                                        name, story, imageUrl, index),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+
                       return AnimationLimiter(
-                        child: ListView.builder(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                        child: GridView.builder(
+                          padding: const EdgeInsets.all(20),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 20,
+                            childAspectRatio: 1.1,
+                          ),
                           itemCount: testimonials.length,
                           itemBuilder: (context, index) {
                             final data = testimonials[index].data()
-                            as Map<String, dynamic>;
+                                as Map<String, dynamic>;
                             final name = data['name'] ?? 'Anonymous';
                             final story = data['story'] ?? '';
                             final imageUrl = data['imageUrl'] ?? '';
 
-                            return AnimationConfiguration.staggeredList(
+                            return AnimationConfiguration.staggeredGrid(
+                              columnCount: crossAxisCount,
                               position: index,
-                              duration: const Duration(milliseconds: 800),
-                              child: SlideAnimation(
-                                verticalOffset: 80.0,
+                              duration: const Duration(milliseconds: 700),
+                              child: ScaleAnimation(
                                 child: FadeInAnimation(
                                   child: _buildTestimonialCard(
                                       name, story, imageUrl, index),
@@ -463,7 +504,8 @@ class TestimonialsPage extends StatelessWidget {
   void _openAddTestimonialDialog(BuildContext context) {
     final nameController = TextEditingController();
     final storyController = TextEditingController();
-    final imageUrlController = TextEditingController();
+    XFile? pickedFile;
+    String uploadedUrl = '';
     bool isLoading = false;
 
     showDialog(
@@ -565,11 +607,57 @@ class TestimonialsPage extends StatelessWidget {
 
                         const SizedBox(height: 15),
 
-                        // Image URL field
-                        _buildDialogTextField(
-                          controller: imageUrlController,
-                          label: "Image URL (optional)",
-                          icon: Icons.image_outlined,
+                        // Image picker row
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.05),
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(color: Colors.white.withOpacity(0.1)),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(colors: [Color(0xFF667EEA), Color(0xFF764BA2)]),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Icon(Icons.image_outlined, color: Colors.white, size: 22),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  pickedFile == null ? 'Attach photo (optional)' : pickedFile!.name,
+                                  style: GoogleFonts.poppins(color: Colors.white70),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              TextButton.icon(
+                                onPressed: () async {
+                                  final picker = ImagePicker();
+                                  final file = await picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
+                                  if (file != null) {
+                                    setState(() { pickedFile = file; });
+                                  }
+                                },
+                                icon: const Icon(Icons.photo_library_outlined, color: Colors.white70),
+                                label: Text('Gallery', style: GoogleFonts.poppins(color: Colors.white70)),
+                              ),
+                              TextButton.icon(
+                                onPressed: () async {
+                                  final picker = ImagePicker();
+                                  final file = await picker.pickImage(source: ImageSource.camera, imageQuality: 85);
+                                  if (file != null) {
+                                    setState(() { pickedFile = file; });
+                                  }
+                                },
+                                icon: const Icon(Icons.photo_camera_outlined, color: Colors.white70),
+                                label: Text('Camera', style: GoogleFonts.poppins(color: Colors.white70)),
+                              ),
+                            ],
+                          ),
                         ),
 
                         const SizedBox(height: 25),
@@ -634,6 +722,14 @@ class TestimonialsPage extends StatelessWidget {
                                     });
 
                                     try {
+                                      // Upload image if picked
+                                      if (pickedFile != null) {
+                                        final file = File(pickedFile!.path);
+                                        final fileName = 'testimonials/${DateTime.now().millisecondsSinceEpoch}_${pickedFile!.name}';
+                                        final ref = FirebaseStorage.instance.ref().child(fileName);
+                                        final task = await ref.putFile(file);
+                                        uploadedUrl = await task.ref.getDownloadURL();
+                                      }
                                       await FirebaseFirestore.instance
                                           .collection('testimonials')
                                           .add({
@@ -644,9 +740,7 @@ class TestimonialsPage extends StatelessWidget {
                                             : nameController.text.trim(),
                                         "story":
                                         storyController.text.trim(),
-                                        "imageUrl": imageUrlController
-                                            .text
-                                            .trim(),
+                                        "imageUrl": uploadedUrl,
                                         "createdAt":
                                         FieldValue.serverTimestamp(),
                                       });
