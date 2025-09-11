@@ -2,6 +2,7 @@ import 'package:auth_reset_pass/pages/career_bank.dart';
 import 'package:flutter/material.dart';
 import '../pages/testimonials.dart';
 import '../pages/contact_page.dart';
+import '../pages/feedback_page.dart';
 
 class UserDrawer extends StatelessWidget {
   final Function(String) onMenuItemSelected;
@@ -98,7 +99,12 @@ class UserDrawer extends StatelessWidget {
 
             // 7) Feedback
             _sectionHeader("Feedback"),
-            _menuItem(context, Icons.feedback, "Feedback"),
+            _menuItem(
+              context,
+              Icons.feedback,
+              "Feedback",
+              page: const FeedbackPage(),
+            ),
 
             // 8) Contact
             _sectionHeader("Contact"),
