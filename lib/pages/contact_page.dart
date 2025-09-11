@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ContactUsPage extends StatefulWidget {
   const ContactUsPage({super.key});
@@ -66,6 +67,38 @@ class _ContactUsPageState extends State<ContactUsPage> {
           _submitting = false;
         });
       }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserProfile();
+  }
+
+  Future<void> _loadUserProfile() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+        final data = doc.data();
+
+        final String name = (data != null && (data['name'] ?? '').toString().trim().isNotEmpty)
+            ? (data['name'] as String)
+            : (user.displayName ?? '');
+        final String email = (data != null && (data['email'] ?? '').toString().trim().isNotEmpty)
+            ? (data['email'] as String)
+            : (user.email ?? '');
+        final String phone = (data != null && (data['phone'] ?? '').toString().trim().isNotEmpty)
+            ? (data['phone'] as String)
+            : (user.phoneNumber ?? '');
+
+        _nameController.text = name;
+        _emailController.text = email;
+        _phoneController.text = phone;
+      }
+    } catch (_) {
+      // Ignore profile load errors; user can still submit message
     }
   }
 
@@ -239,11 +272,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
               controller: _nameController,
               label: 'Name',
               icon: Icons.person_outline,
-              validator:
-                  (v) =>
-                      (v == null || v.trim().isEmpty)
-                          ? 'Enter your name'
-                          : null,
+              readOnly: true,
             ),
             const SizedBox(height: 12),
             _buildTextField(
@@ -251,11 +280,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
               label: 'Email',
               icon: Icons.email_outlined,
               keyboardType: TextInputType.emailAddress,
-              validator:
-                  (v) =>
-                      (v == null || !v.contains('@'))
-                          ? 'Enter a valid email'
-                          : null,
+              readOnly: true,
             ),
             const SizedBox(height: 12),
             _buildTextField(
@@ -263,6 +288,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
               label: 'Phone (optional)',
               icon: Icons.phone_outlined,
               keyboardType: TextInputType.phone,
+              readOnly: true,
             ),
             const SizedBox(height: 12),
             _buildTextField(
@@ -452,12 +478,14 @@ class _ContactUsPageState extends State<ContactUsPage> {
     TextInputType keyboardType = TextInputType.text,
     String? Function(String?)? validator,
     int maxLines = 1,
+    bool readOnly = false,
   }) {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       maxLines: maxLines,
-      style: GoogleFonts.poppins(color: Colors.white),
+      readOnly: readOnly,
+      style: GoogleFonts.poppins(color: readOnly ? Colors.white70 : Colors.white),
       decoration: InputDecoration(
         labelText: label,
         labelStyle: GoogleFonts.poppins(color: Colors.white),
@@ -472,6 +500,9 @@ class _ContactUsPageState extends State<ContactUsPage> {
           borderSide: const BorderSide(color: Color(0xFF667EEA)),
           borderRadius: BorderRadius.circular(12),
         ),
+        suffixIcon: readOnly
+            ? const Icon(Icons.lock_outline, color: Colors.white54, size: 18)
+            : null,
       ),
       validator: validator,
     );
