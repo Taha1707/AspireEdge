@@ -1,5 +1,6 @@
 import 'package:auth_reset_pass/pages/home_page.dart';
 import 'package:auth_reset_pass/pages/signup_page.dart';
+import 'package:auth_reset_pass/services/auth&role_check_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -280,7 +281,7 @@ class _LoginPageState extends State<LoginPage> {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text("Login Successfully")));
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Auth_Role_Check()));
       } else {
         ScaffoldMessenger.of(
           context,

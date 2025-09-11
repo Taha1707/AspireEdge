@@ -2,11 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
-import 'dart:async';
-import 'dart:io';
 
 class TestimonialsPage extends StatelessWidget {
   const TestimonialsPage({super.key});
@@ -181,71 +176,23 @@ class TestimonialsPage extends StatelessWidget {
 
                       final testimonials = snapshot.data!.docs;
 
-                      final width = MediaQuery.of(context).size.width;
-                      final isGrid = width > 900;
-                      final crossAxisCount = width > 1200 ? 3 : 2;
-
-                      if (!isGrid) {
-                        return AnimationLimiter(
-                          child: ListView.builder(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 10,
-                            ),
-                            itemCount: testimonials.length,
-                            itemBuilder: (context, index) {
-                              final data =
-                                  testimonials[index].data()
-                                      as Map<String, dynamic>;
-                              final name = data['name'] ?? 'Anonymous';
-                              final story = data['story'] ?? '';
-                              final imageUrl = data['imageUrl'] ?? '';
-
-                              return AnimationConfiguration.staggeredList(
-                                position: index,
-                                duration: const Duration(milliseconds: 800),
-                                child: SlideAnimation(
-                                  verticalOffset: 80.0,
-                                  child: FadeInAnimation(
-                                    child: _buildTestimonialCard(
-                                      context,
-                                      name,
-                                      story,
-                                      imageUrl,
-                                      index,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      }
-
                       return AnimationLimiter(
-                        child: GridView.builder(
-                          padding: const EdgeInsets.all(20),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: crossAxisCount,
-                                crossAxisSpacing: 20,
-                                mainAxisSpacing: 20,
-                                childAspectRatio: 1.1,
-                              ),
+                        child: ListView.builder(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
                           itemCount: testimonials.length,
                           itemBuilder: (context, index) {
-                            final data =
-                                testimonials[index].data()
-                                    as Map<String, dynamic>;
+                            final data = testimonials[index].data()
+                            as Map<String, dynamic>;
                             final name = data['name'] ?? 'Anonymous';
                             final story = data['story'] ?? '';
                             final imageUrl = data['imageUrl'] ?? '';
 
-                            return AnimationConfiguration.staggeredGrid(
-                              columnCount: crossAxisCount,
+                            return AnimationConfiguration.staggeredList(
                               position: index,
-                              duration: const Duration(milliseconds: 700),
-                              child: ScaleAnimation(
+                              duration: const Duration(milliseconds: 800),
+                              child: SlideAnimation(
+                                verticalOffset: 80.0,
                                 child: FadeInAnimation(
                                   child: _buildTestimonialCard(
                                     context,
@@ -600,8 +547,7 @@ class TestimonialsPage extends StatelessWidget {
   void _openAddTestimonialDialog(BuildContext pageContext) {
     final nameController = TextEditingController();
     final storyController = TextEditingController();
-    XFile? pickedFile;
-    String uploadedUrl = '';
+    final imageUrlController = TextEditingController();
     bool isLoading = false;
 
     showDialog(
@@ -703,98 +649,11 @@ class TestimonialsPage extends StatelessWidget {
 
                         const SizedBox(height: 15),
 
-                        // Image picker row
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.05),
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: Colors.white.withOpacity(0.1),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      Color(0xFF667EEA),
-                                      Color(0xFF764BA2),
-                                    ],
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: const Icon(
-                                  Icons.image_outlined,
-                                  color: Colors.white,
-                                  size: 22,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  pickedFile == null
-                                      ? 'Attach photo (optional)'
-                                      : pickedFile!.name,
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white70,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              TextButton.icon(
-                                onPressed: () async {
-                                  final picker = ImagePicker();
-                                  final file = await picker.pickImage(
-                                    source: ImageSource.gallery,
-                                    imageQuality: 85,
-                                  );
-                                  if (file != null) {
-                                    setState(() {
-                                      pickedFile = file;
-                                    });
-                                  }
-                                },
-                                icon: const Icon(
-                                  Icons.photo_library_outlined,
-                                  color: Colors.white70,
-                                ),
-                                label: Text(
-                                  'Gallery',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white70,
-                                  ),
-                                ),
-                              ),
-                              TextButton.icon(
-                                onPressed: () async {
-                                  final picker = ImagePicker();
-                                  final file = await picker.pickImage(
-                                    source: ImageSource.camera,
-                                    imageQuality: 85,
-                                  );
-                                  if (file != null) {
-                                    setState(() {
-                                      pickedFile = file;
-                                    });
-                                  }
-                                },
-                                icon: const Icon(
-                                  Icons.photo_camera_outlined,
-                                  color: Colors.white70,
-                                ),
-                                label: Text(
-                                  'Camera',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white70,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        // Image URL field
+                        _buildDialogTextField(
+                          controller: imageUrlController,
+                          label: "Image URL (optional)",
+                          icon: Icons.image_outlined,
                         ),
 
                         const SizedBox(height: 25),
@@ -861,153 +720,61 @@ class TestimonialsPage extends StatelessWidget {
                                               isLoading = true;
                                             });
 
-                                            try {
-                                              // Upload image if picked (web/mobile compatible)
-                                              if (pickedFile != null) {
-                                                final String fileName =
-                                                    'testimonials/${DateTime.now().millisecondsSinceEpoch}_${pickedFile!.name}';
-                                                final ref = FirebaseStorage
-                                                    .instance
-                                                    .ref()
-                                                    .child(fileName);
-                                                UploadTask uploadTask;
+                                    try {
+                                      await FirebaseFirestore.instance
+                                          .collection('testimonials')
+                                          .add({
+                                        "name": nameController.text
+                                            .trim()
+                                            .isEmpty
+                                            ? "Anonymous"
+                                            : nameController.text.trim(),
+                                        "story":
+                                            storyController.text.trim(),
+                                        "imageUrl": imageUrlController
+                                            .text
+                                            .trim(),
+                                        "createdAt":
+                                            FieldValue.serverTimestamp(),
+                                      });
 
-                                                if (kIsWeb) {
-                                                  final bytes =
-                                                      await pickedFile!
-                                                          .readAsBytes();
-                                                  final metadata = SettableMetadata(
-                                                    contentType:
-                                                        'image/${pickedFile!.name.split('.').last.toLowerCase()}',
-                                                  );
-                                                  uploadTask = ref.putData(
-                                                    bytes,
-                                                    metadata,
-                                                  );
-                                                } else {
-                                                  final file = File(
-                                                    pickedFile!.path,
-                                                  );
-                                                  uploadTask = ref.putFile(
-                                                    file,
-                                                  );
-                                                }
-
-                                                try {
-                                                  final snapshot =
-                                                      await uploadTask.timeout(
-                                                        const Duration(
-                                                          seconds: 90,
-                                                        ),
-                                                      );
-                                                  uploadedUrl =
-                                                      await snapshot.ref
-                                                          .getDownloadURL();
-                                                } on TimeoutException {
-                                                  // If upload is too slow, continue without image
-                                                  uploadedUrl = '';
-                                                  ScaffoldMessenger.of(
-                                                    context,
-                                                  ).showSnackBar(
-                                                    const SnackBar(
-                                                      content: Text(
-                                                        'Image upload timed out. Sharing story without image.',
-                                                      ),
-                                                    ),
-                                                  );
-                                                }
-                                              }
-                                              // Retry save in case of transient errors
-                                              Future<void> saveDoc() async {
-                                                await FirebaseFirestore.instance
-                                                    .collection('testimonials')
-                                                    .add({
-                                                      "name":
-                                                          nameController.text
-                                                                  .trim()
-                                                                  .isEmpty
-                                                              ? "Anonymous"
-                                                              : nameController
-                                                                  .text
-                                                                  .trim(),
-                                                      "story":
-                                                          storyController.text
-                                                              .trim(),
-                                                      "imageUrl": uploadedUrl,
-                                                      "createdAt":
-                                                          FieldValue.serverTimestamp(),
-                                                    });
-                                              }
-
-                                              int attempts = 0;
-                                              while (true) {
-                                                try {
-                                                  await saveDoc();
-                                                  break;
-                                                } catch (e) {
-                                                  attempts++;
-                                                  if (attempts >= 2) rethrow;
-                                                  await Future.delayed(
-                                                    Duration(
-                                                      milliseconds:
-                                                          400 * attempts,
-                                                    ),
-                                                  );
-                                                }
-                                              }
-
-                                              // On Web, pop after a short delay to avoid disposed view during frame
-                                              ScaffoldMessenger.of(
-                                                pageContext,
-                                              ).showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                    "Success story shared! 🎉",
-                                                    style: GoogleFonts.poppins(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                  backgroundColor: Colors.green,
-                                                  behavior:
-                                                      SnackBarBehavior.floating,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          10,
-                                                        ),
-                                                  ),
-                                                ),
-                                              );
-                                              Future.delayed(
-                                                const Duration(
-                                                  milliseconds: 150,
-                                                ),
-                                                () {
-                                                  if (Navigator.canPop(
-                                                    dialogContext,
-                                                  )) {
-                                                    Navigator.pop(
-                                                      dialogContext,
-                                                    );
-                                                  }
-                                                },
-                                              );
-                                            } catch (e) {
-                                              setState(() {
-                                                isLoading = false;
-                                              });
-                                              ScaffoldMessenger.of(
-                                                pageContext,
-                                              ).showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                    "Error: ${e.toString()}",
-                                                  ),
-                                                  backgroundColor: Colors.red,
-                                                ),
-                                              );
-                                            }
+                                      ScaffoldMessenger.of(
+                                        pageContext,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            "Success story shared! 🎉",
+                                            style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          backgroundColor: Colors.green,
+                                          behavior:
+                                              SnackBarBehavior.floating,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                      );
+                                      if (Navigator.canPop(dialogContext)) {
+                                        Navigator.pop(dialogContext);
+                                      }
+                                    } catch (e) {
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                      ScaffoldMessenger.of(
+                                        pageContext,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            "Error: ${e.toString()}",
+                                          ),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    }
                                           },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.transparent,
