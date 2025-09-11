@@ -30,18 +30,25 @@ class _FeedbackPageState extends State<FeedbackPage> {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+        final doc =
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(user.uid)
+                .get();
         final data = doc.data();
 
-        _nameController.text = (data != null && (data['name'] ?? '').toString().trim().isNotEmpty)
-            ? data['name'] as String
-            : (user.displayName ?? '');
-        _emailController.text = (data != null && (data['email'] ?? '').toString().trim().isNotEmpty)
-            ? data['email'] as String
-            : (user.email ?? '');
-        _phoneController.text = (data != null && (data['phone'] ?? '').toString().trim().isNotEmpty)
-            ? data['phone'] as String
-            : (user.phoneNumber ?? '');
+        _nameController.text =
+            (data != null && (data['name'] ?? '').toString().trim().isNotEmpty)
+                ? data['name'] as String
+                : (user.displayName ?? '');
+        _emailController.text =
+            (data != null && (data['email'] ?? '').toString().trim().isNotEmpty)
+                ? data['email'] as String
+                : (user.email ?? '');
+        _phoneController.text =
+            (data != null && (data['phone'] ?? '').toString().trim().isNotEmpty)
+                ? data['phone'] as String
+                : (user.phoneNumber ?? '');
       }
     } catch (_) {}
   }
@@ -78,9 +85,9 @@ class _FeedbackPageState extends State<FeedbackPage> {
       _feedbackController.clear();
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${e.toString()}')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: ${e.toString()}')));
     } finally {
       if (mounted) setState(() => _submitting = false);
     }
@@ -140,9 +147,16 @@ class _FeedbackPageState extends State<FeedbackPage> {
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
+                border: Border.all(
+                  color: Colors.white.withOpacity(0.2),
+                  width: 1,
+                ),
               ),
-              child: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
+              child: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
           ),
           const SizedBox(width: 12),
@@ -161,7 +175,11 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 ),
                 Text(
                   'Share your thoughts or report an issue',
-                  style: GoogleFonts.poppins(color: Colors.white70, fontSize: 14, letterSpacing: 0.5),
+                  style: GoogleFonts.poppins(
+                    color: Colors.white70,
+                    fontSize: 14,
+                    letterSpacing: 0.5,
+                  ),
                 ),
               ],
             ),
@@ -169,7 +187,9 @@ class _FeedbackPageState extends State<FeedbackPage> {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(colors: [Color(0xFF667EEA), Color(0xFF764BA2)]),
+              gradient: const LinearGradient(
+                colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+              ),
               borderRadius: BorderRadius.circular(14),
               boxShadow: [
                 BoxShadow(
@@ -210,45 +230,73 @@ class _FeedbackPageState extends State<FeedbackPage> {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final double w = constraints.maxWidth;
-          final double titleSize = w >= 900
-              ? 26
-              : w >= 600
+          final bool isWide = w >= 700;
+          final double titleSize =
+              isWide
+                  ? 26
+                  : w >= 500
                   ? 22
-                  : w >= 360
-                      ? 18
-                      : 16;
-          final double bodySize = w >= 900
-              ? 16
-              : w >= 600
+                  : 18;
+          final double bodySize =
+              isWide
+                  ? 16
+                  : w >= 500
                   ? 15
                   : 14;
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'We value your feedback',
-                  maxLines: 1,
-                  overflow: TextOverflow.visible,
-                  style: GoogleFonts.poppins(
+          final Widget title = Text(
+            'We value your feedback',
+            maxLines: isWide ? 2 : 2,
+            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: titleSize,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+
+          final Widget subtitle = Text(
+            'Tell us what you like or report bugs so we can improve.',
+            softWrap: true,
+            style: GoogleFonts.poppins(
+              color: Colors.white70,
+              fontSize: bodySize,
+            ),
+          );
+
+          if (isWide) {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+                    ),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: const Icon(
+                    Icons.feedback,
                     color: Colors.white,
-                    fontSize: titleSize,
-                    fontWeight: FontWeight.bold,
+                    size: 26,
                   ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Tell us what you like or report bugs so we can improve.',
-                style: GoogleFonts.poppins(
-                  color: Colors.white70,
-                  fontSize: bodySize,
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [title, const SizedBox(height: 8), subtitle],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            );
+          }
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [title, const SizedBox(height: 8), subtitle],
           );
         },
       ),
@@ -261,11 +309,28 @@ class _FeedbackPageState extends State<FeedbackPage> {
         key: _formKey,
         child: Column(
           children: [
-            _field(controller: _nameController, label: 'Name', icon: Icons.person_outline, readOnly: true),
+            _field(
+              controller: _nameController,
+              label: 'Name',
+              icon: Icons.person_outline,
+              readOnly: true,
+            ),
             const SizedBox(height: 12),
-            _field(controller: _emailController, label: 'Email', icon: Icons.email_outlined, readOnly: true, keyboardType: TextInputType.emailAddress),
+            _field(
+              controller: _emailController,
+              label: 'Email',
+              icon: Icons.email_outlined,
+              readOnly: true,
+              keyboardType: TextInputType.emailAddress,
+            ),
             const SizedBox(height: 12),
-            _field(controller: _phoneController, label: 'Contact Number', icon: Icons.phone_outlined, readOnly: true, keyboardType: TextInputType.phone),
+            _field(
+              controller: _phoneController,
+              label: 'Contact Number',
+              icon: Icons.phone_outlined,
+              readOnly: true,
+              keyboardType: TextInputType.phone,
+            ),
             const SizedBox(height: 12),
             _typeSelector(),
             const SizedBox(height: 12),
@@ -274,7 +339,11 @@ class _FeedbackPageState extends State<FeedbackPage> {
               label: 'Your Feedback',
               icon: Icons.feedback_outlined,
               maxLines: 4,
-              validator: (v) => (v == null || v.trim().isEmpty) ? 'Please enter feedback' : null,
+              validator:
+                  (v) =>
+                      (v == null || v.trim().isEmpty)
+                          ? 'Please enter feedback'
+                          : null,
             ),
             const SizedBox(height: 16),
             SizedBox(
@@ -285,21 +354,37 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
                   shadowColor: Colors.transparent,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 child: Ink(
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(colors: [Color(0xFF667EEA), Color(0xFF764BA2)]),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+                    ),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
-                    child: _submitting
-                        ? const SizedBox(
-                            width: 22,
-                            height: 22,
-                            child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
-                          )
-                        : Text('Submit Feedback', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold)),
+                    child:
+                        _submitting
+                            ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
+                              ),
+                            )
+                            : Text(
+                              'Submit Feedback',
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                   ),
                 ),
               ),
@@ -332,7 +417,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
           value: _type,
           items: const [
             DropdownMenuItem(value: 'Positive', child: Text('Positive')),
-            DropdownMenuItem(value: 'Negative', child: Text('Negative (Bug/Error)')),
+            DropdownMenuItem(
+              value: 'Negative',
+              child: Text('Negative (Bug/Error)'),
+            ),
           ],
           onChanged: (v) => setState(() => _type = v ?? 'Positive'),
           style: GoogleFonts.poppins(color: Colors.white),
@@ -355,12 +443,21 @@ class _FeedbackPageState extends State<FeedbackPage> {
       keyboardType: keyboardType,
       maxLines: maxLines,
       readOnly: readOnly,
-      style: GoogleFonts.poppins(color: readOnly ? Colors.white70 : Colors.white),
+      style: GoogleFonts.poppins(
+        color: readOnly ? Colors.white70 : Colors.white,
+      ),
       decoration: InputDecoration(
         labelText: label,
         labelStyle: GoogleFonts.poppins(color: Colors.white),
         prefixIcon: Icon(icon, color: Colors.white),
-        suffixIcon: readOnly ? const Icon(Icons.lock_outline, color: Colors.white54, size: 18) : null,
+        suffixIcon:
+            readOnly
+                ? const Icon(
+                  Icons.lock_outline,
+                  color: Colors.white54,
+                  size: 18,
+                )
+                : null,
         filled: true,
         fillColor: Colors.white.withOpacity(0.05),
         enabledBorder: OutlineInputBorder(
@@ -376,5 +473,3 @@ class _FeedbackPageState extends State<FeedbackPage> {
     );
   }
 }
-
-
