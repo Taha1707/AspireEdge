@@ -226,12 +226,18 @@ class _FeedbackPageState extends State<FeedbackPage> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'We value your feedback',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: titleSize,
-                  fontWeight: FontWeight.bold,
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'We value your feedback',
+                  maxLines: 1,
+                  overflow: TextOverflow.visible,
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: titleSize,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
