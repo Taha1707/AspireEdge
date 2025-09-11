@@ -330,31 +330,117 @@ class _ContactUsPageState extends State<ContactUsPage> {
 
   Widget _buildDetailsCard() {
     return _cardDecoration(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Contact Details',
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final bool isWide = constraints.maxWidth >= 600;
+          final double titleSize = isWide ? 20 : 18;
+          final double valueSize = isWide ? 16 : 14;
+
+          Widget detail(String label, String value, IconData icon) {
+            return Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.white.withOpacity(0.12)),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      icon,
+                      color: Colors.white,
+                      size: isWide ? 18 : 16,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          label,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: titleSize,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          value,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white70,
+                            fontSize: valueSize,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          final items = <Widget>[
+            detail('Email', 'hello@aspireedge.example', Icons.email_outlined),
+            detail('Phone', '+92 300 0000000', Icons.phone_outlined),
+            detail(
+              'Address',
+              'Office Road, Karachi, Pakistan',
+              Icons.location_on_outlined,
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Email: hello@aspireedge.example',
-            style: GoogleFonts.poppins(color: Colors.white70),
-          ),
-          Text(
-            'Phone: +92 300 0000000',
-            style: GoogleFonts.poppins(color: Colors.white70),
-          ),
-          Text(
-            'Address: Office Road, Karachi, Pakistan',
-            style: GoogleFonts.poppins(color: Colors.white70),
-          ),
-        ],
+          ];
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Contact Details',
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: isWide ? 22 : 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 12),
+              if (isWide)
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children:
+                      items
+                          .map(
+                            (w) => SizedBox(
+                              width: (constraints.maxWidth - 12) / 2,
+                              child: w,
+                            ),
+                          )
+                          .toList(),
+                )
+              else
+                Column(
+                  children:
+                      items
+                          .map(
+                            (w) => Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: w,
+                            ),
+                          )
+                          .toList(),
+                ),
+            ],
+          );
+        },
       ),
     );
   }
