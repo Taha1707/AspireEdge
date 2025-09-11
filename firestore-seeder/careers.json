@@ -1,0 +1,938 @@
+[
+  {
+    "title": "Software Engineer",
+    "industry": "Technology",
+    "description": "Design, develop, and maintain software applications and systems. Work with programming languages, databases, and frameworks to create innovative digital solutions that solve real-world problems.",
+    "skills": ["Programming", "Problem Solving", "Algorithms", "Database Design", "Git", "Testing", "API Development"],
+    "salary_range": "$70,000 - $200,000",
+    "education_path": [
+      "Complete high school with strong mathematics and science foundation",
+      "Pursue Bachelor's degree in Computer Science, Software Engineering, or related field",
+      "Learn programming languages (Python, Java, JavaScript, C++)",
+      "Build personal projects and contribute to open-source",
+      "Complete internships at tech companies",
+      "Consider specialization (Frontend, Backend, Full-Stack, Mobile)",
+      "Obtain industry certifications (AWS, Google Cloud, Microsoft Azure)",
+      "Stay updated with latest technologies and frameworks"
+    ]
+  },
+  {
+    "title": "Data Scientist",
+    "industry": "Technology",
+    "description": "Extract insights from large datasets using statistical analysis, machine learning, and data visualization techniques. Help organizations make data-driven decisions and predict future trends.",
+    "skills": ["Python/R", "Statistics", "Machine Learning", "SQL", "Data Visualization", "Big Data Tools", "Business Acumen"],
+    "salary_range": "$80,000 - $180,000",
+    "education_path": [
+      "Strong foundation in mathematics, statistics, and computer science",
+      "Bachelor's degree in Data Science, Statistics, Mathematics, or Computer Science",
+      "Master programming languages: Python, R, SQL",
+      "Learn statistical analysis and machine learning algorithms",
+      "Gain experience with data visualization tools (Tableau, Power BI, matplotlib)",
+      "Work with big data technologies (Hadoop, Spark, Apache Kafka)",
+      "Complete data science bootcamps or online certifications",
+      "Build portfolio with real-world data projects"
+    ]
+  },
+  {
+    "title": "Cybersecurity Specialist",
+    "industry": "Technology",
+    "description": "Protect organizations from digital threats by implementing security measures, monitoring networks, and responding to cyber attacks. Ensure data privacy and system integrity.",
+    "skills": ["Network Security", "Ethical Hacking", "Risk Assessment", "Incident Response", "Cryptography", "Compliance", "Forensics"],
+    "salary_range": "$75,000 - $160,000",
+    "education_path": [
+      "Complete high school with focus on mathematics and computer science",
+      "Pursue Bachelor's degree in Cybersecurity, Computer Science, or Information Technology",
+      "Learn networking fundamentals and operating systems",
+      "Study ethical hacking and penetration testing",
+      "Obtain industry certifications (CISSP, CEH, CompTIA Security+)",
+      "Gain hands-on experience through internships or security labs",
+      "Stay updated with latest threats and security technologies",
+      "Consider specialization in specific areas (cloud security, forensics, compliance)"
+    ]
+  },
+  {
+    "title": "Mobile App Developer",
+    "industry": "Technology",
+    "description": "Create mobile applications for iOS and Android platforms. Design user interfaces, implement functionality, and optimize performance for mobile devices.",
+    "skills": ["Swift/Kotlin", "React Native/Flutter", "UI/UX Design", "Mobile Architecture", "App Store Optimization", "Testing", "API Integration"],
+    "salary_range": "$65,000 - $150,000",
+    "education_path": [
+      "Learn programming fundamentals and object-oriented programming",
+      "Choose platform specialization: iOS (Swift), Android (Kotlin/Java), or Cross-platform",
+      "Master mobile development frameworks and SDKs",
+      "Study mobile UI/UX design principles",
+      "Learn database integration and API consumption",
+      "Build and publish apps to app stores",
+      "Gain experience with mobile testing and debugging",
+      "Stay updated with platform-specific guidelines and updates"
+    ]
+  },
+  {
+    "title": "Web Developer",
+    "industry": "Technology",
+    "description": "Build and maintain websites and web applications using various programming languages and frameworks. Focus on user experience, functionality, and performance optimization.",
+    "skills": ["HTML/CSS", "JavaScript", "React/Angular/Vue", "Node.js", "Responsive Design", "Version Control", "Testing", "SEO"],
+    "salary_range": "$55,000 - $140,000",
+    "education_path": [
+      "Learn HTML, CSS, and JavaScript fundamentals",
+      "Choose frontend framework (React, Angular, Vue.js)",
+      "Learn backend development (Node.js, Python, PHP)",
+      "Master database management (MySQL, MongoDB)",
+      "Build personal portfolio with diverse projects",
+      "Learn version control with Git and GitHub",
+      "Complete web development bootcamp or degree",
+      "Stay updated with web development trends and best practices"
+    ]
+  },
+  {
+    "title": "Artificial Intelligence Engineer",
+    "industry": "Technology",
+    "description": "Develop AI systems and machine learning models to solve complex problems. Work on natural language processing, computer vision, and predictive analytics applications.",
+    "skills": ["Machine Learning", "Deep Learning", "Python", "TensorFlow/PyTorch", "Neural Networks", "Computer Vision", "NLP", "Statistics"],
+    "salary_range": "$90,000 - $250,000",
+    "education_path": [
+      "Strong foundation in mathematics, statistics, and programming",
+      "Bachelor's degree in Computer Science, AI, or related field",
+      "Master machine learning algorithms and frameworks",
+      "Learn deep learning with TensorFlow or PyTorch",
+      "Specialize in areas like NLP, computer vision, or robotics",
+      "Build AI projects and contribute to open-source",
+      "Consider Master's or PhD for research positions",
+      "Stay updated with latest AI research and developments"
+    ]
+  },
+  {
+    "title": "Cloud Solutions Architect",
+    "industry": "Technology",
+    "description": "Design and implement cloud computing strategies for organizations. Oversee cloud adoption, migration, and optimization across various cloud platforms.",
+    "skills": ["Cloud Platforms", "System Architecture", "DevOps", "Networking", "Security", "Cost Optimization", "Automation", "Leadership"],
+    "salary_range": "$85,000 - $200,000",
+    "education_path": [
+      "Bachelor's degree in Computer Science or Information Technology",
+      "Gain experience in software development and system administration",
+      "Learn major cloud platforms (AWS, Azure, Google Cloud)",
+      "Obtain cloud certifications (AWS Solutions Architect, Azure Architect)",
+      "Master containerization and orchestration (Docker, Kubernetes)",
+      "Develop expertise in DevOps practices and tools",
+      "Gain experience in enterprise architecture and design patterns",
+      "Lead cloud migration and transformation projects"
+    ]
+  },
+  {
+    "title": "DevOps Engineer",
+    "industry": "Technology",
+    "description": "Bridge the gap between development and operations teams. Automate deployment processes, manage infrastructure, and ensure reliable software delivery.",
+    "skills": ["CI/CD", "Containerization", "Infrastructure as Code", "Monitoring", "Cloud Platforms", "Scripting", "Version Control", "Automation"],
+    "salary_range": "$75,000 - $170,000",
+    "education_path": [
+      "Background in software development or system administration",
+      "Learn scripting languages (Bash, Python, PowerShell)",
+      "Master version control systems (Git, GitLab, GitHub)",
+      "Learn containerization with Docker and Kubernetes",
+      "Study CI/CD tools (Jenkins, GitLab CI, GitHub Actions)",
+      "Gain expertise in cloud platforms and services",
+      "Learn infrastructure as code (Terraform, Ansible)",
+      "Practice monitoring and logging tools"
+    ]
+  },
+  {
+    "title": "Medical Doctor",
+    "industry": "Healthcare",
+    "description": "Diagnose and treat illnesses, injuries, and medical conditions. Provide comprehensive healthcare services and work collaboratively with healthcare teams to ensure patient well-being.",
+    "skills": ["Medical Knowledge", "Diagnosis", "Patient Care", "Communication", "Critical Thinking", "Empathy", "Research", "Teamwork"],
+    "salary_range": "$200,000 - $500,000",
+    "education_path": [
+      "Excel in high school sciences (Biology, Chemistry, Physics) and Mathematics",
+      "Complete Bachelor's degree with pre-medical requirements",
+      "Maintain high GPA and gain healthcare experience through volunteering",
+      "Take and excel in MCAT (Medical College Admission Test)",
+      "Apply to and complete 4-year medical school program",
+      "Complete residency training in chosen specialty (3-7 years)",
+      "Obtain medical license and board certification",
+      "Consider fellowship training for subspecialization"
+    ]
+  },
+  {
+    "title": "Registered Nurse",
+    "industry": "Healthcare",
+    "description": "Provide direct patient care, administer medications, monitor patient conditions, and collaborate with healthcare teams to deliver quality medical care in various settings.",
+    "skills": ["Patient Care", "Medical Knowledge", "Communication", "Critical Thinking", "Compassion", "Attention to Detail", "Time Management"],
+    "salary_range": "$60,000 - $120,000",
+    "education_path": [
+      "Complete high school with strong science and mathematics foundation",
+      "Pursue Associate Degree in Nursing (ADN) or Bachelor of Science in Nursing (BSN)",
+      "Complete clinical rotations in various healthcare settings",
+      "Pass the NCLEX-RN licensing examination",
+      "Gain experience in different nursing specialties",
+      "Consider pursuing BSN if started with ADN",
+      "Obtain specialty certifications (ICU, Emergency, Pediatric, etc.)",
+      "Pursue advanced practice roles (Nurse Practitioner, Nurse Anesthetist)"
+    ]
+  },
+  {
+    "title": "Physical Therapist",
+    "industry": "Healthcare",
+    "description": "Help patients recover from injuries, surgeries, or medical conditions through therapeutic exercises, manual therapy, and rehabilitation programs to restore mobility and function.",
+    "skills": ["Anatomy & Physiology", "Manual Therapy", "Exercise Prescription", "Patient Assessment", "Communication", "Empathy", "Problem Solving"],
+    "salary_range": "$75,000 - $120,000",
+    "education_path": [
+      "Complete high school with strong foundation in sciences",
+      "Pursue Bachelor's degree with prerequisite courses in biology, chemistry, physics, and anatomy",
+      "Gain observation hours in physical therapy settings",
+      "Apply to Doctor of Physical Therapy (DPT) program (3 years)",
+      "Complete extensive clinical internships and rotations",
+      "Pass the National Physical Therapy Examination (NPTE)",
+      "Obtain state licensure to practice",
+      "Consider specialization through residency or fellowship programs"
+    ]
+  },
+  {
+    "title": "Pharmacist",
+    "industry": "Healthcare",
+    "description": "Dispense medications, provide drug information, and counsel patients on proper medication use. Collaborate with healthcare providers to optimize drug therapy outcomes.",
+    "skills": ["Pharmacology", "Drug Interactions", "Patient Counseling", "Attention to Detail", "Communication", "Ethics", "Clinical Knowledge"],
+    "salary_range": "$120,000 - $160,000",
+    "education_path": [
+      "Complete high school with strong science and mathematics background",
+      "Complete 2-4 years of undergraduate pre-pharmacy coursework",
+      "Take the Pharmacy College Admission Test (PCAT)",
+      "Complete 4-year Doctor of Pharmacy (PharmD) program",
+      "Complete pharmacy internships and rotations",
+      "Pass the North American Pharmacist Licensure Examination (NAPLEX)",
+      "Obtain state pharmacy license",
+      "Consider residency for specialized practice areas"
+    ]
+  },
+  {
+    "title": "Dental Hygienist",
+    "industry": "Healthcare",
+    "description": "Provide preventive dental care, clean teeth, examine patients for oral diseases, and educate patients about oral hygiene practices.",
+    "skills": ["Dental Procedures", "Patient Care", "Oral Health Education", "Radiography", "Communication", "Attention to Detail", "Manual Dexterity"],
+    "salary_range": "$65,000 - $95,000",
+    "education_path": [
+      "Complete high school with science courses",
+      "Complete dental hygiene program (Associate or Bachelor's degree)",
+      "Complete clinical training and hands-on experience",
+      "Pass national and state licensing examinations",
+      "Obtain dental hygiene license",
+      "Maintain continuing education requirements",
+      "Consider specialization in public health or education",
+      "Stay updated with dental technology and procedures"
+    ]
+  },
+  {
+    "title": "Medical Laboratory Technologist",
+    "industry": "Healthcare",
+    "description": "Perform complex medical laboratory tests to help diagnose, treat, and prevent diseases. Analyze blood, tissue, and other body specimens using sophisticated equipment.",
+    "skills": ["Laboratory Techniques", "Quality Control", "Equipment Operation", "Data Analysis", "Attention to Detail", "Problem Solving", "Safety Protocols"],
+    "salary_range": "$50,000 - $75,000",
+    "education_path": [
+      "Complete high school with strong science background",
+      "Earn Bachelor's degree in Medical Laboratory Science or related field",
+      "Complete clinical laboratory training program",
+      "Pass national certification examination (ASCP, AMT, or AAB)",
+      "Obtain state licensure if required",
+      "Gain experience in different laboratory departments",
+      "Maintain continuing education and certification",
+      "Consider specialization in specific laboratory areas"
+    ]
+  },
+  {
+    "title": "Civil Engineer",
+    "industry": "Engineering",
+    "description": "Design, build, and maintain infrastructure projects including roads, bridges, buildings, and water systems. Ensure public safety and environmental sustainability in construction projects.",
+    "skills": ["Structural Design", "AutoCAD", "Project Management", "Mathematics", "Problem Solving", "Environmental Knowledge", "Safety Protocols"],
+    "salary_range": "$65,000 - $130,000",
+    "education_path": [
+      "Excel in high school mathematics, physics, and chemistry",
+      "Pursue Bachelor's degree in Civil Engineering (ABET-accredited)",
+      "Learn engineering software (AutoCAD, Revit, STAAD Pro)",
+      "Complete internships with engineering firms or government agencies",
+      "Take the Fundamentals of Engineering (FE) exam",
+      "Gain 4 years of professional experience under licensed engineer",
+      "Pass the Professional Engineering (PE) exam for licensure",
+      "Consider specialization (structural, transportation, environmental, geotechnical)"
+    ]
+  },
+  {
+    "title": "Mechanical Engineer",
+    "industry": "Engineering",
+    "description": "Design, develop, and test mechanical systems and devices. Work on everything from small components to large industrial machinery, focusing on efficiency and innovation.",
+    "skills": ["CAD Design", "Thermodynamics", "Materials Science", "Manufacturing Processes", "Problem Solving", "Mathematics", "Project Management"],
+    "salary_range": "$70,000 - $140,000",
+    "education_path": [
+      "Strong foundation in mathematics, physics, and chemistry in high school",
+      "Complete Bachelor's degree in Mechanical Engineering",
+      "Learn computer-aided design (CAD) software (SolidWorks, AutoCAD, CATIA)",
+      "Gain hands-on experience through internships and co-op programs",
+      "Understand manufacturing processes and materials science",
+      "Take the Fundamentals of Engineering (FE) exam",
+      "Accumulate professional experience for PE licensure",
+      "Consider specialization (automotive, aerospace, robotics, HVAC)"
+    ]
+  },
+  {
+    "title": "Electrical Engineer",
+    "industry": "Engineering",
+    "description": "Design and develop electrical systems, from microprocessors to power generation equipment. Work on projects ranging from consumer electronics to large-scale power grids.",
+    "skills": ["Circuit Design", "Programming", "Signal Processing", "Power Systems", "Electronics", "Control Systems", "Problem Solving"],
+    "salary_range": "$75,000 - $145,000",
+    "education_path": [
+      "Excel in mathematics, physics, and chemistry during high school",
+      "Pursue Bachelor's degree in Electrical Engineering or Electrical & Computer Engineering",
+      "Master circuit analysis, digital systems, and signal processing",
+      "Learn programming languages relevant to embedded systems",
+      "Complete laboratory work and design projects",
+      "Gain industry experience through internships",
+      "Take the Fundamentals of Engineering (FE) exam",
+      "Work toward Professional Engineering (PE) licensure"
+    ]
+  },
+  {
+    "title": "Chemical Engineer",
+    "industry": "Engineering",
+    "description": "Apply principles of chemistry, physics, and mathematics to solve problems involving chemical processes. Design and operate plants for manufacturing chemicals, pharmaceuticals, and materials.",
+    "skills": ["Process Design", "Chemical Reactions", "Thermodynamics", "Mass Transfer", "Safety Engineering", "Process Control", "Mathematics"],
+    "salary_range": "$80,000 - $150,000",
+    "education_path": [
+      "Strong background in chemistry, physics, and mathematics",
+      "Complete Bachelor's degree in Chemical Engineering",
+      "Learn process simulation software (Aspen Plus, HYSYS)",
+      "Gain experience through internships in chemical/petrochemical industries",
+      "Understand process safety and environmental regulations",
+      "Take the Fundamentals of Engineering (FE) exam",
+      "Accumulate experience for Professional Engineering (PE) licensure",
+      "Consider specialization in specific industries or processes"
+    ]
+  },
+  {
+    "title": "Aerospace Engineer",
+    "industry": "Engineering",
+    "description": "Design, develop, and test aircraft, spacecraft, satellites, and missiles. Work on aerodynamics, propulsion systems, and flight control systems for various aerospace applications.",
+    "skills": ["Aerodynamics", "Propulsion", "CAD Design", "Materials Science", "Flight Dynamics", "Systems Engineering", "Testing & Analysis"],
+    "salary_range": "$85,000 - $160,000",
+    "education_path": [
+      "Excel in advanced mathematics, physics, and chemistry",
+      "Complete Bachelor's degree in Aerospace Engineering or related field",
+      "Learn aerospace-specific software (CATIA, ANSYS, MATLAB)",
+      "Gain experience through internships with aerospace companies or NASA",
+      "Study aerodynamics, propulsion, and flight mechanics",
+      "Consider security clearance for defense-related positions",
+      "Pursue advanced degrees for research and development roles",
+      "Specialize in areas like aircraft design, space systems, or propulsion"
+    ]
+  },
+  {
+    "title": "UX/UI Designer",
+    "industry": "Design",
+    "description": "Create intuitive and engaging user experiences for digital products. Research user needs, design interfaces, and test usability to ensure products are user-friendly and accessible.",
+    "skills": ["User Research", "Wireframing", "Prototyping", "Visual Design", "Usability Testing", "Design Tools", "Psychology", "Communication"],
+    "salary_range": "$55,000 - $130,000",
+    "education_path": [
+      "Study design principles, psychology, and human-computer interaction",
+      "Pursue degree in Design, Psychology, Computer Science, or related field",
+      "Learn design tools (Figma, Sketch, Adobe Creative Suite, InVision)",
+      "Understand user research methodologies and usability testing",
+      "Build a strong portfolio showcasing design process and thinking",
+      "Gain experience through internships or freelance projects",
+      "Stay updated with design trends and accessibility standards",
+      "Consider specialization in UX research, visual design, or interaction design"
+    ]
+  },
+  {
+    "title": "Graphic Designer",
+    "industry": "Design",
+    "description": "Create visual content for print and digital media including logos, brochures, websites, and advertising materials. Communicate ideas through compelling visual design and typography.",
+    "skills": ["Adobe Creative Suite", "Typography", "Color Theory", "Branding", "Layout Design", "Creativity", "Client Communication", "Project Management"],
+    "salary_range": "$40,000 - $80,000",
+    "education_path": [
+      "Develop artistic skills and visual creativity from early age",
+      "Complete high school with art and design courses",
+      "Pursue Bachelor's degree in Graphic Design, Visual Arts, or related field",
+      "Master design software (Photoshop, Illustrator, InDesign, After Effects)",
+      "Study typography, color theory, and composition principles",
+      "Build comprehensive portfolio showcasing diverse design work",
+      "Gain experience through internships with design agencies or in-house teams",
+      "Stay current with design trends and emerging technologies"
+    ]
+  },
+  {
+    "title": "Interior Designer",
+    "industry": "Design",
+    "description": "Plan and design interior spaces that are functional, safe, and aesthetically pleasing. Work with clients to create environments that reflect their needs and personal style.",
+    "skills": ["Space Planning", "Color Theory", "CAD Software", "Material Knowledge", "Client Relations", "Project Management", "Building Codes", "Creativity"],
+    "salary_range": "$45,000 - $75,000",
+    "education_path": [
+      "Develop patience and strong communication skills",
+      "Complete Bachelor's degree in Special Education or general education with special education endorsement",
+      "Learn about different disabilities and learning differences",
+      "Complete student teaching in special education settings",
+      "Pass state certification exams for special education",
+      "Obtain special education teaching credential",
+      "Gain experience with IEP development and implementation",
+      "Pursue ongoing professional development in specialized areas"
+    ]
+  },
+  {
+    "title": "Journalist",
+    "industry": "Arts & Media",
+    "description": "Research, write, and report news stories for newspapers, magazines, television, radio, or online platforms. Investigate events and communicate information to the public.",
+    "skills": ["Writing", "Research", "Interviewing", "Ethics", "Critical Thinking", "Communication", "Technology", "Deadline Management"],
+    "salary_range": "$35,000 - $80,000",
+    "education_path": [
+      "Excel in English, writing, and social studies courses",
+      "Complete Bachelor's degree in Journalism, Communications, English, or related field",
+      "Gain experience writing for school newspaper or local publications",
+      "Complete internships at news organizations or media outlets",
+      "Develop expertise in specific beat (politics, sports, business, etc.)",
+      "Learn digital media tools and social media platforms",
+      "Build portfolio of published work and establish professional network",
+      "Stay updated with media ethics and journalism best practices"
+    ]
+  },
+  {
+    "title": "Film Director",
+    "industry": "Arts & Media",
+    "description": "Oversee the creative aspects of film production from pre-production through post-production. Guide actors, coordinate with crew, and bring stories to life on screen.",
+    "skills": ["Storytelling", "Leadership", "Creativity", "Communication", "Project Management", "Visual Arts", "Collaboration", "Technical Knowledge"],
+    "salary_range": "$50,000 - $250,000",
+    "education_path": [
+      "Develop storytelling abilities and visual creativity",
+      "Study film, theater, communications, or fine arts in college",
+      "Learn filmmaking techniques through hands-on practice",
+      "Create short films and build a directing portfolio",
+      "Gain experience in various film production roles",
+      "Network with industry professionals and attend film festivals",
+      "Start with smaller projects and work up to feature films",
+      "Continuously study film history and contemporary cinema"
+    ]
+  },
+  {
+    "title": "Photographer",
+    "industry": "Arts & Media",
+    "description": "Capture images for various purposes including portraits, events, commercial advertising, and artistic expression. Master technical and creative aspects of photography.",
+    "skills": ["Photography Techniques", "Photo Editing", "Creativity", "Technical Skills", "Client Relations", "Marketing", "Equipment Knowledge", "Visual Composition"],
+    "salary_range": "$30,000 - $80,000",
+    "education_path": [
+      "Develop artistic eye and visual composition skills",
+      "Learn photography basics and camera operation",
+      "Complete formal photography education or workshops",
+      "Master photo editing software (Photoshop, Lightroom)",
+      "Build diverse photography portfolio",
+      "Gain experience through internships or assistant positions",
+      "Establish photography business and marketing skills",
+      "Specialize in specific photography niches (wedding, portrait, commercial, etc.)"
+    ]
+  },
+  {
+    "title": "Musician",
+    "industry": "Arts & Media",
+    "description": "Perform music as a solo artist or with groups. May compose, arrange, and record music across various genres and platforms.",
+    "skills": ["Musical Instrument Proficiency", "Music Theory", "Performance", "Creativity", "Collaboration", "Stage Presence", "Recording Technology", "Marketing"],
+    "salary_range": "$25,000 - $100,000+",
+    "education_path": [
+      "Start learning musical instruments from young age",
+      "Develop music theory knowledge and sight-reading skills",
+      "Participate in school bands, orchestras, or choirs",
+      "Consider formal music education (Bachelor's in Music Performance or Music Education)",
+      "Gain performance experience through local venues and events",
+      "Learn recording technology and music production",
+      "Build professional network within music industry",
+      "Develop multiple income streams (performance, teaching, recording, composing)"
+    ]
+  },
+  {
+    "title": "Content Creator",
+    "industry": "Arts & Media",
+    "description": "Create digital content for social media platforms, blogs, websites, and other online channels. Engage audiences through various media formats and storytelling techniques.",
+    "skills": ["Content Creation", "Video Editing", "Social Media", "Writing", "Photography", "SEO", "Analytics", "Brand Development"],
+    "salary_range": "$30,000 - $150,000+",
+    "education_path": [
+      "Develop strong communication and creative skills",
+      "Learn content creation tools and software",
+      "Build presence on various social media platforms",
+      "Study digital marketing and audience engagement",
+      "Create consistent, high-quality content in chosen niche",
+      "Learn analytics and performance measurement",
+      "Develop personal brand and unique voice",
+      "Explore monetization strategies (sponsorships, partnerships, products)"
+    ]
+  },
+  {
+    "title": "Research Scientist",
+    "industry": "Science",
+    "description": "Conduct experiments and studies to advance knowledge in specific scientific fields. Design research methodologies, analyze data, and publish findings in peer-reviewed journals.",
+    "skills": ["Scientific Method", "Data Analysis", "Critical Thinking", "Research Design", "Laboratory Skills", "Writing", "Statistics", "Collaboration"],
+    "salary_range": "$65,000 - $140,000",
+    "education_path": [
+      "Excel in science and mathematics courses throughout high school",
+      "Complete Bachelor's degree in relevant scientific field",
+      "Participate in undergraduate research opportunities",
+      "Pursue Ph.D. in specialized area of science (4-6 years)",
+      "Complete post-doctoral research fellowships",
+      "Develop expertise in specific research area",
+      "Publish research in peer-reviewed journals",
+      "Apply for research positions in academia, government, or industry"
+    ]
+  },
+  {
+    "title": "Environmental Scientist",
+    "industry": "Science",
+    "description": "Study environmental problems and develop solutions to protect human health and the environment. Conduct field research, analyze pollution data, and recommend policy changes.",
+    "skills": ["Environmental Assessment", "Data Collection", "GIS", "Research Methods", "Problem Solving", "Communication", "Field Work", "Regulatory Knowledge"],
+    "salary_range": "$50,000 - $100,000",
+    "education_path": [
+      "Strong foundation in biology, chemistry, earth science, and mathematics",
+      "Complete Bachelor's degree in Environmental Science, Biology, Chemistry, or related field",
+      "Gain field experience through internships with environmental agencies",
+      "Learn environmental monitoring techniques and equipment",
+      "Master GIS software and data analysis tools",
+      "Consider Master's degree for advanced research positions",
+      "Stay updated with environmental regulations and policies",
+      "Specialize in areas like air quality, water resources, or waste management"
+    ]
+  },
+  {
+    "title": "Biologist",
+    "industry": "Science",
+    "description": "Study living organisms and their interactions with the environment. Conduct research in areas such as genetics, ecology, microbiology, or marine biology.",
+    "skills": ["Research Methods", "Laboratory Techniques", "Data Analysis", "Scientific Writing", "Field Work", "Microscopy", "Molecular Biology", "Statistics"],
+    "salary_range": "$45,000 - $95,000",
+    "education_path": [
+      "Excel in biology, chemistry, and mathematics in high school",
+      "Complete Bachelor's degree in Biology or specialized biological science",
+      "Gain laboratory and field research experience",
+      "Consider specialization (marine biology, genetics, ecology, etc.)",
+      "Pursue Master's or Ph.D. for research or academic positions",
+      "Develop expertise in specific research techniques and technologies",
+      "Publish research findings and present at scientific conferences",
+      "Seek employment in universities, government agencies, or private research institutions"
+    ]
+  },
+  {
+    "title": "Forensic Scientist",
+    "industry": "Science",
+    "description": "Apply scientific methods to analyze physical evidence in criminal investigations. Work with law enforcement to help solve crimes through laboratory analysis and expert testimony.",
+    "skills": ["Laboratory Analysis", "Attention to Detail", "Scientific Method", "Evidence Handling", "Report Writing", "Courtroom Testimony", "Chemistry", "Biology"],
+    "salary_range": "$55,000 - $90,000",
+    "education_path": [
+      "Strong background in chemistry, biology, and mathematics",
+      "Complete Bachelor's degree in Forensic Science, Chemistry, Biology, or related field",
+      "Gain laboratory experience and learn forensic techniques",
+      "Complete internships with crime laboratories or law enforcement agencies",
+      "Learn evidence collection and analysis procedures",
+      "Develop expertise in specific forensic specialties (DNA, toxicology, ballistics)",
+      "Obtain relevant certifications from professional organizations",
+      "Gain experience providing expert testimony in legal proceedings"
+    ]
+  },
+  {
+    "title": "Agricultural Engineer",
+    "industry": "Agriculture",
+    "description": "Apply engineering principles to agricultural production and processing. Design farm equipment, irrigation systems, and facilities to improve efficiency and sustainability.",
+    "skills": ["Engineering Design", "Agricultural Systems", "Problem Solving", "CAD Software", "Project Management", "Sustainability", "Technology Integration"],
+    "salary_range": "$60,000 - $120,000",
+    "education_path": [
+      "Strong background in mathematics, physics, and biology",
+      "Complete Bachelor's degree in Agricultural Engineering or Biological Systems Engineering",
+      "Learn agricultural production systems and farm equipment",
+      "Gain hands-on experience through internships on farms or with equipment manufacturers",
+      "Master engineering software and design tools",
+      "Understand sustainability principles and precision agriculture",
+      "Consider Professional Engineer (PE) licensure",
+      "Specialize in areas like irrigation, machinery design, or food processing"
+    ]
+  },
+  {
+    "title": "Veterinarian",
+    "industry": "Agriculture",
+    "description": "Diagnose and treat diseases and injuries in animals. Provide medical care for pets, livestock, and wildlife while educating owners about animal health and welfare.",
+    "skills": ["Animal Anatomy", "Medical Diagnosis", "Surgery", "Communication", "Compassion", "Problem Solving", "Research", "Physical Stamina"],
+    "salary_range": "$75,000 - $160,000",
+    "education_path": [
+      "Excel in biology, chemistry, physics, and mathematics in high school",
+      "Complete Bachelor's degree with pre-veterinary requirements",
+      "Gain animal experience through volunteering or work",
+      "Take the Veterinary College Admission Test (VCAT)",
+      "Complete 4-year Doctor of Veterinary Medicine (DVM) program",
+      "Pass the North American Veterinary Licensing Examination (NAVLE)",
+      "Obtain state veterinary license",
+      "Consider specialization through internship and residency programs"
+    ]
+  },
+  {
+    "title": "Food Scientist",
+    "industry": "Agriculture",
+    "description": "Study the physical, chemical, and biological properties of food. Develop new food products, improve food safety, and enhance nutritional value of food products.",
+    "skills": ["Food Chemistry", "Microbiology", "Product Development", "Quality Control", "Food Safety", "Research Methods", "Sensory Analysis", "Nutrition"],
+    "salary_range": "$50,000 - $100,000",
+    "education_path": [
+      "Strong foundation in chemistry, biology, and mathematics",
+      "Complete Bachelor's degree in Food Science, Chemistry, Biology, or related field",
+      "Learn food processing and preservation techniques",
+      "Gain experience through internships with food companies",
+      "Study food safety regulations and quality control methods",
+      "Consider advanced degrees for research or management positions",
+      "Obtain relevant certifications (CFS, SQF, HACCP)",
+      "Specialize in areas like product development, food safety, or nutrition"
+    ]
+  },
+  {
+    "title": "Agricultural Specialist",
+    "industry": "Agriculture",
+    "description": "Provide expertise and guidance to farmers and agricultural businesses. Help optimize crop production, implement sustainable practices, and solve agricultural challenges.",
+    "skills": ["Agricultural Knowledge", "Problem Solving", "Communication", "Research", "Extension Services", "Crop Management", "Soil Science", "Pest Management"],
+    "salary_range": "$45,000 - $80,000",
+    "education_path": [
+      "Strong background in agriculture, biology, and chemistry",
+      "Complete Bachelor's degree in Agriculture, Agronomy, or related field",
+      "Gain practical farming experience through internships or work",
+      "Learn about crop production, soil management, and pest control",
+      "Develop expertise in sustainable agriculture practices",
+      "Consider advanced degrees for research or consulting positions",
+      "Obtain relevant certifications or licenses",
+      "Build network within agricultural community and extension services"
+    ]
+  },
+  {
+    "title": "Lawyer",
+    "industry": "Law & Legal",
+    "description": "Represent clients in legal matters, provide legal advice, and advocate for justice in courts. Specialize in areas such as corporate law, criminal defense, or family law.",
+    "skills": ["Legal Research", "Writing", "Oral Advocacy", "Critical Thinking", "Negotiation", "Ethics", "Client Relations", "Analytical Skills"],
+    "salary_range": "$60,000 - $200,000+",
+    "education_path": [
+      "Excel in English, history, government, and debate in high school",
+      "Complete Bachelor's degree in any field with strong GPA",
+      "Take the Law School Admission Test (LSAT)",
+      "Complete 3-year Juris Doctor (J.D.) program at accredited law school",
+      "Participate in internships, clinics, or law review",
+      "Pass the bar examination in the state where you plan to practice",
+      "Consider specialization through additional coursework or experience",
+      "Maintain continuing legal education requirements"
+    ]
+  },
+  {
+    "title": "Paralegal",
+    "industry": "Law & Legal",
+    "description": "Assist lawyers with legal research, document preparation, and case management. Support legal teams in litigation, corporate transactions, and client communication.",
+    "skills": ["Legal Research", "Document Preparation", "Case Management", "Communication", "Organization", "Attention to Detail", "Ethics", "Technology"],
+    "salary_range": "$35,000 - $65,000",
+    "education_path": [
+      "Complete high school with strong writing and research skills",
+      "Pursue Associate degree in Paralegal Studies or Bachelor's degree with paralegal certificate",
+      "Complete internship with law firm or legal department",
+      "Learn legal research databases and document management systems",
+      "Stay updated with legal procedures and regulations",
+      "Consider specialization in specific areas of law",
+      "Maintain continuing education requirements",
+      "Join professional paralegal associations"
+    ]
+  },
+  {
+    "title": "Legal Assistant",
+    "industry": "Law & Legal",
+    "description": "Provide administrative and clerical support to lawyers and legal professionals. Handle scheduling, filing, client communication, and basic legal document preparation.",
+    "skills": ["Administrative Skills", "Communication", "Organization", "Computer Skills", "Customer Service", "Confidentiality", "Time Management", "Legal Terminology"],
+    "salary_range": "$30,000 - $50,000",
+    "education_path": [
+      "Complete high school with strong administrative and communication skills",
+      "Consider post-secondary certificate in legal assistance or administration",
+      "Learn basic legal terminology and procedures",
+      "Gain experience with legal software and document management systems",
+      "Develop strong organizational and multitasking abilities",
+      "Complete on-the-job training with law firms",
+      "Maintain confidentiality and professional ethics",
+      "Consider advancement to paralegal through additional education"
+    ]
+  },
+  {
+    "title": "Court Reporter",
+    "industry": "Law & Legal",
+    "description": "Create verbatim transcripts of legal proceedings, depositions, and other official proceedings. Use specialized equipment to capture spoken words accurately and efficiently.",
+    "skills": ["Stenography", "Typing Speed", "Accuracy", "Concentration", "Legal Terminology", "Technology Skills", "Attention to Detail", "Time Management"],
+    "salary_range": "$40,000 - $80,000",
+    "education_path": [
+      "Complete high school with strong English and typing skills",
+      "Attend court reporting school or community college program",
+      "Learn stenographic machine operation and techniques",
+      "Achieve required typing speed (usually 200+ words per minute)",
+      "Pass state licensing or certification examinations",
+      "Gain experience through internships or entry-level positions",
+      "Maintain continuing education requirements",
+      "Consider specialization in specific types of proceedings"
+    ]
+  },
+  {
+    "title": "Investment Banker",
+    "industry": "Finance",
+    "description": "Help corporations and governments raise capital through securities offerings. Provide advisory services for mergers, acquisitions, and other financial transactions.",
+    "skills": ["Financial Modeling", "Valuation", "Client Relations", "Communication", "Analytics", "Risk Assessment", "Market Knowledge", "Negotiation"],
+    "salary_range": "$100,000 - $300,000+",
+    "education_path": [
+      "Excel in mathematics and economics in high school",
+      "Complete Bachelor's degree in Finance, Economics, or Business with high GPA",
+      "Gain relevant internships at investment banks or financial firms",
+      "Master financial modeling and valuation techniques",
+      "Learn advanced Excel and financial software",
+      "Network with industry professionals and alumni",
+      "Consider MBA from top-tier business school for advancement",
+      "Obtain relevant certifications (CFA, FRM) for specialization"
+    ]
+  },
+  {
+    "title": "Actuary",
+    "industry": "Finance",
+    "description": "Analyze risk and uncertainty for insurance companies and financial institutions. Use mathematics, statistics, and financial theory to assess the probability of future events.",
+    "skills": ["Mathematics", "Statistics", "Risk Analysis", "Programming", "Communication", "Problem Solving", "Attention to Detail", "Business Acumen"],
+    "salary_range": "$80,000 - $180,000",
+    "education_path": [
+      "Excel in advanced mathematics, statistics, and calculus in high school",
+      "Complete Bachelor's degree in Actuarial Science, Mathematics, Statistics, or Economics",
+      "Pass actuarial examinations from Society of Actuaries (SOA) or Casualty Actuarial Society (CAS)",
+      "Gain internship experience with insurance companies or consulting firms",
+      "Learn programming languages (R, Python, SQL, VBA)",
+      "Continue passing actuarial exams while working (typically 5-7 exams total)",
+      "Gain relevant work experience for fellowship status",
+      "Specialize in specific areas (life insurance, health insurance, property & casualty)"
+    ]
+  },
+  {
+    "title": "Financial Planner",
+    "industry": "Finance",
+    "description": "Help individuals and families manage their finances, plan for retirement, and achieve financial goals. Provide investment advice and comprehensive financial planning services.",
+    "skills": ["Financial Planning", "Investment Knowledge", "Client Relations", "Communication", "Ethics", "Risk Assessment", "Tax Planning", "Insurance Knowledge"],
+    "salary_range": "$50,000 - $120,000",
+    "education_path": [
+      "Strong foundation in mathematics and economics",
+      "Complete Bachelor's degree in Finance, Economics, Business, or related field",
+      "Gain experience in financial services or sales",
+      "Obtain required securities licenses (Series 7, Series 66)",
+      "Pursue Certified Financial Planner (CFP) certification",
+      "Develop expertise in tax planning, insurance, and estate planning",
+      "Build client base and professional network",
+      "Maintain continuing education requirements"
+    ]
+  },
+  {
+    "title": "Accountant",
+    "industry": "Finance",
+    "description": "Prepare and examine financial records, ensure accuracy of financial transactions, and help organizations comply with tax regulations and financial reporting requirements.",
+    "skills": ["Financial Analysis", "Tax Preparation", "Auditing", "Attention to Detail", "Ethics", "Communication", "Computer Skills", "Problem Solving"],
+    "salary_range": "$45,000 - $90,000",
+    "education_path": [
+      "Strong foundation in mathematics and attention to detail",
+      "Complete Bachelor's degree in Accounting, Finance, or Business",
+      "Learn accounting software and financial analysis tools",
+      "Gain experience through internships with accounting firms",
+      "Understand tax regulations and financial reporting standards",
+      "Consider Certified Public Accountant (CPA) certification",
+      "Specialize in areas like tax preparation, auditing, or forensic accounting",
+      "Maintain continuing education for professional certifications"
+    ]
+  },
+  {
+    "title": "Insurance Agent",
+    "industry": "Finance",
+    "description": "Sell insurance policies to individuals and businesses. Assess client needs, explain coverage options, and help customers choose appropriate insurance products.",
+    "skills": ["Sales", "Communication", "Customer Service", "Product Knowledge", "Relationship Building", "Problem Solving", "Ethics", "Organization"],
+    "salary_range": "$35,000 - $100,000+",
+    "education_path": [
+      "Develop strong communication and interpersonal skills",
+      "Complete high school with focus on communication and mathematics",
+      "Consider Bachelor's degree in Business, Marketing, or related field",
+      "Complete pre-licensing education courses",
+      "Pass state insurance licensing examination",
+      "Gain experience with insurance products and regulations",
+      "Develop sales and customer service skills",
+      "Build client base and professional network"
+    ]
+  },
+
+  {
+    "title": "Fashion Designer",
+    "industry": "Design",
+    "description": "Create original clothing designs and accessories. Develop concepts, sketch designs, select materials, and oversee the production process from concept to finished product.",
+    "skills": ["Fashion Illustration", "Pattern Making", "Textile Knowledge", "Trend Analysis", "Creativity", "Sewing", "Fashion History", "Marketing"],
+    "salary_range": "$35,000 - $120,000",
+    "education_path": [
+      "Develop artistic skills and fashion sense",
+      "Complete high school with art and design courses",
+      "Pursue degree in Fashion Design or related field",
+      "Learn fashion illustration and computer-aided design",
+      "Study textiles, pattern making, and garment construction",
+      "Build portfolio with original fashion designs",
+      "Gain experience through internships with fashion houses or brands",
+      "Consider specialization in specific areas (haute couture, ready-to-wear, accessories)"
+    ]
+  },
+  {
+    "title": "Architect",
+    "industry": "Design",
+    "description": "Design buildings and structures, ensuring they are functional, safe, and aesthetically pleasing. Collaborate with clients, engineers, and contractors throughout the construction process.",
+    "skills": ["Architectural Design", "CAD Software", "Building Codes", "Project Management", "Creativity", "Technical Drawing", "Sustainability", "Communication"],
+    "salary_range": "$60,000 - $130,000",
+    "education_path": [
+      "Strong foundation in mathematics, physics, and art",
+      "Complete Bachelor's degree in Architecture (5-year program)",
+      "Learn architectural software (AutoCAD, Revit, SketchUp, Rhino)",
+      "Complete internship (Architectural Experience Program - AXP)",
+      "Pass the Architect Registration Examination (ARE)",
+      "Obtain architectural license",
+      "Gain experience in different types of projects",
+      "Consider specialization (residential, commercial, sustainable design)"
+    ]
+  },
+  {
+    "title": "Marketing Manager",
+    "industry": "Business",
+    "description": "Develop and execute marketing strategies to promote products and services. Analyze market trends, manage campaigns, and coordinate with teams to achieve business objectives.",
+    "skills": ["Strategic Planning", "Digital Marketing", "Analytics", "Communication", "Project Management", "Creativity", "Market Research", "Leadership"],
+    "salary_range": "$60,000 - $130,000",
+    "education_path": [
+      "Excel in communication, mathematics, and social studies in high school",
+      "Pursue Bachelor's degree in Marketing, Business Administration, or Communications",
+      "Learn digital marketing tools and platforms (Google Analytics, social media, SEO)",
+      "Gain experience through internships in marketing departments",
+      "Develop skills in market research and consumer behavior analysis",
+      "Stay updated with digital marketing trends and technologies",
+      "Consider MBA or marketing certifications for advancement",
+      "Build expertise in specific areas (content marketing, social media, brand management)"
+    ]
+  },
+  {
+    "title": "Financial Analyst",
+    "industry": "Business",
+    "description": "Evaluate investment opportunities, analyze financial data, and provide recommendations for business decisions. Help organizations optimize their financial performance and manage risk.",
+    "skills": ["Financial Modeling", "Excel", "Data Analysis", "Investment Analysis", "Risk Assessment", "Communication", "Attention to Detail", "Critical Thinking"],
+    "salary_range": "$55,000 - $120,000",
+    "education_path": [
+      "Strong foundation in mathematics and economics in high school",
+      "Pursue Bachelor's degree in Finance, Economics, Accounting, or Business",
+      "Master financial modeling and Excel advanced functions",
+      "Learn financial analysis software and databases (Bloomberg, Reuters)",
+      "Gain internship experience in banking, investment firms, or corporate finance",
+      "Consider professional certifications (CFA, FRM, CPA)",
+      "Develop understanding of financial markets and investment instruments",
+      "Pursue MBA for senior analyst or management roles"
+    ]
+  },
+  {
+    "title": "Human Resources Manager",
+    "industry": "Business",
+    "description": "Oversee recruitment, employee relations, training, and organizational development. Ensure compliance with labor laws and create positive workplace culture.",
+    "skills": ["Communication", "Leadership", "Conflict Resolution", "Employment Law", "Recruitment", "Training & Development", "Analytics", "Empathy"],
+    "salary_range": "$65,000 - $125,000",
+    "education_path": [
+      "Develop strong communication and interpersonal skills",
+      "Complete Bachelor's degree in Human Resources, Business, Psychology, or related field",
+      "Learn employment law and HR best practices",
+      "Gain experience through HR internships or entry-level positions",
+      "Master HR information systems and analytics tools",
+      "Obtain professional certifications (PHR, SHRM-CP, SHRM-SCP)",
+      "Develop expertise in areas like recruitment, compensation, or training",
+      "Pursue advanced degree for senior HR leadership roles"
+    ]
+  },
+  {
+    "title": "Project Manager",
+    "industry": "Business",
+    "description": "Lead and coordinate projects from initiation to completion. Manage timelines, resources, budgets, and team members to ensure successful project delivery.",
+    "skills": ["Project Planning", "Leadership", "Communication", "Risk Management", "Budgeting", "Team Management", "Problem Solving", "Organization"],
+    "salary_range": "$70,000 - $140,000",
+    "education_path": [
+      "Develop strong organizational and leadership skills",
+      "Complete Bachelor's degree in Business, Engineering, or related field",
+      "Learn project management methodologies (Agile, Waterfall, Scrum)",
+      "Master project management software (MS Project, Asana, Jira)",
+      "Gain experience in team leadership and coordination",
+      "Obtain Project Management Professional (PMP) certification",
+      "Develop expertise in specific industries or project types",
+      "Pursue advanced certifications or MBA for senior roles"
+    ]
+  },
+  {
+    "title": "Business Analyst",
+    "industry": "Business",
+    "description": "Analyze business processes, identify improvement opportunities, and recommend solutions. Bridge the gap between business needs and technology solutions.",
+    "skills": ["Business Analysis", "Data Analysis", "Process Mapping", "Requirements Gathering", "Communication", "Problem Solving", "Documentation", "SQL"],
+    "salary_range": "$60,000 - $120,000",
+    "education_path": [
+      "Strong analytical and problem-solving skills",
+      "Complete Bachelor's degree in Business, Economics, IT, or related field",
+      "Learn business analysis tools and techniques",
+      "Master data analysis tools (Excel, SQL, Tableau)",
+      "Gain experience through internships or entry-level analyst positions",
+      "Obtain business analysis certifications (CBAP, PMI-PBA)",
+      "Develop domain expertise in specific industries",
+      "Consider advanced degrees for senior analyst roles"
+    ]
+  },
+  {
+    "title": "Elementary School Teacher",
+    "industry": "Education",
+    "description": "Educate and nurture young learners in foundational subjects. Create engaging lesson plans, assess student progress, and communicate with parents to support child development.",
+    "skills": ["Curriculum Development", "Classroom Management", "Communication", "Patience", "Creativity", "Assessment", "Technology Integration", "Empathy"],
+    "salary_range": "$40,000 - $70,000",
+    "education_path": [
+      "Excel in all academic subjects with focus on areas you want to teach",
+      "Complete Bachelor's degree in Elementary Education or subject area with education minor",
+      "Complete student teaching or field experience requirements",
+      "Pass state-required teacher certification exams (Praxis, CSET, etc.)",
+      "Obtain teaching license/credential in your state",
+      "Participate in ongoing professional development and training",
+      "Consider Master's degree in Education for salary advancement",
+      "Maintain certification through continuing education requirements"
+    ]
+  },
+  {
+    "title": "High School Teacher",
+    "industry": "Education",
+    "description": "Teach specific subjects to high school students. Prepare students for college and careers while helping them develop critical thinking and life skills.",
+    "skills": ["Subject Expertise", "Classroom Management", "Lesson Planning", "Assessment", "Communication", "Technology Integration", "Mentoring", "Adaptability"],
+    "salary_range": "$45,000 - $75,000",
+    "education_path": [
+      "Master the subject area you want to teach",
+      "Complete Bachelor's degree in subject area with teacher preparation program",
+      "Complete student teaching in high school setting",
+      "Pass state certification exams for your subject area",
+      "Obtain secondary teaching credential/license",
+      "Gain experience with diverse student populations",
+      "Consider Master's degree for career advancement",
+      "Stay current with subject matter and educational technologies"
+    ]
+  },
+  {
+    "title": "University Professor",
+    "industry": "Education",
+    "description": "Teach undergraduate and graduate courses, conduct research in your field of expertise, and contribute to academic knowledge through publications and presentations.",
+    "skills": ["Subject Expertise", "Research", "Writing", "Public Speaking", "Critical Thinking", "Mentoring", "Grant Writing", "Publishing"],
+    "salary_range": "$55,000 - $150,000",
+    "education_path": [
+      "Excel academically throughout high school and undergraduate studies",
+      "Complete Bachelor's degree with high GPA in chosen field",
+      "Pursue Master's degree to deepen subject knowledge",
+      "Complete Ph.D. in specific field of study (4-7 years)",
+      "Conduct original research and publish dissertation",
+      "Gain teaching experience as graduate assistant or adjunct instructor",
+      "Apply for tenure-track faculty positions",
+      "Build research portfolio and continue publishing in academic journals"
+    ]
+  },
+  {
+    "title": "School Counselor",
+    "industry": "Education",
+    "description": "Provide academic, career, and personal counseling to students. Help students overcome challenges, plan their futures, and develop social-emotional skills.",
+    "skills": ["Counseling", "Communication", "Empathy", "Problem Solving", "Crisis Intervention", "Program Development", "Assessment", "Advocacy"],
+    "salary_range": "$45,000 - $80,000",
+    "education_path": [
+      "Develop strong interpersonal and communication skills",
+      "Complete Bachelor's degree in Psychology, Education, or related field",
+      "Gain experience working with children or adolescents",
+      "Pursue Master's degree in School Counseling or related field",
+      "Complete supervised practicum and internship experiences",
+      "Obtain school counseling credential/license",
+      "Develop expertise in crisis intervention and mental health",
+      "Maintain continuing education and professional development"
+    ]
+  }
+]
