@@ -1,3 +1,4 @@
+import 'package:auth_reset_pass/pages/edit_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../services/authentication.dart';
@@ -17,11 +18,11 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  // 👇 Removed _ProfileTab from list since we are navigating to a new page
   final List<Widget> _tabs = const [
     _HomeTab(),
     _ExploreTab(),
     _NotificationsTab(),
-    _ProfileTab(),
   ];
 
   @override
@@ -59,10 +60,8 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.grey[700],
         ),
 
-        // 👉 Add your custom drawer here
         drawer: UserDrawer(
           onMenuItemSelected: (title) {
-            // handle menu selection if needed
             debugPrint("Selected: $title");
           },
         ),
@@ -104,6 +103,16 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.w500,
                 ),
                 onTap: (index) {
+                  if (index == 3) {
+                    // 👇 Navigate to Profile Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EditProfilePage(),
+                      ),
+                    );
+                    return;
+                  }
                   if (index == 4) {
                     _scaffoldKey.currentState?.openDrawer();
                     return;
@@ -192,23 +201,6 @@ class _NotificationsTab extends StatelessWidget {
       child: const Center(
         child: Text(
           'Notifications',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-}
-
-class _ProfileTab extends StatelessWidget {
-  const _ProfileTab();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: const Center(
-        child: Text(
-          'Profile',
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
       ),
