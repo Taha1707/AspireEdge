@@ -207,19 +207,44 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   Widget _buildIntroCard() {
     return _cardDecoration(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'We value your feedback',
-            style: GoogleFonts.poppins(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Tell us what you like or report bugs so we can improve.',
-            style: GoogleFonts.poppins(color: Colors.white70),
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final double w = constraints.maxWidth;
+          final double titleSize = w >= 900
+              ? 26
+              : w >= 600
+                  ? 22
+                  : w >= 360
+                      ? 18
+                      : 16;
+          final double bodySize = w >= 900
+              ? 16
+              : w >= 600
+                  ? 15
+                  : 14;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'We value your feedback',
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: titleSize,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Tell us what you like or report bugs so we can improve.',
+                style: GoogleFonts.poppins(
+                  color: Colors.white70,
+                  fontSize: bodySize,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
