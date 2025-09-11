@@ -1,4 +1,5 @@
 import 'package:auth_reset_pass/pages/career_bank.dart';
+import 'package:auth_reset_pass/pages/quiz_intro.dart';
 import 'package:flutter/material.dart';
 import '../pages/testimonials.dart';
 
@@ -76,7 +77,7 @@ class UserDrawer extends StatelessWidget {
 
             // 4) Career Quiz
             _sectionHeader("Career Quiz"),
-            _menuItem(context, Icons.quiz, "Career Quiz"),
+            _menuItem(context, Icons.quiz, "Career Quiz", page: const QuizIntroPage()),
 
             // 5) Multimedia Guidance
             _sectionHeader("Multimedia Guidance"),

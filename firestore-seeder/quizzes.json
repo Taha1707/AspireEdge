@@ -1,0 +1,1336 @@
+{
+  "quizzes": {
+    "Class 8": {
+      "questions": {
+        "q1": {
+          "question": "If you had a free afternoon, what would you most likely do?",
+          "options": [
+            {
+              "text": "Try to build a model or fix something broken.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "Read a book about animals, plants, or the human body.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "Help organize a family event or manage a small budget for a project.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Draw, write a story, or practice music.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q2": {
+          "question": "Which school subject do you find most satisfying?",
+          "options": [
+            {
+              "text": "Mathematics - I enjoy finding the one correct answer.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "Science - I love experiments and seeing how things work in real life.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "Social Studies - Understanding how societies and economies function is interesting.",
+              "category": "Commerce"
+            },
+            {
+              "text": "English/Art - I enjoy expressing myself and interpreting creative work.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q3": {
+          "question": "What kind of project would you choose for a science fair?",
+          "options": [
+            {
+              "text": "Building a simple robot or a working computer program.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "Testing how different fertilizers affect plant growth.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "A survey on spending habits of students and presenting the data.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Creating a documentary video on a social issue in my community.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q4": {
+          "question": "When playing a game, what role do you usually take?",
+          "options": [
+            {
+              "text": "The strategist who figures out the rules to win.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "The explorer who examines everything in the environment.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "The leader who organizes the team and resources.",
+              "category": "Commerce"
+            },
+            {
+              "text": "The creator who makes up stories and characters.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q5": {
+          "question": "Which TV channel would you watch?",
+          "options": [
+            {
+              "text": "Discovery Science or National Geographic: How it's Made.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "National Geographic: Wild or Animal Planet.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "A news channel focused on business and markets.",
+              "category": "Commerce"
+            },
+            {
+              "text": "A movie channel or a channel about design and fashion.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q6": {
+          "question": "You win a prize. What do you do with the money?",
+          "options": [
+            {
+              "text": "Buy a new gadget or tech kit to play with.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "Buy a telescope, microscope, or a pet.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "Save most of it or think of a small business to start.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Buy art supplies, books, or concert tickets.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q7": {
+          "question": "What is your biggest strength in group work?",
+          "options": [
+            {
+              "text": "I'm good at solving the technical problems that come up.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "I pay close attention to details others might miss.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "I'm good at keeping the group organized and on task.",
+              "category": "Commerce"
+            },
+            {
+              "text": "I come up with creative ideas and designs.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q8": {
+          "question": "Which famous person's job seems most interesting?",
+          "options": [
+            {
+              "text": "Elon Musk (Inventor/Engineer)",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "Dr. Jane Goodall (Primatologist)",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "Warren Buffett (Investor)",
+              "category": "Commerce"
+            },
+            {
+              "text": "J.K. Rowling (Author)",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q9": {
+          "question": "How do you prefer to learn something new?",
+          "options": [
+            {
+              "text": "By taking it apart and putting it back together.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "By observing it closely in a real-world setting.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "By reading a practical guide or a 'how-to' manual.",
+              "category": "Commerce"
+            },
+            {
+              "text": "By watching a video or looking at pictures.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q10": {
+          "question": "What kind of puzzle do you enjoy the most?",
+          "options": [
+            {
+              "text": "Logic puzzles or Rubik's cubes.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "Pattern recognition puzzles (like finding hidden objects).",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "Crossword puzzles (word-based logic).",
+              "category": "Commerce"
+            },
+            {
+              "text": "Open-ended creative puzzles with no single answer.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q11": {
+          "question": "What frustrates you the most?",
+          "options": [
+            {
+              "text": "When something is inefficient and could be done better.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "When people don't care about facts and evidence.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "When a project is disorganized and messy.",
+              "category": "Commerce"
+            },
+            {
+              "text": "When people lack creativity or imagination.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q12": {
+          "question": "Which computer game genre do you prefer?",
+          "options": [
+            {
+              "text": "Strategy or puzzle games.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "Simulation games (e.g., farming, life).",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "Management or tycoon games.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Role-playing games with rich stories and worlds.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q13": {
+          "question": "What would you rather visit?",
+          "options": [
+            {
+              "text": "A technology expo.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "A natural history museum.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "A stock exchange or a large corporation.",
+              "category": "Commerce"
+            },
+            {
+              "text": "An art gallery or a historic monument.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q14": {
+          "question": "Your ideal superhero power would be:",
+          "options": [
+            {
+              "text": "Super-intelligence to invent anything.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "The ability to heal any injury or sickness.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "The ability to manage and lead anyone to success.",
+              "category": "Commerce"
+            },
+            {
+              "text": "The ability to create illusions or bring stories to life.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        },
+        "q15": {
+          "question": "What is your approach to a big, difficult task?",
+          "options": [
+            {
+              "text": "I break it down into smaller logical steps.",
+              "category": "Computer Science/Engineering"
+            },
+            {
+              "text": "I research and gather all the information first.",
+              "category": "Biology/Pre-Medical"
+            },
+            {
+              "text": "I make a schedule and a plan to tackle it.",
+              "category": "Commerce"
+            },
+            {
+              "text": "I think about the big picture and the end goal first.",
+              "category": "Arts/Humanities"
+            }
+          ]
+        }
+      }
+    },
+    "Matric": {
+      "questions": {
+        "q1": {
+          "question": "You have to choose a group for a major project. What do you look for?",
+          "options": [
+            {
+              "text": "Teammates who are logical and good with technical details.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "Teammates who are curious, meticulous, and research-oriented.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "Teammates who are organized, practical, and good with numbers.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Teammates who are creative thinkers and good communicators.",
+              "category": "Computer Science/Arts"
+            }
+          ]
+        },
+        "q2": {
+          "question": "Which of these real-world problems concerns you the most?",
+          "options": [
+            {
+              "text": "Developing sustainable energy sources and infrastructure.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "Finding cures for diseases like cancer or Alzheimer's.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "Addressing poverty and wealth inequality.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Fighting misinformation and improving digital security.",
+              "category": "Computer Science"
+            }
+          ]
+        },
+        "q3": {
+          "question": "What kind of part-time job would interest you?",
+          "options": [
+            {
+              "text": "Tutoring math or physics.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "Working at a pharmacy or a vet's clinic.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "Helping out at a family business or a bank.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Freelance graphic design or content writing.",
+              "category": "Computer Science/Arts"
+            }
+          ]
+        },
+        "q4": {
+          "question": "How do you handle a subject you find difficult?",
+          "options": [
+            {
+              "text": "I practice derivations and numerical problems repeatedly.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "I create detailed diagrams and flashcards to memorize processes.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "I focus on understanding the core concepts and their practical applications.",
+              "category": "Commerce"
+            },
+            {
+              "text": "I try to find a video or a creative analogy to understand it.",
+              "category": "Computer Science/Arts"
+            }
+          ]
+        },
+        "q5": {
+          "question": "Which university lab would you most want to tour?",
+          "options": [
+            {
+              "text": "Robotics or Material Science lab.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "Genetics or Microbiology lab.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "Trading floor or Economics simulation lab.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Game Development or Animation studio.",
+              "category": "Computer Science/Arts"
+            }
+          ]
+        },
+        "q6": {
+          "question": "What is your favorite type of data to work with?",
+          "options": [
+            {
+              "text": "Numerical data and formulas.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "Visual data like cells under a microscope or chemical reactions.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "Financial data and statistical trends.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Code, algorithms, or user experience data.",
+              "category": "Computer Science"
+            }
+          ]
+        },
+        "q7": {
+          "question": "Which magazine would you subscribe to?",
+          "options": [
+            {
+              "text": "Popular Mechanics or MIT Technology Review.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "New Scientist or National Geographic.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "The Economist or Forbes.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Wired or PC Magazine.",
+              "category": "Computer Science"
+            }
+          ]
+        },
+        "q8": {
+          "question": "Your ideal mentor would be a...",
+          "options": [
+            {
+              "text": "Chief Engineer at a manufacturing company.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "Senior Surgeon or Research Scientist.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "Chartered Accountant or Financial Analyst.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Software Architect or AI Researcher.",
+              "category": "Computer Science"
+            }
+          ]
+        },
+        "q9": {
+          "question": "What kind of competition would you enter?",
+          "options": [
+            {
+              "text": "Math Olympiad or Physics Bee.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "Biology Olympiad or Science Bowl.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "Business plan competition or stock market challenge.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Hackathon or App Development contest.",
+              "category": "Computer Science"
+            }
+          ]
+        },
+        "q10": {
+          "question": "Which of these skills do you feel is your strongest?",
+          "options": [
+            {
+              "text": "Spatial reasoning and conceptual thinking.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "Memorization and recalling complex information.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "Numerical fluency and logical deduction.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Abstract thinking and algorithmic design.",
+              "category": "Computer Science"
+            }
+          ]
+        },
+        "q11": {
+          "question": "What does 'success' mean to you right now?",
+          "options": [
+            {
+              "text": "Designing something that solves a real-world problem.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "Making a discovery that contributes to human knowledge.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "Achieving financial independence and stability.",
+              "category": "Commerce"
+            },
+            {
+              "text": "Creating a innovative piece of technology or art.",
+              "category": "Computer Science/Arts"
+            }
+          ]
+        },
+        "q12": {
+          "question": "How do you prepare for your exams?",
+          "options": [
+            {
+              "text": "I focus on practicing every type of problem.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "I draw diagrams and create summary sheets of processes.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "I understand concepts and practice their application in case studies.",
+              "category": "Commerce"
+            },
+            {
+              "text": "I break down topics into logical structures and understand how they connect.",
+              "category": "Computer Science"
+            }
+          ]
+        },
+        "q13": {
+          "question": "Which documentary would you recommend to a friend?",
+          "options": [
+            {
+              "text": "The story of the Large Hadron Collider.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "A documentary on the human immune system.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "An analysis of the 2008 financial crisis.",
+              "category": "Commerce"
+            },
+            {
+              "text": "The history of the internet and Silicon Valley.",
+              "category": "Computer Science"
+            }
+          ]
+        },
+        "q14": {
+          "question": "What kind of internship would be most valuable?",
+          "options": [
+            {
+              "text": "At a civil engineering firm or an automotive workshop.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "At a hospital shadowing a doctor or in a diagnostic lab.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "At a chartered accountant's office or a marketing agency.",
+              "category": "Commerce"
+            },
+            {
+              "text": "At a software house working on a small module of an app.",
+              "category": "Computer Science"
+            }
+          ]
+        },
+        "q15": {
+          "question": "Which of these college environments appeals to you?",
+          "options": [
+            {
+              "text": "A campus known for its rigorous technical workshops and labs.",
+              "category": "Pre-Engineering"
+            },
+            {
+              "text": "A campus integrated with a teaching hospital and research centers.",
+              "category": "Pre-Medical"
+            },
+            {
+              "text": "A campus in a business district with strong corporate ties.",
+              "category": "Commerce"
+            },
+            {
+              "text": "A modern campus with state-of-the-art computer labs and innovation hubs.",
+              "category": "Computer Science"
+            }
+          ]
+        }
+      }
+    },
+    "Intermediate": {
+      "questions": {
+        "q1": {
+          "question": "What is the primary driver for your career choice?",
+          "options": [
+            {
+              "text": "The desire to build, design, and create tangible solutions.",
+              "category": "Engineering/Architecture/BSCS"
+            },
+            {
+              "text": "The challenge of solving complex analytical or financial problems.",
+              "category": "Economics/Accounting & Finance"
+            },
+            {
+              "text": "A deep-seated need to help, heal, and care for others.",
+              "category": "MBBS/Pharmacy/Psychology"
+            },
+            {
+              "text": "The ambition to lead, manage, and drive organizations forward.",
+              "category": "BBA"
+            },
+            {
+              "text": "The passion to express, communicate, and shape culture.",
+              "category": "Media Studies/Arts/Law"
+            }
+          ]
+        },
+        "q2": {
+          "question": "Which professional's daily routine seems most engaging?",
+          "options": [
+            {
+              "text": "A Software Engineer debugging code and collaborating on sprints.",
+              "category": "BSCS"
+            },
+            {
+              "text": "An Investment Analyst tracking markets and building financial models.",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "A Doctor making rounds, diagnosing patients, and coordinating care.",
+              "category": "MBBS"
+            },
+            {
+              "text": "A Marketing Manager developing strategies and leading campaigns.",
+              "category": "BBA"
+            },
+            {
+              "text": "A Journalist investigating a story and conducting interviews.",
+              "category": "Media Studies"
+            }
+          ]
+        },
+        "q3": {
+          "question": "What type of pressure brings out your best work?",
+          "options": [
+            {
+              "text": "The pressure to meet a technical specification or a tight deadline for a product launch.",
+              "category": "Engineering/BSCS"
+            },
+            {
+              "text": "The pressure to analyze data accurately for a high-stakes audit or deal.",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "The life-or-death pressure of making the right decision in an emergency.",
+              "category": "MBBS"
+            },
+            {
+              "text": "The pressure of negotiating a contract or closing a major sale.",
+              "category": "BBA/Law"
+            },
+            {
+              "text": "The pressure to create a unique and compelling artistic piece on demand.",
+              "category": "Arts/Media Studies"
+            }
+          ]
+        },
+        "q4": {
+          "question": "How do you see yourself contributing to society?",
+          "options": [
+            {
+              "text": "By innovating and building the infrastructure of the future.",
+              "category": "Engineering/Architecture/BSCS"
+            },
+            {
+              "text": "By ensuring financial stability and driving economic growth.",
+              "category": "Economics/Accounting & Finance"
+            },
+            {
+              "text": "By directly saving lives and improving public health.",
+              "category": "MBBS/Pharmacy/Psychology"
+            },
+            {
+              "text": "By creating jobs and leading successful, ethical businesses.",
+              "category": "BBA"
+            },
+            {
+              "text": "By informing the public, advocating for justice, or creating inspiring art.",
+              "category": "Media Studies/Law/Arts"
+            }
+          ]
+        },
+        "q5": {
+          "question": "Which graduate degree has the most appeal for you?",
+          "options": [
+            {
+              "text": "Masters in Engineering or Computer Science.",
+              "category": "Engineering/BSCS"
+            },
+            {
+              "text": "Chartered Accountancy (CA) or CFA.",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "Doctor of Medicine (MD) or Doctor of Pharmacy (Pharm.D).",
+              "category": "MBBS/Pharmacy"
+            },
+            {
+              "text": "MBA (Master of Business Administration).",
+              "category": "BBA"
+            },
+            {
+              "text": "LL.B (Law) or Masters in Media Sciences.",
+              "category": "Law/Media Studies"
+            }
+          ]
+        },
+        "q6": {
+          "question": "What kind of internship is most crucial for your resume?",
+          "options": [
+            {
+              "text": "A tech internship at a software company.",
+              "category": "BSCS"
+            },
+            {
+              "text": "An internship at an audit firm or bank.",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "A clerkship or shadowing in a hospital.",
+              "category": "MBBS"
+            },
+            {
+              "text": "An internship in a multinational corporation's business division.",
+              "category": "BBA"
+            },
+            {
+              "text": "An internship at a law firm, news channel, or advertising agency.",
+              "category": "Law/Media Studies"
+            }
+          ]
+        },
+        "q7": {
+          "question": "Which professional network is most important for you to build?",
+          "options": [
+            {
+              "text": "With engineers and tech innovators.",
+              "category": "Engineering/BSCS"
+            },
+            {
+              "text": "With bankers, accountants, and financiers.",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "With doctors, researchers, and healthcare providers.",
+              "category": "MBBS/Pharmacy"
+            },
+            {
+              "text": "With entrepreneurs, CEOs, and business leaders.",
+              "category": "BBA"
+            },
+            {
+              "text": "With artists, journalists, lawyers, and policymakers.",
+              "category": "Arts/Media Studies/Law"
+            }
+          ]
+        },
+        "q8": {
+          "question": "What is your tolerance for years of education?",
+          "options": [
+            {
+              "text": "4-5 years for a bachelor's is fine. I'm ready to work after that.",
+              "category": "Engineering/BBA/BSCS"
+            },
+            {
+              "text": "I'm committed to 5+ years, including articleship/training for a professional degree (CA, etc.).",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "I am prepared for a long haul of 6+ years of education and training (MBBS).",
+              "category": "MBBS"
+            },
+            {
+              "text": "I see myself studying continuously, even after my degree, to stay updated.",
+              "category": "All, but especially Law/Medicine"
+            }
+          ]
+        },
+        "q9": {
+          "question": "Which industry trend excites you the most?",
+          "options": [
+            {
+              "text": "Artificial Intelligence and Machine Learning.",
+              "category": "BSCS"
+            },
+            {
+              "text": "FinTech and Digital Currencies.",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "Personalized Medicine and Gene Therapy.",
+              "category": "MBBS/Biotechnology"
+            },
+            {
+              "text": "E-commerce and Global Supply Chains.",
+              "category": "BBA"
+            },
+            {
+              "text": "Digital Content Creation and Streaming Services.",
+              "category": "Media Studies"
+            }
+          ]
+        },
+        "q10": {
+          "question": "What kind of work-life balance are you seeking?",
+          "options": [
+            {
+              "text": "Project-based work with intense periods followed by quieter ones.",
+              "category": "Engineering/BSCS/Media"
+            },
+            {
+              "text": "A standard, predictable 9-to-5 schedule with clear boundaries.",
+              "category": "Accounting & Finance (in some roles)"
+            },
+            {
+              "text": "Irregular and long hours, accepting that the job comes first often.",
+              "category": "MBBS"
+            },
+            {
+              "text": "A dynamic schedule that blends social networking with work.",
+              "category": "BBA/Sales/Marketing"
+            },
+            {
+              "text": "Freelance flexibility, where I control my time but deadlines are sacred.",
+              "category": "Arts/Media/Software Development"
+            }
+          ]
+        },
+        "q11": {
+          "question": "Which professional ethics challenge is most concerning to you?",
+          "options": [
+            {
+              "text": "The ethical use of AI and data privacy.",
+              "category": "BSCS"
+            },
+            {
+              "text": "Insider trading and conflicts of interest in finance.",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "Patient confidentiality and end-of-life care decisions.",
+              "category": "MBBS"
+            },
+            {
+              "text": "Corporate social responsibility vs. profit maximization.",
+              "category": "BBA"
+            },
+            {
+              "text": "Defending a client you know is guilty or biased reporting.",
+              "category": "Law/Media Studies"
+            }
+          ]
+        },
+        "q12": {
+          "question": "How do you handle conflicting information?",
+          "options": [
+            {
+              "text": "I run tests or simulations to see which information holds up.",
+              "category": "Engineering/BSCS"
+            },
+            {
+              "text": "I trace the data back to its source to verify its accuracy.",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "I consult multiple experts and review the latest research.",
+              "category": "MBBS"
+            },
+            {
+              "text": "I analyze which source is more credible based on their track record.",
+              "category": "BBA/Law"
+            },
+            {
+              "text": "I present both sides and investigate the context behind the conflict.",
+              "category": "Media Studies"
+            }
+          ]
+        },
+        "q13": {
+          "question": "What kind of 'impact' do you want to have?",
+          "options": [
+            {
+              "text": "Technical impact: My code or design is used by millions.",
+              "category": "BSCS/Engineering"
+            },
+            {
+              "text": "Financial impact: I help a company become profitable or secure someone's retirement.",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "Human impact: I directly improve or save a person's life.",
+              "category": "MBBS"
+            },
+            {
+              "text": "Organizational impact: I lead a company to become a market leader.",
+              "category": "BBA"
+            },
+            {
+              "text": "Cultural impact: My work changes how people think about an issue.",
+              "category": "Arts/Media/Law"
+            }
+          ]
+        },
+        "q14": {
+          "question": "Which software tool would you be most interested in mastering?",
+          "options": [
+            {
+              "text": "Programming languages like Python or Java.",
+              "category": "BSCS"
+            },
+            {
+              "text": "Advanced Excel, SQL, or financial modeling software.",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "Medical imaging software or electronic health record systems.",
+              "category": "MBBS"
+            },
+            {
+              "text": "Project management tools like Jira or CRM software.",
+              "category": "BBA"
+            },
+            {
+              "text": "Adobe Creative Suite or video editing software.",
+              "category": "Media Studies/Arts"
+            }
+          ]
+        },
+        "q15": {
+          "question": "What defines a 'prestigious' career for you?",
+          "options": [
+            {
+              "text": "Working for a tech giant like Google or Tesla.",
+              "category": "BSCS/Engineering"
+            },
+            {
+              "text": "Becoming a Partner at a Big Four accounting firm.",
+              "category": "Accounting & Finance"
+            },
+            {
+              "text": "Being a respected surgeon at a top hospital.",
+              "category": "MBBS"
+            },
+            {
+              "text": "Becoming the CEO of a Fortune 500 company.",
+              "category": "BBA"
+            },
+            {
+              "text": "Winning a Pulitzer Prize or arguing a case in the Supreme Court.",
+              "category": "Media Studies/Law"
+            }
+          ]
+        }
+      }
+    },
+    "Professional": {
+      "questions": {
+        "q1": {
+          "question": "You receive critical feedback on a project. Your first reaction is to:",
+          "options": [
+            {
+              "text": "Thank the person, analyze the feedback for actionable points, and create a revision plan.",
+              "category": "Professionalism/Communication"
+            },
+            {
+              "text": "Ask clarifying questions to fully understand the concerns before reacting.",
+              "category": "Critical Thinking"
+            },
+            {
+              "text": "Objectively evaluate if the criticism is valid based on data and project goals.",
+              "category": "Problem Solving"
+            },
+            {
+              "text": "Incorporate the useful feedback and politely discard the rest, focusing on the final goal.",
+              "category": "Time Management"
+            }
+          ]
+        },
+        "q2": {
+          "question": "A colleague is consistently missing deadlines, affecting your work. You:",
+          "options": [
+            {
+              "text": "Schedule a private meeting to understand their challenges and offer help.",
+              "category": "Leadership/Teamwork"
+            },
+            {
+              "text": "Clearly communicate the impact of their delays on the project and agree on a new, firm deadline.",
+              "category": "Communication"
+            },
+            {
+              "text": "Adapt your own workflow to create buffers and minimize the impact on your output.",
+              "category": "Problem Solving"
+            },
+            {
+              "text": "Escalate the issue to your manager with documented evidence of the delays.",
+              "category": "Strategic Thinking"
+            }
+          ]
+        },
+        "q3": {
+          "question": "You are asked to lead a project on a topic you know little about. You:",
+          "options": [
+            {
+              "text": "Immerse yourself in rapid research to build a foundational understanding quickly.",
+              "category": "Adaptability/Learning"
+            },
+            {
+              "text": "Identify and recruit team members who are experts in that area.",
+              "category": "Leadership/Networking"
+            },
+            {
+              "text": "Break the project down into manageable parts and tackle the learning step-by-step.",
+              "category": "Project Management"
+            },
+            {
+              "text": "Be transparent about your knowledge gap but confident in your ability to learn and manage.",
+              "category": "Professionalism"
+            }
+          ]
+        },
+        "q4": {
+          "question": "Networking at an event feels to you like:",
+          "options": [
+            {
+              "text": "An opportunity to learn from others' experiences and share my own.",
+              "category": "Genuine Networking"
+            },
+            {
+              "text": "A necessary part of career building. I set a goal to make 5 valuable connections.",
+              "category": "Strategic Networking"
+            },
+            {
+              "text": "A chance to practice communicating my value proposition clearly and concisely.",
+              "category": "Communication Skills"
+            },
+            {
+              "text": "Something I prepare for by researching attendees and planning conversation starters.",
+              "category": "Preparation/Initiative"
+            }
+          ]
+        },
+        "q5": {
+          "question": "What is your approach to your online professional presence (e.g., LinkedIn)?",
+          "options": [
+            {
+              "text": "I keep it meticulously updated as a living record of my skills and achievements.",
+              "category": "Career Development"
+            },
+            {
+              "text": "I use it actively to share industry insights and comment on trends.",
+              "category": "Networking/Personal Branding"
+            },
+            {
+              "text": "I see it as a digital CV, crucial for recruiters to find me.",
+              "category": "Job Interview Prep"
+            },
+            {
+              "text": "I connect with everyone I meet and use it to maintain a broad network.",
+              "category": "Networking"
+            }
+          ]
+        },
+        "q6": {
+          "question": "You have two high-priority tasks from different managers. You:",
+          "options": [
+            {
+              "text": "Communicate the conflict to both managers and ask them to prioritize.",
+              "category": "Communication"
+            },
+            {
+              "text": "Assess which task has the tighter deadline or greater business impact and start there.",
+              "category": "Time Management/Critical Thinking"
+            },
+            {
+              "text": "Negotiate a slight extension on one task by demonstrating your current workload.",
+              "category": "Negotiation"
+            },
+            {
+              "text": "Work extra hours to complete both without disappointing either manager.",
+              "category": "Work Ethic (but caution burnout)"
+            }
+          ]
+        },
+        "q7": {
+          "question": "A project you led has failed. In the post-mortem meeting, you:",
+          "options": [
+            {
+              "text": "Take full responsibility for the outcome as the leader, without blaming others.",
+              "category": "Leadership"
+            },
+            {
+              "text": "Present a clear analysis of what went wrong and the lessons learned.",
+              "category": "Critical Thinking"
+            },
+            {
+              "text": "Focus the discussion on actionable steps to prevent similar failures in the future.",
+              "category": "Problem Solving"
+            },
+            {
+              "text": "Acknowledge the team's effort and ensure morale is preserved for the next project.",
+              "category": "Teamwork"
+            }
+          ]
+        },
+        "q8": {
+          "question": "You discover a more efficient way to do a routine task. You:",
+          "options": [
+            {
+              "text": "Document the process and share it with my team and manager.",
+              "category": "Initiative/Teamwork"
+            },
+            {
+              "text": "Implement it immediately to save time on my own work.",
+              "category": "Efficiency/Time Management"
+            },
+            {
+              "text": "Test it thoroughly to ensure it's reliable before presenting it.",
+              "category": "Critical Thinking"
+            },
+            {
+              "text": "Schedule a meeting to demonstrate the new method and its benefits.",
+              "category": "Communication/Leadership"
+            }
+          ]
+        },
+        "q9": {
+          "question": "You are passed over for a promotion. You:",
+          "options": [
+            {
+              "text": "Request feedback to understand the gaps in my skills or experience.",
+              "category": "Career Development"
+            },
+            {
+              "text": "Analyze the qualifications of the person who got it to set new goals for myself.",
+              "category": "Self-Analysis"
+            },
+            {
+              "text": "Re-double my efforts to ensure my work is undeniable for the next opportunity.",
+              "category": "Resilience"
+            },
+            {
+              "text": "Discuss my career path with my manager to create a clear development plan.",
+              "category": "Proactive Planning"
+            }
+          ]
+        },
+        "q10": {
+          "question": "What does 'career growth' mean to you?",
+          "options": [
+            {
+              "text": "Continuous learning and acquiring new, valuable skills.",
+              "category": "Skill Development"
+            },
+            {
+              "text": "Increasing levels of responsibility and leadership.",
+              "category": "Leadership"
+            },
+            {
+              "text": "Increasing my compensation and financial security.",
+              "category": "Financial Motivation"
+            },
+            {
+              "text": "Building a strong professional reputation and network.",
+              "category": "Networking/Personal Branding"
+            }
+          ]
+        },
+        "q11": {
+          "question": "How do you approach a salary negotiation?",
+          "options": [
+            {
+              "text": "I research industry standards and come prepared with data to justify my request.",
+              "category": "Preparation/Negotiation"
+            },
+            {
+              "text": "I focus on articulating the value and skills I bring to the role.",
+              "category": "Communication/Confidence"
+            },
+            {
+              "text": "I consider the entire package (benefits, vacation, growth) not just the salary.",
+              "category": "Holistic Thinking"
+            },
+            {
+              "text": "I practice the conversation multiple times to stay calm and professional.",
+              "category": "Preparation"
+            }
+          ]
+        },
+        "q12": {
+          "question": "Mentoring a junior colleague is important because:",
+          "options": [
+            {
+              "text": "It reinforces my own knowledge and helps me see things from a new perspective.",
+              "category": "Leadership/Learning"
+            },
+            {
+              "text": "It's my responsibility to give back and help others grow, as others did for me.",
+              "category": "Teamwork"
+            },
+            {
+              "text": "It builds a stronger, more skilled team, which benefits everyone.",
+              "category": "Strategic Thinking"
+            },
+            {
+              "text": "It helps develop my leadership and communication skills.",
+              "category": "Personal Development"
+            }
+          ]
+        },
+        "q13": {
+          "question": "What is your strategy for staying updated in your field?",
+          "options": [
+            {
+              "text": "I dedicate time each week to read industry publications and journals.",
+              "category": "Proactive Learning"
+            },
+            {
+              "text": "I attend webinars and conferences whenever possible.",
+              "category": "Networking/Learning"
+            },
+            {
+              "text": "I am part of professional forums and online communities where trends are discussed.",
+              "category": "Community Engagement"
+            },
+            {
+              "text": "I take online courses to earn certifications in emerging areas.",
+              "category": "Skill Development"
+            }
+          ]
+        },
+        "q14": {
+          "question": "You witness unethical behavior at work. You:",
+          "options": [
+            {
+              "text": "Document the incident with facts and dates before doing anything.",
+              "category": "Professionalism"
+            },
+            {
+              "text": "Report it immediately through the official channels outlined by the company.",
+              "category": "Ethics"
+            },
+            {
+              "text": "If comfortable, confront the individual directly to understand their perspective.",
+              "category": "Courage/Communication"
+            },
+            {
+              "text": "Consult the company's code of conduct and then report to my trusted manager or HR.",
+              "category": "Procedural Integrity"
+            }
+          ]
+        },
+        "q15": {
+          "question": "How do you define 'work-life integration'?",
+          "options": [
+            {
+              "text": "Setting strict boundaries to ensure my personal time is protected.",
+              "category": "Time Management"
+            },
+            {
+              "text": "Being flexible, allowing work and personal life to blend when necessary, but ensuring overall balance.",
+              "category": "Adaptability"
+            },
+            {
+              "text": "Working hard when needed but fully disconnecting during vacations and weekends.",
+              "category": "Boundary Setting"
+            },
+            {
+              "text": "Finding a job I'm so passionate about that it doesn't feel like 'work'.",
+              "category": "Purpose-Driven"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

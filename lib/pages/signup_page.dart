@@ -34,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
     "Class 8",
     "Matric",
     "Intermediate",
-    "Graduation"
+    "Professional"
   ];
 
   final password_controller = TextEditingController();
