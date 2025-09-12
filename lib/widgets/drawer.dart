@@ -1,4 +1,5 @@
 import 'package:auth_reset_pass/pages/career_bank.dart';
+import 'package:auth_reset_pass/pages/cv_tips.dart';
 import 'package:auth_reset_pass/pages/quiz_intro.dart';
 import 'package:flutter/material.dart';
 import '../pages/testimonials.dart';
@@ -70,7 +71,19 @@ class UserDrawer extends StatelessWidget {
             // 2) Admission and Coaching Tools
             _sectionHeader("Admission & Coaching"),
             _subMenuItem(context, Icons.school, "Stream Selector"),
-            _subMenuItem(context, Icons.article, "CV Tips"),
+            _subMenuItem(
+              context,
+              Icons.article,
+              "CV Tips",
+              onTap: () {
+                Navigator.pop(context); // close the drawer first
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CVTipsPage()),
+                );
+              },
+            ),
+
             _subMenuItem(
               context,
               Icons.record_voice_over,
@@ -170,7 +183,12 @@ class UserDrawer extends StatelessWidget {
   }
 
   // Sub menu items (indented)
-  Widget _subMenuItem(BuildContext context, IconData icon, String title) {
+  Widget _subMenuItem(
+      BuildContext context,
+      IconData icon,
+      String title, {
+        VoidCallback? onTap,
+      }) {
     return Padding(
       padding: const EdgeInsets.only(left: 30),
       child: ListTile(
@@ -180,12 +198,19 @@ class UserDrawer extends StatelessWidget {
           style: const TextStyle(color: Colors.white70, fontSize: 14),
         ),
         onTap: () {
-          onMenuItemSelected(title);
-          Navigator.pop(context);
+          if (onTap != null) {
+            // 🔹 If custom action is provided, run it
+            onTap();
+          } else {
+            // 🔹 Default behavior
+            onMenuItemSelected(title);
+            Navigator.pop(context);
+          }
         },
         hoverColor: Colors.blueGrey.withOpacity(0.25),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     );
   }
+
 }
