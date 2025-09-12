@@ -10,11 +10,15 @@ class EditProfilePage extends StatefulWidget {
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> with TickerProviderStateMixin {
+class _EditProfilePageState extends State<EditProfilePage>
+    with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _oldPwdController = TextEditingController();
+  final TextEditingController _newPwdController = TextEditingController();
+  final TextEditingController _confirmPwdController = TextEditingController();
 
   String? currentTier;
   String? originalName;
@@ -24,6 +28,10 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
   bool _isLoading = false;
   bool _isUpdating = false;
   bool _hasChanges = false;
+  bool _changingPassword = false;
+  bool _obscureOld = true;
+  bool _obscureNew = true;
+  bool _obscureConfirm = true;
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -33,7 +41,7 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
     "Class 8",
     "Matric",
     "Intermediate",
-    "Graduation"
+    "Graduation",
   ];
 
   @override
@@ -46,7 +54,10 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
-    _slideAnimation = Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeOutCubic),
     );
 
@@ -56,6 +67,9 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
     // Listen for changes
     _nameController.addListener(_checkForChanges);
     _phoneController.addListener(_checkForChanges);
+    _oldPwdController.addListener(_checkForChanges);
+    _newPwdController.addListener(_checkForChanges);
+    _confirmPwdController.addListener(_checkForChanges);
   }
 
   @override
@@ -64,16 +78,28 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
     _nameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
+    _oldPwdController.dispose();
+    _newPwdController.dispose();
+    _confirmPwdController.dispose();
     super.dispose();
   }
 
   void _checkForChanges() {
     final hasNameChanged = _nameController.text.trim() != (originalName ?? '');
-    final hasPhoneChanged = _phoneController.text.trim() != (originalPhone ?? '');
+    final hasPhoneChanged =
+        _phoneController.text.trim() != (originalPhone ?? '');
     final hasTierChanged = currentTier != originalTier;
+    final wantsPasswordChange =
+        _oldPwdController.text.isNotEmpty ||
+        _newPwdController.text.isNotEmpty ||
+        _confirmPwdController.text.isNotEmpty;
 
     setState(() {
-      _hasChanges = hasNameChanged || hasPhoneChanged || hasTierChanged;
+      _hasChanges =
+          hasNameChanged ||
+          hasPhoneChanged ||
+          hasTierChanged ||
+          wantsPasswordChange;
     });
   }
 
@@ -85,10 +111,11 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        final doc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .get();
+        final doc =
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(user.uid)
+                .get();
 
         if (doc.exists) {
           final data = doc.data()!;
@@ -132,11 +159,11 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
             .collection('users')
             .doc(user.uid)
             .update({
-          'name': _nameController.text.trim(),
-          'phone': _phoneController.text.trim(),
-          'tier': currentTier,
-          'updatedAt': FieldValue.serverTimestamp(),
-        });
+              'name': _nameController.text.trim(),
+              'phone': _phoneController.text.trim(),
+              'tier': currentTier,
+              'updatedAt': FieldValue.serverTimestamp(),
+            });
 
         // Update original values
         originalName = _nameController.text.trim();
@@ -219,29 +246,33 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
             ),
           ),
           SafeArea(
-            child: _isLoading
-                ? _buildLoadingScreen()
-                : FadeTransition(
-              opacity: _fadeAnimation,
-              child: SlideTransition(
-                position: _slideAnimation,
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildHeader(context),
-                      const SizedBox(height: 8),
-                      _buildProfileInfoCard(),
-                      const SizedBox(height: 16),
-                      _buildFormCard(),
-                      const SizedBox(height: 24),
-                      _buildActionButtons(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            child:
+                _isLoading
+                    ? _buildLoadingScreen()
+                    : FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: SlideTransition(
+                        position: _slideAnimation,
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 10,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildHeader(context),
+                              const SizedBox(height: 8),
+                              _buildProfileInfoCard(),
+                              const SizedBox(height: 16),
+                              _buildFormCard(),
+                              const SizedBox(height: 24),
+                              _buildActionButtons(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
           ),
         ],
       ),
@@ -268,10 +299,7 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
           const SizedBox(height: 20),
           Text(
             'Loading Profile...',
-            style: GoogleFonts.poppins(
-              color: Colors.white70,
-              fontSize: 16,
-            ),
+            style: GoogleFonts.poppins(color: Colors.white70, fontSize: 16),
           ),
         ],
       ),
@@ -385,11 +413,7 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
               ),
               borderRadius: BorderRadius.circular(30),
             ),
-            child: Icon(
-              Icons.person,
-              color: Colors.white,
-              size: 30,
-            ),
+            child: Icon(Icons.person, color: Colors.white, size: 30),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -397,7 +421,9 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _nameController.text.isEmpty ? 'Your Name' : _nameController.text,
+                  _nameController.text.isEmpty
+                      ? 'Your Name'
+                      : _nameController.text,
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 18,
@@ -415,7 +441,10 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
                 if (currentTier != null) ...[
                   const SizedBox(height: 4),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
@@ -442,11 +471,7 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.orange.withOpacity(0.4)),
               ),
-              child: Icon(
-                Icons.edit,
-                color: Colors.orange,
-                size: 16,
-              ),
+              child: Icon(Icons.edit, color: Colors.orange, size: 16),
             ),
         ],
       ),
@@ -528,26 +553,149 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              items: tierOptions.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                );
-              }).toList(),
+              items:
+                  tierOptions.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    );
+                  }).toList(),
               onChanged: (val) {
                 setState(() {
                   currentTier = val;
                 });
                 _checkForChanges();
               },
-              validator: (val) => val == null ? "Please select your tier" : null,
+              validator:
+                  (val) => val == null ? "Please select your tier" : null,
             ),
+
+            const SizedBox(height: 24),
+            Text(
+              'Change Password',
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 12),
+            // Old password
+            TextFormField(
+              controller: _oldPwdController,
+              obscureText: _obscureOld,
+              style: GoogleFonts.poppins(color: Colors.white),
+              decoration: InputDecoration(
+                labelText: 'Old Password',
+                labelStyle: GoogleFonts.poppins(color: Colors.white70),
+                prefixIcon: const Icon(
+                  Icons.lock_outline,
+                  color: Colors.white70,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureOld
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color: Colors.white70,
+                    size: 18,
+                  ),
+                  onPressed: () => setState(() => _obscureOld = !_obscureOld),
+                ),
+                filled: true,
+                fillColor: Colors.white.withOpacity(0.05),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Color(0xFF667EEA)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              validator:
+                  (v) => (v == null || v.isEmpty) ? 'Enter old password' : null,
+            ),
+            const SizedBox(height: 12),
+            // New password
+            TextFormField(
+              controller: _newPwdController,
+              obscureText: _obscureNew,
+              style: GoogleFonts.poppins(color: Colors.white),
+              decoration: InputDecoration(
+                labelText: 'New Password',
+                labelStyle: GoogleFonts.poppins(color: Colors.white70),
+                prefixIcon: const Icon(Icons.lock, color: Colors.white70),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureNew
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color: Colors.white70,
+                    size: 18,
+                  ),
+                  onPressed: () => setState(() => _obscureNew = !_obscureNew),
+                ),
+                filled: true,
+                fillColor: Colors.white.withOpacity(0.05),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Color(0xFF667EEA)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              validator:
+                  (v) => (v == null || v.length < 6) ? 'Min 6 chars' : null,
+            ),
+            const SizedBox(height: 12),
+            // Confirm password
+            TextFormField(
+              controller: _confirmPwdController,
+              obscureText: _obscureConfirm,
+              style: GoogleFonts.poppins(color: Colors.white),
+              decoration: InputDecoration(
+                labelText: 'Confirm New Password',
+                labelStyle: GoogleFonts.poppins(color: Colors.white70),
+                prefixIcon: const Icon(Icons.lock, color: Colors.white70),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureConfirm
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color: Colors.white70,
+                    size: 18,
+                  ),
+                  onPressed:
+                      () => setState(() => _obscureConfirm = !_obscureConfirm),
+                ),
+                filled: true,
+                fillColor: Colors.white.withOpacity(0.05),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Color(0xFF667EEA)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              validator:
+                  (v) =>
+                      (v != _newPwdController.text)
+                          ? 'Passwords do not match'
+                          : null,
+            ),
+            const SizedBox(height: 12),
+            // Password is updated on Save Changes; no separate button
           ],
         ),
       ),
@@ -580,30 +728,33 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Center(
-                  child: _isUpdating
-                      ? const SizedBox(
-                    width: 22,
-                    height: 22,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                  )
-                      : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.save, color: Colors.white),
-                      SizedBox(width: 8),
-                      Text(
-                        'Save Changes',
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
+                  child:
+                      _isUpdating
+                          ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white,
+                              ),
+                            ),
+                          )
+                          : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.save, color: Colors.white),
+                              SizedBox(width: 8),
+                              Text(
+                                'Save Changes',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                 ),
               ),
             ),
@@ -695,27 +846,34 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
             color: readOnly ? Colors.white60 : Colors.white,
           ),
           decoration: InputDecoration(
-            prefixIcon: Icon(icon, color: readOnly ? Colors.white60 : Colors.white),
-            suffixIcon: suffixIcon != null
-                ? Icon(suffixIcon, color: Colors.white54, size: 18)
-                : null,
+            prefixIcon: Icon(
+              icon,
+              color: readOnly ? Colors.white60 : Colors.white,
+            ),
+            suffixIcon:
+                suffixIcon != null
+                    ? Icon(suffixIcon, color: Colors.white54, size: 18)
+                    : null,
             filled: true,
-            fillColor: readOnly
-                ? Colors.white.withOpacity(0.02)
-                : Colors.white.withOpacity(0.05),
+            fillColor:
+                readOnly
+                    ? Colors.white.withOpacity(0.02)
+                    : Colors.white.withOpacity(0.05),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: readOnly
-                    ? Colors.white.withOpacity(0.1)
-                    : Colors.white.withOpacity(0.2),
+                color:
+                    readOnly
+                        ? Colors.white.withOpacity(0.1)
+                        : Colors.white.withOpacity(0.2),
               ),
               borderRadius: BorderRadius.circular(12),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: readOnly
-                    ? Colors.white.withOpacity(0.1)
-                    : const Color(0xFF667EEA),
+                color:
+                    readOnly
+                        ? Colors.white.withOpacity(0.1)
+                        : const Color(0xFF667EEA),
               ),
               borderRadius: BorderRadius.circular(12),
             ),
@@ -728,5 +886,45 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
         ),
       ],
     );
+  }
+
+  Future<void> _changePassword() async {
+    if (!_formKey.currentState!.validate()) return;
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    final email =
+        _emailController.text.trim().isNotEmpty
+            ? _emailController.text.trim()
+            : (user.email ?? '');
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Email unavailable for reauthentication')),
+      );
+      return;
+    }
+    setState(() => _changingPassword = true);
+    try {
+      final cred = EmailAuthProvider.credential(
+        email: email,
+        password: _oldPwdController.text.trim(),
+      );
+      await user.reauthenticateWithCredential(cred);
+      await user.updatePassword(_newPwdController.text.trim());
+      _oldPwdController.clear();
+      _newPwdController.clear();
+      _confirmPwdController.clear();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Password updated successfully')),
+      );
+    } on FirebaseAuthException catch (e) {
+      String msg = e.message ?? 'Password update failed';
+      if (e.code == 'wrong-password') msg = 'Old password is incorrect';
+      if (e.code == 'weak-password') msg = 'New password is too weak';
+      if (e.code == 'requires-recent-login')
+        msg = 'Please log in again and retry';
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+    } finally {
+      if (mounted) setState(() => _changingPassword = false);
+    }
   }
 }

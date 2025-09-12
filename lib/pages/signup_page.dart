@@ -119,6 +119,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               controller: name_controller,
                               label: "Name",
                               hint: "Enter Name",
+                              validator: validateName,
                               icon: Icons.person_outline,
                               onSaved: (val) => name = val,
                             ),
@@ -143,6 +144,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               controller: phone_controller,
                               label: "Phone",
                               hint: "Enter Phone Number",
+                              validator: validatePhoneNumber,
                               icon: Icons.phone_outlined,
                               keyboardType: TextInputType.phone,
                               onSaved: (val) => phone = val,
@@ -199,6 +201,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             TextFormField(
                               controller: password_controller,
                               obscureText: _isObscure,
+                              validator: validatePassword,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 labelText: "Password",
@@ -233,7 +236,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              validator: validatePassword,
                               onSaved: (val) => password = val,
                             ),
 

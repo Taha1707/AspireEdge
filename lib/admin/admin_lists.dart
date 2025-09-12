@@ -527,7 +527,6 @@ class _AdminListScaffold extends StatelessWidget {
               await FileSaver.instance.saveFile(
                 name: '${title.toLowerCase().replaceAll(' ', '_')}.pdf',
                 bytes: Uint8List.fromList(bytes),
-                ext: 'pdf',
                 mimeType: MimeType.pdf,
               );
               ScaffoldMessenger.of(
@@ -576,7 +575,6 @@ class _AdminListScaffold extends StatelessWidget {
               await FileSaver.instance.saveFile(
                 name: '${title.toLowerCase().replaceAll(' ', '_')}.doc',
                 bytes: bytes,
-                ext: 'doc',
                 mimeType: MimeType.microsoftWord,
               );
               ScaffoldMessenger.of(
