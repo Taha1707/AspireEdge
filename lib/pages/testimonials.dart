@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'dart:typed_data';
+import 'dart:convert';
 
 class TestimonialsPage extends StatelessWidget {
   const TestimonialsPage({super.key});
@@ -72,7 +72,7 @@ class TestimonialsPage extends StatelessWidget {
                             as Map<String, dynamic>;
                             final name = data['name'] ?? 'Anonymous';
                             final story = data['story'] ?? '';
-                            final imageUrl = data['imageUrl'] ?? '';
+                            final imageBase64 = data['imageBase64'] ?? '';
 
                             return AnimationConfiguration.staggeredList(
                               position: index,
@@ -81,7 +81,7 @@ class TestimonialsPage extends StatelessWidget {
                                 verticalOffset: 50.0,
                                 child: FadeInAnimation(
                                   child: _buildTestimonialCard(
-                                      name, story, imageUrl, index),
+                                      name, story, imageBase64, index),
                                 ),
                               ),
                             );
@@ -233,14 +233,10 @@ class TestimonialsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTestimonialCard(String name, String story, String imageUrl, int index) {
+  Widget _buildTestimonialCard(String name, String story, String imageBase64, int index) {
     final gradientColors = [
       [const Color(0xFF667EEA), const Color(0xFF764BA2)],
-      [const Color(0xFFFF6B6B), const Color(0xFFEE5A24)],
       [const Color(0xFF00D2FF), const Color(0xFF3A7BD5)],
-      [const Color(0xFF11998E), const Color(0xFF38EF7D)],
-      [const Color(0xFFFC466B), const Color(0xFF3F5EFB)],
-      [const Color(0xFFFFCE00), const Color(0xFFFF6B00)],
     ];
 
     final colors = gradientColors[index % gradientColors.length];
@@ -337,8 +333,10 @@ class TestimonialsPage extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 28,
                         backgroundColor: Colors.white,
-                        backgroundImage: imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
-                        child: imageUrl.isEmpty
+                        backgroundImage: imageBase64.isNotEmpty
+                            ? MemoryImage(_base64ToUint8List(imageBase64))
+                            : null,
+                        child: imageBase64.isEmpty
                             ? Text(
                           name.isNotEmpty ? name[0].toUpperCase() : 'A',
                           style: GoogleFonts.poppins(
@@ -377,7 +375,7 @@ class TestimonialsPage extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              "Success Story",
+                              "SUCCESS STORY",
                               style: GoogleFonts.poppins(
                                 color: colors[0],
                                 fontSize: 11,
@@ -441,7 +439,7 @@ class TestimonialsPage extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            "My Journey",
+                            "MY JOURNEY",
                             style: GoogleFonts.poppins(
                               color: colors[0],
                               fontSize: 13,
@@ -553,13 +551,58 @@ class TestimonialsPage extends StatelessWidget {
     );
   }
 
+  // Helper function to convert base64 string to Uint8List
+  Uint8List _base64ToUint8List(String base64String) {
+    try {
+      // Remove data URL prefix if present
+      if (base64String.startsWith('data:')) {
+        base64String = base64String.split(',')[1];
+      }
+      return base64Decode(base64String);
+    } catch (e) {
+      print('Error decoding base64: $e');
+      return Uint8List(0);
+    }
+  }
+
+  // Helper function to convert image to base64
+  Future<String?> _imageToBase64(XFile imageFile) async {
+    try {
+      Uint8List imageBytes;
+
+      if (kIsWeb) {
+        imageBytes = await imageFile.readAsBytes();
+      } else {
+        final file = File(imageFile.path);
+        imageBytes = await file.readAsBytes();
+      }
+
+      // Compress and resize image if needed
+      final compressedBytes = await _compressImage(imageBytes);
+
+      // Convert to base64
+      final base64String = base64Encode(compressedBytes);
+      return 'data:image/jpeg;base64,$base64String';
+    } catch (e) {
+      print('Error converting image to base64: $e');
+      return null;
+    }
+  }
+
+  // Helper function to compress image
+  Future<Uint8List> _compressImage(Uint8List imageBytes) async {
+    // For now, return original bytes
+    // You can add image compression logic here using packages like flutter_image_compress
+    return imageBytes;
+  }
+
   void _openAddTestimonialDialog(BuildContext context) {
     final nameController = TextEditingController();
     final storyController = TextEditingController();
-    String? imageUrl;
+    String? imageBase64;
     XFile? selectedImage;
     bool isLoading = false;
-    bool isUploadingImage = false;
+    bool isProcessingImage = false;
 
     Future<XFile?> pickImage() async {
       try {
@@ -687,39 +730,7 @@ class TestimonialsPage extends StatelessWidget {
 
         return image;
       } catch (e) {
-        return null;
-      }
-    }
-
-    Future<String?> uploadImage(XFile image) async {
-      try {
-        final storage = FirebaseStorage.instance;
-        final ref = storage.ref().child('testimonials/${DateTime.now().millisecondsSinceEpoch}_${image.name}');
-
-        UploadTask uploadTask;
-        if (kIsWeb) {
-          final bytes = await image.readAsBytes();
-          uploadTask = ref.putData(
-            bytes,
-            SettableMetadata(
-              contentType: 'image/jpeg',
-              customMetadata: {'uploaded_by': 'testimonials_page'},
-            ),
-          );
-        } else {
-          uploadTask = ref.putFile(
-            File(image.path),
-            SettableMetadata(
-              contentType: 'image/jpeg',
-              customMetadata: {'uploaded_by': 'testimonials_page'},
-            ),
-          );
-        }
-
-        final snapshot = await uploadTask;
-        return await snapshot.ref.getDownloadURL();
-      } catch (e) {
-        print('Error uploading image: $e');
+        print('Error picking image: $e');
         return null;
       }
     }
@@ -802,24 +813,24 @@ class TestimonialsPage extends StatelessWidget {
                         // Image upload section
                         Center(
                           child: GestureDetector(
-                            onTap: isUploadingImage ? null : () async {
+                            onTap: isProcessingImage ? null : () async {
                               final image = await pickImage();
                               if (image != null) {
                                 setState(() {
                                   selectedImage = image;
-                                  isUploadingImage = true;
+                                  isProcessingImage = true;
                                 });
 
-                                final url = await uploadImage(image);
+                                final base64 = await _imageToBase64(image);
                                 setState(() {
-                                  imageUrl = url;
-                                  isUploadingImage = false;
+                                  imageBase64 = base64;
+                                  isProcessingImage = false;
                                 });
 
-                                if (url == null) {
+                                if (base64 == null) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text("Failed to upload image"),
+                                      content: Text("Failed to process image"),
                                       backgroundColor: Colors.red,
                                     ),
                                   );
@@ -830,7 +841,7 @@ class TestimonialsPage extends StatelessWidget {
                               width: 100,
                               height: 100,
                               decoration: BoxDecoration(
-                                gradient: imageUrl != null || selectedImage != null
+                                gradient: imageBase64 != null || selectedImage != null
                                     ? null
                                     : const LinearGradient(
                                   colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
@@ -850,16 +861,16 @@ class TestimonialsPage extends StatelessWidget {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
-                                child: isUploadingImage
+                                child: isProcessingImage
                                     ? const Center(
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
                                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                                   ),
                                 )
-                                    : imageUrl != null
-                                    ? Image.network(
-                                  imageUrl!,
+                                    : imageBase64 != null
+                                    ? Image.memory(
+                                  _base64ToUint8List(imageBase64!),
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) =>
                                   const Icon(Icons.error, color: Colors.white),
@@ -974,7 +985,7 @@ class TestimonialsPage extends StatelessWidget {
                                   ],
                                 ),
                                 child: ElevatedButton(
-                                  onPressed: (isLoading || isUploadingImage)
+                                  onPressed: (isLoading || isProcessingImage)
                                       ? null
                                       : () async {
                                     if (nameController.text.trim().isEmpty) {
@@ -1009,7 +1020,7 @@ class TestimonialsPage extends StatelessWidget {
                                           .add({
                                         "name": nameController.text.trim(),
                                         "story": storyController.text.trim(),
-                                        "imageUrl": imageUrl ?? "",
+                                        "imageBase64": imageBase64 ?? "",
                                         "createdAt": FieldValue.serverTimestamp(),
                                       });
 
