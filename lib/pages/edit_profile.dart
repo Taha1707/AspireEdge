@@ -41,7 +41,7 @@ class _EditProfilePageState extends State<EditProfilePage>
     "Class 8",
     "Matric",
     "Intermediate",
-    "Graduation",
+    "Professional",
   ];
 
   @override
