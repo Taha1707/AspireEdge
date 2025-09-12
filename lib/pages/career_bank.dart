@@ -52,7 +52,7 @@ class _CareerBankPageState extends State<CareerBankPage> with TickerProviderStat
       Set<String> uniqueCategories = {"All"};
 
       for (var doc in snapshot.docs) {
-        final data = doc.data() as Map<String, dynamic>;
+        final data = doc.data();
 
         // Safely read category (works with both Industry & industry)
         String category = (data['Industry'] ?? data['industry'] ?? '').toString();

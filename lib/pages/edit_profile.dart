@@ -512,7 +512,7 @@ class _EditProfilePageState extends State<EditProfilePage> with TickerProviderSt
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
-              value: currentTier,
+              initialValue: currentTier,
               dropdownColor: Colors.black87,
               style: GoogleFonts.poppins(color: Colors.white),
               decoration: InputDecoration(

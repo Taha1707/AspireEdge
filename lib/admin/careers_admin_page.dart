@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -48,15 +49,18 @@ class CareersAdminPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Text(
-                      'Careers Management',
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
+                    Expanded(
+                      child: Text(
+                        'Careers Management',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
-                    const Spacer(),
                     OutlinedButton.icon(
                       onPressed: () => _openCategoriesManager(context),
                       style: OutlinedButton.styleFrom(
@@ -370,177 +374,232 @@ class CareersAdminPage extends StatelessWidget {
           builder: (context, setState) {
             return Dialog(
               backgroundColor: Colors.transparent,
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.white24),
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        doc == null ? 'Create Career' : 'Edit Career',
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.08),
+                      borderRadius: BorderRadius.circular(25),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.12),
+                        width: 1,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.25),
+                          blurRadius: 24,
+                          offset: const Offset(0, 12),
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      _inputField(
-                        controller: title,
-                        label: 'Title *',
-                        icon: Icons.title,
-                      ),
-                      const SizedBox(height: 10),
-                      _inputField(
-                        controller: description,
-                        label: 'Description *',
-                        icon: Icons.description,
-                        maxLines: 3,
-                      ),
-                      const SizedBox(height: 10),
-                      _inputField(
-                        controller: category,
-                        label: 'Category / Industry',
-                        icon: Icons.category,
-                      ),
-                      const SizedBox(height: 10),
-                      _inputField(
-                        controller: salaryRange,
-                        label: 'Salary Range',
-                        icon: Icons.attach_money,
-                      ),
-                      const SizedBox(height: 10),
-                      _inputField(
-                        controller: skills,
-                        label: 'Skills (comma separated)',
-                        icon: Icons.psychology,
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
+                      ],
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text(
-                                'Cancel',
-                                style: GoogleFonts.poppins(
-                                  color: Colors.white70,
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Color(0xFF667EEA),
+                                      Color(0xFF764BA2),
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: const Icon(
+                                  Icons.business_center,
+                                  color: Colors.white,
+                                  size: 24,
                                 ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Container(
-                              height: 46,
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF667EEA),
-                                    Color(0xFF764BA2),
-                                  ],
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: ElevatedButton(
-                                onPressed:
-                                    isSaving
-                                        ? null
-                                        : () async {
-                                          if (title.text.trim().isEmpty ||
-                                              description.text.trim().isEmpty) {
-                                            ScaffoldMessenger.of(
-                                              context,
-                                            ).showSnackBar(
-                                              const SnackBar(
-                                                content: Text(
-                                                  'Title and Description are required',
-                                                ),
-                                              ),
-                                            );
-                                            return;
-                                          }
-                                          setState(() => isSaving = true);
-                                          final data = {
-                                            'title': title.text.trim(),
-                                            'description':
-                                                description.text.trim(),
-                                            'industry': category.text.trim(),
-                                            'salary_range':
-                                                salaryRange.text.trim(),
-                                            'skills':
-                                                skills.text
-                                                    .split(',')
-                                                    .map((e) => e.trim())
-                                                    .where((e) => e.isNotEmpty)
-                                                    .toList(),
-                                            'updatedAt':
-                                                FieldValue.serverTimestamp(),
-                                          };
-                                          try {
-                                            if (doc == null) {
-                                              await FirebaseFirestore.instance
-                                                  .collection('careers')
-                                                  .add({
-                                                    ...data,
-                                                    'createdAt':
-                                                        FieldValue.serverTimestamp(),
-                                                  });
-                                            } else {
-                                              await FirebaseFirestore.instance
-                                                  .collection('careers')
-                                                  .doc(doc.id)
-                                                  .update(data);
-                                            }
-                                            if (Navigator.canPop(context))
-                                              Navigator.pop(context);
-                                          } catch (e) {
-                                            ScaffoldMessenger.of(
-                                              context,
-                                            ).showSnackBar(
-                                              SnackBar(
-                                                content: Text('Error: $e'),
-                                              ),
-                                            );
-                                          } finally {
-                                            setState(() => isSaving = false);
-                                          }
-                                        },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.transparent,
-                                  shadowColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  doc == null ? 'Create Career' : 'Edit Career',
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
-                                child:
-                                    isSaving
-                                        ? const SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            color: Colors.white,
-                                          ),
-                                        )
-                                        : Text(
-                                          'Save',
-                                          style: GoogleFonts.poppins(
-                                            color: Colors.white,
-                                          ),
-                                        ),
                               ),
-                            ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          Divider(
+                            color: Colors.white.withOpacity(0.08),
+                            height: 1,
+                          ),
+                          const SizedBox(height: 12),
+                          _inputField(
+                            controller: title,
+                            label: 'Title *',
+                            icon: Icons.title,
+                          ),
+                          const SizedBox(height: 10),
+                          _inputField(
+                            controller: description,
+                            label: 'Description *',
+                            icon: Icons.description,
+                            maxLines: 3,
+                          ),
+                          const SizedBox(height: 10),
+                          _inputField(
+                            controller: category,
+                            label: 'Category / Industry',
+                            icon: Icons.category,
+                          ),
+                          const SizedBox(height: 10),
+                          _inputField(
+                            controller: salaryRange,
+                            label: 'Salary Range',
+                            icon: Icons.attach_money,
+                          ),
+                          const SizedBox(height: 10),
+                          _inputField(
+                            controller: skills,
+                            label: 'Skills (comma separated)',
+                            icon: Icons.psychology,
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text(
+                                    'Cancel',
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white70,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Container(
+                                  height: 46,
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Color(0xFF667EEA),
+                                        Color(0xFF764BA2),
+                                      ],
+                                    ),
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed:
+                                        isSaving
+                                            ? null
+                                            : () async {
+                                              if (title.text.trim().isEmpty ||
+                                                  description.text
+                                                      .trim()
+                                                      .isEmpty) {
+                                                ScaffoldMessenger.of(
+                                                  context,
+                                                ).showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                      'Title and Description are required',
+                                                    ),
+                                                  ),
+                                                );
+                                                return;
+                                              }
+                                              setState(() => isSaving = true);
+                                              final data = {
+                                                'title': title.text.trim(),
+                                                'description':
+                                                    description.text.trim(),
+                                                'industry':
+                                                    category.text.trim(),
+                                                'salary_range':
+                                                    salaryRange.text.trim(),
+                                                'skills':
+                                                    skills.text
+                                                        .split(',')
+                                                        .map((e) => e.trim())
+                                                        .where(
+                                                          (e) => e.isNotEmpty,
+                                                        )
+                                                        .toList(),
+                                                'updatedAt':
+                                                    FieldValue.serverTimestamp(),
+                                              };
+                                              try {
+                                                if (doc == null) {
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('careers')
+                                                      .add({
+                                                        ...data,
+                                                        'createdAt':
+                                                            FieldValue.serverTimestamp(),
+                                                      });
+                                                } else {
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('careers')
+                                                      .doc(doc.id)
+                                                      .update(data);
+                                                }
+                                                if (Navigator.canPop(context)) {
+                                                  Navigator.pop(context);
+                                                }
+                                              } catch (e) {
+                                                ScaffoldMessenger.of(
+                                                  context,
+                                                ).showSnackBar(
+                                                  SnackBar(
+                                                    content: Text('Error: $e'),
+                                                  ),
+                                                );
+                                              } finally {
+                                                setState(
+                                                  () => isSaving = false,
+                                                );
+                                              }
+                                            },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.transparent,
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    child:
+                                        isSaving
+                                            ? const SizedBox(
+                                              width: 20,
+                                              height: 20,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2,
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                            : Text(
+                                              'Save',
+                                              style: GoogleFonts.poppins(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
@@ -556,7 +615,7 @@ class CareersAdminPage extends StatelessWidget {
     final data = doc.data() as Map<String, dynamic>;
     if (!data.containsKey(key)) return null;
     final value = data[key];
-    return value == null ? null : value.toString();
+    return value?.toString();
   }
 
   static Widget _inputField({
@@ -626,6 +685,15 @@ class _CareersListState extends State<_CareersListStateful> {
             stream:
                 FirebaseFirestore.instance.collection('careers').snapshots(),
             builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    'Error loading careers: ${snapshot.error}',
+                    style: GoogleFonts.poppins(color: Colors.redAccent),
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              }
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: CircularProgressIndicator(color: Color(0xFF667EEA)),
