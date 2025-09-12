@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../pages/testimonials.dart';
 import '../pages/contact_page.dart';
 import '../pages/feedback_page.dart';
+import '../services/authentication.dart';
+import '../pages/login_page.dart';
 
 class UserDrawer extends StatelessWidget {
   final Function(String) onMenuItemSelected;
@@ -133,6 +135,28 @@ class UserDrawer extends StatelessWidget {
               "Contact",
               page: const ContactUsPage(),
             ),
+            const SizedBox(height: 8),
+            const Divider(color: Colors.white24),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.lightBlueAccent),
+              title: const Text(
+                'Logout',
+                style: TextStyle(color: Colors.white, fontSize: 15),
+              ),
+              onTap: () async {
+                Navigator.pop(context);
+                await AuthenticationHelper().signOut();
+                // ignore: use_build_context_synchronously
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => const LoginPage()),
+                );
+              },
+              hoverColor: Colors.blueGrey.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
           ],
         ),
       ),
@@ -213,4 +237,101 @@ class UserDrawer extends StatelessWidget {
     );
   }
 
+}
+
+class AdminDrawer extends StatelessWidget {
+  final Function(String) onMenuItemSelected;
+
+  const AdminDrawer({super.key, required this.onMenuItemSelected});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 270,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.indigo.shade900, Colors.blueGrey.shade900],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.4),
+            blurRadius: 10,
+            offset: const Offset(3, 0),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              child: Center(
+                child: Text(
+                  "Admin",
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+            ),
+            const Divider(color: Colors.white24),
+
+            _sectionHeader("Content Management"),
+            _menuItem(context, Icons.folder, "Resources Hub"),
+            _menuItem(context, Icons.video_library, "Multimedia Guidance"),
+            _menuItem(context, Icons.people, "Testimonials/Success Carousel"),
+
+            _sectionHeader("Engagement"),
+            _menuItem(context, Icons.feedback, "Feedback Forms"),
+            _menuItem(context, Icons.contact_mail, "Contact Us"),
+            const SizedBox(height: 8),
+            const Divider(color: Colors.white24),
+            _menuItem(context, Icons.logout, "Logout"),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _sectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, top: 15, bottom: 6),
+      child: Text(
+        title,
+        style: TextStyle(
+          color: Colors.lightBlueAccent.shade100,
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _menuItem(BuildContext context, IconData icon, String title) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.lightBlueAccent),
+      title: const Text(' ', style: TextStyle(color: Colors.transparent)),
+      subtitle: Text(
+        title,
+        style: const TextStyle(color: Colors.white, fontSize: 15),
+      ),
+      onTap: () {
+        Navigator.pop(context);
+        onMenuItemSelected(title);
+      },
+      hoverColor: Colors.blueGrey.withOpacity(0.2),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    );
+  }
 }

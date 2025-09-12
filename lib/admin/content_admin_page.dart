@@ -107,3 +107,91 @@ class ContentAdminPage extends StatelessWidget {
     );
   }
 }
+
+class AdminResourcesPage extends StatelessWidget {
+  const AdminResourcesPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const _AdminPlaceholder(title: 'Resources Hub (Admin)');
+  }
+}
+
+class AdminMultimediaPage extends StatelessWidget {
+  const AdminMultimediaPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const _AdminPlaceholder(title: 'Multimedia Guidance (Admin)');
+  }
+}
+
+class AdminTestimonialsPage extends StatelessWidget {
+  const AdminTestimonialsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const _AdminPlaceholder(
+      title: 'Testimonials/Success Carousel (Admin)',
+    );
+  }
+}
+
+class AdminFeedbackFormsPage extends StatelessWidget {
+  const AdminFeedbackFormsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const _AdminPlaceholder(title: 'Feedback Forms (Admin)');
+  }
+}
+
+class AdminContactUsPage extends StatelessWidget {
+  const AdminContactUsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const _AdminPlaceholder(title: 'Contact Us (Admin)');
+  }
+}
+
+class _AdminPlaceholder extends StatelessWidget {
+  final String title;
+  const _AdminPlaceholder({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF1A1A2E),
+                Color(0xFF16213E),
+                Color(0xFF0F4C75),
+                Color(0xFF3282B8),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              stops: [0.0, 0.3, 0.7, 1.0],
+            ),
+          ),
+        ),
+        SafeArea(
+          child: Center(
+            child: Text(
+              title,
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

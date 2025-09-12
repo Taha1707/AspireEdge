@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../widgets/gradient_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class QuizzesAdminPage extends StatelessWidget {
@@ -663,7 +664,7 @@ class _QuizzesList extends StatelessWidget {
                             ],
                           ),
                         );
-                      }).toList(),
+                      }),
                       Row(
                         children: [
                           TextButton.icon(
@@ -677,125 +678,99 @@ class _QuizzesList extends StatelessWidget {
                             },
                             icon: const Icon(Icons.add, color: Colors.white),
                             label: const Text('Add Option'),
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.white,
+                            ),
                           ),
                           const Spacer(),
                           TextButton(
                             onPressed: () => Navigator.pop(ctx),
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.white70,
+                            ),
                             child: const Text('Cancel'),
                           ),
                           const SizedBox(width: 8),
-                          Container(
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
-                              ),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: ElevatedButton(
-                              onPressed:
-                                  isSaving
-                                      ? null
-                                      : () async {
-                                        if (questionController.text
-                                            .trim()
-                                            .isEmpty)
-                                          return;
-                                        final opts =
-                                            optionControllers
-                                                .asMap()
-                                                .entries
-                                                .map(
-                                                  (entry) => {
-                                                    'text':
-                                                        entry
-                                                            .value['text']!
-                                                            .text
-                                                            .trim(),
-                                                    'category':
-                                                        entry
-                                                            .value['category']!
-                                                            .text
-                                                            .trim(),
-                                                    if (selectedCorrectIndex ==
-                                                        entry.key)
-                                                      'isCorrect': true,
-                                                  },
-                                                )
-                                                .where(
-                                                  (o) =>
-                                                      (o['text'] as String)
-                                                          .isNotEmpty &&
-                                                      (o['category'] as String)
-                                                          .isNotEmpty,
-                                                )
-                                                .toList();
-                                        if (opts.length < 2) {
-                                          ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            const SnackBar(
-                                              content: Text(
-                                                'Add at least 2 options',
-                                              ),
-                                            ),
-                                          );
-                                          return;
-                                        }
-                                        if (selectedCorrectIndex == -1) {
-                                          ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            const SnackBar(
-                                              content: Text(
-                                                'Select the correct option (radio button)',
-                                              ),
-                                            ),
-                                          );
-                                          return;
-                                        }
-                                        setState(() => isSaving = true);
-                                        try {
-                                          final data = {
-                                            'question':
-                                                questionController.text.trim(),
-                                            'options': opts,
-                                            'updatedAt':
-                                                FieldValue.serverTimestamp(),
-                                          };
-                                          if (questionDoc == null) {
-                                            await FirebaseFirestore.instance
-                                                .collection('quizzes')
-                                                .doc(quizDoc.id)
-                                                .collection('questions')
-                                                .add({
-                                                  ...data,
-                                                  'createdAt':
-                                                      FieldValue.serverTimestamp(),
-                                                });
-                                          } else {
-                                            await FirebaseFirestore.instance
-                                                .collection('quizzes')
-                                                .doc(quizDoc.id)
-                                                .collection('questions')
-                                                .doc(questionDoc.id)
-                                                .update(data);
-                                          }
-                                          if (Navigator.canPop(ctx))
-                                            Navigator.pop(ctx);
-                                        } finally {
-                                          setState(() => isSaving = false);
-                                        }
-                                      },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.transparent,
-                                shadowColor: Colors.transparent,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              child: Text(
-                                questionDoc == null ? 'Save' : 'Update',
-                              ),
+                          GradientButton(
+                            isLoading: isSaving,
+                            onPressed: () async {
+                              if (questionController.text.trim().isEmpty) {
+                                return;
+                              }
+                              final opts =
+                                  optionControllers
+                                      .asMap()
+                                      .entries
+                                      .map(
+                                        (entry) => {
+                                          'text':
+                                              entry.value['text']!.text.trim(),
+                                          'category':
+                                              entry.value['category']!.text
+                                                  .trim(),
+                                          if (selectedCorrectIndex == entry.key)
+                                            'isCorrect': true,
+                                        },
+                                      )
+                                      .where(
+                                        (o) =>
+                                            (o['text'] as String).isNotEmpty &&
+                                            (o['category'] as String)
+                                                .isNotEmpty,
+                                      )
+                                      .toList();
+                              if (opts.length < 2) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Add at least 2 options'),
+                                  ),
+                                );
+                                return;
+                              }
+                              if (selectedCorrectIndex == -1) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Select the correct option (radio button)',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+                              setState(() => isSaving = true);
+                              try {
+                                final data = {
+                                  'question': questionController.text.trim(),
+                                  'options': opts,
+                                  'updatedAt': FieldValue.serverTimestamp(),
+                                };
+                                if (questionDoc == null) {
+                                  await FirebaseFirestore.instance
+                                      .collection('quizzes')
+                                      .doc(quizDoc.id)
+                                      .collection('questions')
+                                      .add({
+                                        ...data,
+                                        'createdAt':
+                                            FieldValue.serverTimestamp(),
+                                      });
+                                } else {
+                                  await FirebaseFirestore.instance
+                                      .collection('quizzes')
+                                      .doc(quizDoc.id)
+                                      .collection('questions')
+                                      .doc(questionDoc.id)
+                                      .update(data);
+                                }
+                                if (Navigator.canPop(ctx)) {
+                                  Navigator.pop(ctx);
+                                }
+                              } finally {
+                                setState(() => isSaving = false);
+                              }
+                            },
+                            child: Text(
+                              questionDoc == null ? 'Save' : 'Update',
                             ),
                           ),
                         ],

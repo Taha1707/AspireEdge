@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'careers_admin_page.dart';
 import 'quizzes_admin_page.dart';
 import 'content_admin_page.dart';
 import '../widgets/drawer.dart';
+import 'content_admin_page.dart' show AdminResourcesPage, AdminMultimediaPage;
+import '_feature_card_tile.dart';
 import '../services/authentication.dart';
+import 'admin_lists.dart';
 import '../pages/login_page.dart';
 
 class AdminHomePage extends StatefulWidget {
-  const AdminHomePage({super.key});
+  final int initialIndex;
+  const AdminHomePage({super.key, this.initialIndex = 0});
 
   @override
   State<AdminHomePage> createState() => _AdminHomePageState();
@@ -19,6 +24,12 @@ class _AdminHomePageState extends State<AdminHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -27,25 +38,30 @@ class _AdminHomePageState extends State<AdminHomePage> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await AuthenticationHelper().signOut();
+      ),
+      body: _buildBody(),
+      bottomNavigationBar: _buildBottomNavBar(context),
+      drawer: AdminDrawer(
+        onMenuItemSelected: (title) {
+          if (title == 'Resources Hub') {
+            _safePush(const AdminResourcesPage());
+          } else if (title == 'Multimedia Guidance') {
+            _safePush(const AdminMultimediaPage());
+          } else if (title == 'Testimonials/Success Carousel') {
+            _safePush(const AdminTestimonialsListPage());
+          } else if (title == 'Feedback Forms') {
+            _safePush(const AdminFeedbackListPage());
+          } else if (title == 'Contact Us') {
+            _safePush(const AdminInquiriesListPage());
+          } else if (title == 'Logout') {
+            AuthenticationHelper().signOut().then((_) {
               if (!mounted) return;
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (_) => const LoginPage()),
               );
-            },
-            icon: const Icon(Icons.logout_outlined),
-          ),
-        ],
-      ),
-      body: _buildBody(),
-      bottomNavigationBar: _buildBottomNavBar(context),
-      drawer: UserDrawer(
-        onMenuItemSelected: (title) {
-          // You can handle admin-specific routes here later
+            });
+          }
         },
       ),
     );
@@ -80,6 +96,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
                     _buildHeader(),
                     const SizedBox(height: 16),
                     _buildDashboardCard(),
+                    const SizedBox(height: 16),
+                    _buildAllStatsGrid(),
                     const SizedBox(height: 20),
                     _buildFeatureGrid(),
                     const SizedBox(height: 20),
@@ -100,6 +118,16 @@ class _AdminHomePageState extends State<AdminHomePage> {
         return _placeholderTab(title: "Settings");
       default:
         return const SizedBox.shrink();
+    }
+  }
+
+  void _safePush(Widget page) {
+    try {
+      Navigator.push(context, MaterialPageRoute(builder: (_) => page));
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Navigation error: $e')));
     }
   }
 
@@ -312,27 +340,72 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
   Widget _buildFeatureGrid() {
     final features = [
-      {"icon": Icons.inventory, "title": "Manage Products", "onTap": () {}},
-      {"icon": Icons.receipt_long, "title": "Orders", "onTap": () {}},
-      {"icon": Icons.people, "title": "Customers", "onTap": () {}},
-      {"icon": Icons.analytics, "title": "Reports", "onTap": () {}},
+      {
+        "icon": Icons.business_center,
+        "title": "Careers",
+        "onTap": () => setState(() => _selectedIndex = 1),
+      },
+      {
+        "icon": Icons.quiz,
+        "title": "Quizzes",
+        "onTap": () => setState(() => _selectedIndex = 2),
+      },
+      {
+        "icon": Icons.group,
+        "title": "Users",
+        "onTap": () => _safePush(const AdminUsersPage()),
+      },
+      {
+        "icon": Icons.people,
+        "title": "Testimonials",
+        "onTap": () => _safePush(const AdminTestimonialsListPage()),
+      },
+      {
+        "icon": Icons.feedback,
+        "title": "Feedback",
+        "onTap": () => _safePush(const AdminFeedbackListPage()),
+      },
+      {
+        "icon": Icons.contact_mail,
+        "title": "Inquiries",
+        "onTap": () => _safePush(const AdminInquiriesListPage()),
+      },
+      {
+        "icon": Icons.folder,
+        "title": "Resources",
+        "onTap": () => _safePush(const AdminResourcesPage()),
+      },
     ];
 
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 1.2,
-      ),
-      itemCount: features.length,
-      itemBuilder: (context, index) {
-        return _featureCard(
-          icon: features[index]["icon"] as IconData,
-          title: features[index]["title"] as String,
-          onTap: features[index]["onTap"] as VoidCallback,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double width = constraints.maxWidth;
+        const int crossAxisCount = 2; // Always show 2 items per row
+
+        return GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: crossAxisCount,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio:
+                width >= 900
+                    ? 3.8
+                    : width >= 700
+                    ? 3.4
+                    : width >= 500
+                    ? 3.0
+                    : 2.4,
+          ),
+          itemCount: features.length,
+          itemBuilder: (context, index) {
+            return _featureCard(
+              icon: features[index]["icon"] as IconData,
+              title: features[index]["title"] as String,
+              onTap: features[index]["onTap"] as VoidCallback,
+            );
+          },
         );
       },
     );
@@ -343,42 +416,201 @@ class _AdminHomePageState extends State<AdminHomePage> {
     required String title,
     required VoidCallback onTap,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: _cardWrapper(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF667EEA).withOpacity(0.3),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
+    return FeatureCardTile(icon: icon, title: title, onTap: onTap);
+  }
+
+  // Removed old separate stats rows; consolidated into _buildAllStatsGrid
+
+  Widget _buildAllStatsGrid() {
+    final List<Widget> tiles = [
+      _statTile('Careers', Icons.business_center, 'careers'),
+      _statTile('Quizzes', Icons.quiz, 'quizzes'),
+      _statTile('Testimonials', Icons.people, 'testimonials'),
+      _userStatTile(
+        'Users',
+        Icons.group,
+        FirebaseFirestore.instance.collection('users'),
+      ),
+      _userStatTile(
+        'Active',
+        Icons.verified_user,
+        FirebaseFirestore.instance
+            .collection('users')
+            .where('active', isEqualTo: true),
+      ),
+      _userStatTile(
+        'Inactive',
+        Icons.person_off,
+        FirebaseFirestore.instance
+            .collection('users')
+            .where('active', isEqualTo: false),
+      ),
+    ];
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double width = constraints.maxWidth;
+        final int cols = width < 360 ? 1 : 2;
+        double aspect;
+        if (cols == 1) {
+          aspect = 5.2; // wider tile, more height on very narrow screens
+        } else if (width < 420) {
+          aspect = 2.4;
+        } else {
+          aspect = 2.8;
+        }
+
+        return GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: cols,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: aspect,
+          ),
+          itemCount: tiles.length,
+          itemBuilder: (context, index) => tiles[index],
+        );
+      },
+    );
+  }
+
+  Widget _statTile(String title, IconData icon, String collection) {
+    return _cardWrapper(
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection(collection).snapshots(),
+        builder: (context, snapshot) {
+          final count = snapshot.hasData ? snapshot.data!.docs.length : 0;
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              final bool tight =
+                  constraints.maxHeight <= 56 || constraints.maxWidth <= 180;
+              final double iconSize = tight ? 16 : 20;
+              final double pad = tight ? 8 : 10;
+              final double titleSize = tight ? 11 : 12;
+              final double valueSize = tight ? 18 : 20;
+              final double gap = tight ? 8 : 12;
+
+              return Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(pad),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(icon, color: Colors.white, size: iconSize),
+                  ),
+                  SizedBox(width: gap),
+                  Expanded(
+                    child: FittedBox(
+                      alignment: Alignment.centerLeft,
+                      fit: BoxFit.scaleDown,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white70,
+                              fontSize: titleSize,
+                            ),
+                          ),
+                          Text(
+                            '$count',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: valueSize,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
-              ),
-              child: Icon(icon, color: Colors.white, size: 30),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _userStatTile(String title, IconData icon, Query query) {
+    return _cardWrapper(
+      child: StreamBuilder<QuerySnapshot>(
+        stream: query.snapshots(),
+        builder: (context, snapshot) {
+          final count = snapshot.hasData ? snapshot.data!.docs.length : 0;
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              final bool tight =
+                  constraints.maxHeight <= 56 || constraints.maxWidth <= 180;
+              final double iconSize = tight ? 16 : 20;
+              final double pad = tight ? 8 : 10;
+              final double titleSize = tight ? 11 : 12;
+              final double valueSize = tight ? 18 : 20;
+              final double gap = tight ? 8 : 12;
+
+              return Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(pad),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(icon, color: Colors.white, size: iconSize),
+                  ),
+                  SizedBox(width: gap),
+                  Expanded(
+                    child: FittedBox(
+                      alignment: Alignment.centerLeft,
+                      fit: BoxFit.scaleDown,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white70,
+                              fontSize: titleSize,
+                            ),
+                          ),
+                          Text(
+                            '$count',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: valueSize,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        },
       ),
     );
   }

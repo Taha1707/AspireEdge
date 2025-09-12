@@ -43,18 +43,6 @@ class _HomePageState extends State<HomePage> {
         key: _scaffoldKey,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          actions: <Widget>[
-            IconButton(
-              onPressed: () async {
-                await AuthenticationHelper().signOut();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
-              },
-              icon: const Icon(Icons.logout_outlined),
-            ),
-          ],
           centerTitle: true,
           title: const Text("Home - Page"),
           backgroundColor: Colors.grey[700],

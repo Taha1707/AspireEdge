@@ -173,30 +173,24 @@ class _CareerBankPageState extends State<CareerBankPage> with TickerProviderStat
           SafeArea(
             child: isLoading
                 ? _buildLoadingWidget()
-                : CustomScrollView(
-              slivers: [
-                // Header
-                SliverToBoxAdapter(
-                  child: _buildHeader(),
-                ),
+                : Column(
+              children: [
+                // Custom Header
+                _buildHeader(),
 
                 // Search Bar
-                SliverToBoxAdapter(
-                  child: _buildSearchBar(),
-                ),
+                _buildSearchBar(),
 
                 // Category Filter
-                SliverToBoxAdapter(
-                  child: _buildCategoryFilter(),
-                ),
+                _buildCategoryFilter(),
 
                 // Career Stats
-                SliverToBoxAdapter(
-                  child: _buildStatsRow(),
-                ),
+                _buildStatsRow(),
 
                 // Careers Grid
-                _buildCareersGrid(),
+                Expanded(
+                  child: _buildCareersGrid(),
+                ),
               ],
             ),
           ),
@@ -506,79 +500,72 @@ class _CareerBankPageState extends State<CareerBankPage> with TickerProviderStat
     final filteredList = filteredCareers;
 
     if (filteredList.isEmpty) {
-      return SliverToBoxAdapter(
-        child: Container(
-          height: 400,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.2),
-                    ),
-                  ),
-                  child: Icon(
-                    Icons.search_off,
-                    color: Colors.white.withOpacity(0.6),
-                    size: 60,
-                  ),
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: Colors.white.withOpacity(0.2),
                 ),
-                const SizedBox(height: 20),
-                Text(
-                  "No careers found",
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  "Try adjusting your search or filter",
-                  style: GoogleFonts.poppins(
-                    color: Colors.white70,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
+              ),
+              child: Icon(
+                Icons.search_off,
+                color: Colors.white.withOpacity(0.6),
+                size: 60,
+              ),
             ),
-          ),
+            const SizedBox(height: 20),
+            Text(
+              "No careers found",
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              "Try adjusting your search or filter",
+              style: GoogleFonts.poppins(
+                color: Colors.white70,
+                fontSize: 14,
+              ),
+            ),
+          ],
         ),
       );
     }
 
-    return SliverPadding(
-      padding: const EdgeInsets.all(20),
-      sliver: SliverGrid(
-        delegate: SliverChildBuilderDelegate(
-              (context, index) {
-            final career = filteredList[index];
-
-            return AnimationConfiguration.staggeredGrid(
-              position: index,
-              duration: const Duration(milliseconds: 600),
-              columnCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
-              child: SlideAnimation(
-                verticalOffset: 50.0,
-                child: FadeInAnimation(
-                  child: _buildCareerCard(career, index),
-                ),
-              ),
-            );
-          },
-          childCount: filteredList.length,
-        ),
+    return AnimationLimiter(
+      child: GridView.builder(
+        padding: const EdgeInsets.all(20),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
           mainAxisSpacing: 20,
           crossAxisSpacing: 20,
           childAspectRatio: MediaQuery.of(context).size.width > 600 ? 0.75 : 0.85,
         ),
+        itemCount: filteredList.length,
+        itemBuilder: (context, index) {
+          final career = filteredList[index];
+
+          return AnimationConfiguration.staggeredGrid(
+            position: index,
+            duration: const Duration(milliseconds: 600),
+            columnCount: MediaQuery.of(context).size.width > 600 ? 2 : 1,
+            child: SlideAnimation(
+              verticalOffset: 50.0,
+              child: FadeInAnimation(
+                child: _buildCareerCard(career, index),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
