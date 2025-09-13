@@ -20,7 +20,6 @@ class _CVTipsPageState extends State<CVTipsPage> with TickerProviderStateMixin {
     "Templates",
     "Do's",
     "Don'ts",
-    "Industries",
     "ATS Tips"
   ];
 
@@ -368,11 +367,7 @@ class _CVTipsPageState extends State<CVTipsPage> with TickerProviderStateMixin {
   Widget _buildTipCard(CVTipItem tip, int index) {
     final gradients = [
       [const Color(0xFF667EEA), const Color(0xFF764BA2)],
-      [const Color(0xFF4FACFE), const Color(0xFF00F2FE)],
-      [const Color(0xFF43E97B), const Color(0xFF38F9D7)],
-      [const Color(0xFFFA709A), const Color(0xFFFE9A8B)],
-      [const Color(0xFFA8EDEA), const Color(0xFFFED6E3)],
-      [const Color(0xFFD299C2), const Color(0xFFFEF9D7)],
+      [const Color(0xFF00D2FF), const Color(0xFF3A7BD5)],
     ];
 
     final gradient = gradients[index % gradients.length];
@@ -826,98 +821,210 @@ class CVTipItem {
   });
 }
 
-// Sample Data
 final List<CVTipItem> allCVTips = [
-// Resume Formats
-CVTipItem(
-title: "Chronological Resume",
-subtitle: "Most popular format for traditional career paths",
-category: "Formats",
-icon: Icons.timeline,
-description: "The chronological resume format lists your work experience in reverse chronological order, starting with your most recent position. This format is ideal for professionals with a steady work history in the same field.",
-detailedDescription: "The chronological resume is the gold standard for most job applications. It provides a clear timeline of your career progression, making it easy for hiring managers to understand your professional growth. This format works exceptionally well when you have consistent employment history and want to highlight career advancement within your field.",
-points: [
-"Lists work experience in reverse chronological order",
-"Emphasizes career progression and stability",
-"Preferred by most recruiters and ATS systems",
-"Easy to read and follow",
-],
-detailedPoints: [
-"Start with your contact information and professional summary at the top",
-"List your work experience with most recent job first, including company, position, dates, and achievements",
-"Include education section with relevant degrees and certifications",
-"Add skills section highlighting relevant technical and soft skills",
-"Keep formatting consistent throughout with clear headings and bullet points",
-"Use action verbs to describe accomplishments and quantify results where possible"
-],
-examples: [
-"Software Developer at TechCorp (2021-Present): Developed 15+ web applications using React and Node.js",
-"Marketing Manager at StartupXYZ (2019-2021): Increased brand awareness by 40% through digital campaigns"
-],
-templates: [
-"CONTACT INFORMATION\n\nPROFESSIONAL SUMMARY\n2-3 lines highlighting your expertise\n\nWORK EXPERIENCE\nJob Title | Company | Dates\n• Achievement 1\n• Achievement 2\n\nEDUCATION\nDegree | University | Year\n\nSKILLS\nTechnical Skills | Soft Skills"
-],
-),
-
-CVTipItem(
-title: "Functional Resume",
-subtitle: "Skills-focused format for career changers",
-category: "Formats",
-icon: Icons.psychology,
-description: "The functional resume emphasizes skills and abilities rather than chronological work history. Perfect for career changers, recent graduates, or those with employment gaps.",
-detailedDescription: "A functional resume shifts focus away from your work timeline and instead highlights your relevant skills and achievements. This format allows you to group your experiences by skill category rather than by job, making it easier to demonstrate your qualifications for a new field or role type. It's particularly effective when your past job titles don't directly relate to your target position.",
-points: [
-"Focuses on skills rather than work timeline",
-"Groups experiences by skill categories",
-"Ideal for career changers and recent graduates",
-"Downplays employment gaps",
-],
-detailedPoints: [
-"Start with contact information and a compelling professional summary",
-"Create 3-4 skill categories relevant to your target role",
-"Under each skill category, list specific achievements and examples",
-"Include a brief work history section with just company names and dates",
-"Education section should be prominent if you're a recent graduate",
-"Customize skill categories for each job application to match requirements"
-],
-examples: [
-"PROJECT MANAGEMENT: Led cross-functional teams of 10+ members, delivered 5 projects on time",
-"DIGITAL MARKETING: Managed social media campaigns reaching 50K+ users, increased engagement by 35%"
-],
-templates: [
-"CONTACT INFORMATION\n\nPROFESSIONAL SUMMARY\n\nCORE COMPETENCIES\n\nSKILL CATEGORY 1\n• Relevant achievement\n• Quantified result\n\nSKILL CATEGORY 2\n• Relevant achievement\n• Quantified result\n\nEMPLOYMENT HISTORY\nCompany | Dates\n\nEDUCATION"
-],
-),
-// ✅ Completed Combination Resume
+  // ------------------ RESUME FORMATS ------------------
   CVTipItem(
-    title: "Combination Resume",
-    subtitle: "Best of both chronological and functional formats",
+    title: "Chronological Resume",
+    subtitle: "Most popular format for traditional career paths",
     category: "Formats",
-    icon: Icons.merge_type,
+    icon: Icons.timeline,
     description:
-    "The combination resume merges the chronological and functional formats, highlighting both your skills and work history. Ideal for experienced professionals with diverse skill sets.",
+    "Lists your work experience in reverse chronological order, highlighting steady career growth.",
     detailedDescription:
-    "The combination resume format offers the perfect balance for professionals who want to showcase both their skills and career progression. This hybrid approach allows you to lead with your strongest qualifications while still providing the work history that employers expect to see. It's particularly effective for senior-level positions where both expertise and experience matter equally.",
+    "The chronological resume is the gold standard for most job applications. It provides a clear timeline of your career progression, making it easy for hiring managers to understand your professional growth. Best suited for those with consistent employment history.",
     points: [
-      "Combines skills-focused and chronological approaches",
-      "Highlights both competencies and career progression",
-      "Perfect for experienced professionals",
-      "Shows versatility and depth of experience",
+      "Reverse chronological work history",
+      "Clear and easy to scan",
+      "ATS-friendly format",
+      "Highlights career stability"
     ],
     detailedPoints: [
-      "Begin with contact information and a strong professional summary",
-      "Create a core competencies section with 6-8 key skills",
-      "Follow with detailed work experience in reverse chronological order",
-      "Include quantified achievements under each role",
-      "Highlight career progression along with technical expertise",
-      "Finish with education, certifications, and relevant projects",
+      "Start with a compelling professional summary",
+      "List jobs with company, title, dates, and achievements",
+      "Focus on quantifiable results in bullet points",
+      "End with education, certifications, and skills section"
     ],
     examples: [
-      "CORE SKILLS: Project Management | Data Analysis | Leadership",
-      "Senior Developer at InnovateTech (2018-Present): Led team of 8 developers, delivered 10+ apps"
+      "Software Engineer, Google (2021-Present) – Developed 10+ features for core search products",
     ],
     templates: [
-      "CONTACT INFORMATION\n\nPROFESSIONAL SUMMARY\n...\n\nCORE COMPETENCIES\nSkill 1 | Skill 2 | Skill 3\n\nWORK EXPERIENCE\nJob Title | Company | Dates\n• Achievement\n• Achievement\n\nEDUCATION\nDegree | University | Year"
+      "CONTACT INFO\n\nSUMMARY\nProfessional summary here...\n\nWORK EXPERIENCE\nJob Title | Company | Date\n• Achievement\n• Achievement\n\nEDUCATION\nDegree | University | Year\n\nSKILLS"
     ],
+  ),
+  CVTipItem(
+    title: "Functional Resume",
+    subtitle: "Perfect for career changers or freshers",
+    category: "Formats",
+    icon: Icons.psychology,
+    description:
+    "Focuses on skills and achievements rather than job history. Ideal for job seekers with gaps or career switchers.",
+    detailedDescription:
+    "A functional resume highlights what you can do, not just where you worked. Skills are grouped into categories with examples of accomplishments. Employers still expect a small work history section at the end.",
+    points: [
+      "Focuses on skills instead of timeline",
+      "Good for freshers or freelancers",
+      "Minimizes gaps in work history",
+      "Highlights transferable skills"
+    ],
+    detailedPoints: [
+      "Group your skills by relevance to job",
+      "Add real-world examples for each skill",
+      "Keep work history minimal at bottom",
+      "Tailor skill categories per job posting"
+    ],
+    examples: [
+      "PROJECT MANAGEMENT: Delivered 5 cross-functional projects on time and under budget"
+    ],
+    templates: [
+      "CONTACT INFO\n\nPROFESSIONAL SUMMARY\n...\n\nCORE SKILLS\nSkill 1: Achievement\nSkill 2: Achievement\n\nWORK HISTORY\nCompany | Date\n\nEDUCATION"
+    ],
+  ),
+
+  // ------------------ DO'S ------------------
+  CVTipItem(
+    title: "Use Action Verbs",
+    subtitle: "Make every bullet point impactful",
+    category: "Do's",
+    icon: Icons.check_circle,
+    description:
+    "Start bullet points with strong action verbs to show achievement and responsibility.",
+    detailedDescription:
+    "Recruiters skim CVs for action-oriented words. Using verbs like 'Led', 'Developed', 'Implemented', or 'Designed' makes your contributions clear and compelling.",
+    points: [
+      "Use past tense for previous jobs",
+      "Show impact rather than duties",
+      "Be concise and result-driven"
+    ],
+    detailedPoints: [
+      "Avoid weak openers like 'Responsible for'",
+      "Focus on what you achieved, not just tasks",
+      "Quantify impact whenever possible"
+    ],
+    examples: [
+      "Led a team of 5 engineers to deliver 3 successful app releases",
+      "Reduced website load time by 30% through performance optimization"
+    ],
+    templates: [],
+  ),
+  CVTipItem(
+    title: "Tailor for Each Job",
+    subtitle: "Customize, don't just copy-paste",
+    category: "Do's",
+    icon: Icons.adjust,
+    description:
+    "Every job description is unique. Customize your CV to highlight the skills and achievements most relevant to that role.",
+    detailedDescription:
+    "Sending the same CV to every job rarely works. Read the job description carefully, use similar keywords, and highlight matching skills.",
+    points: [
+      "Match keywords for ATS",
+      "Focus on most relevant experience",
+      "Show how you solve employer problems"
+    ],
+    detailedPoints: [
+      "Analyze job description and pick key terms",
+      "Reorder achievements so most relevant come first",
+      "Mention industry-specific tools if required"
+    ],
+    examples: [
+      "For a data analyst job, highlight SQL, Python, and dashboard projects first."
+    ],
+    templates: [],
+  ),
+
+  // ------------------ DON'TS ------------------
+  CVTipItem(
+    title: "Avoid Typos",
+    subtitle: "Errors can cost you the job",
+    category: "Don'ts",
+    icon: Icons.close,
+    description:
+    "Grammar mistakes or typos make a bad first impression and signal carelessness.",
+    detailedDescription:
+    "Always proofread your CV multiple times. Use spell-check and tools like Grammarly to catch errors. Ask a friend to review it for a fresh perspective.",
+    points: [
+      "Proofread before sending",
+      "Keep formatting consistent",
+      "Avoid slang or informal language"
+    ],
+    detailedPoints: [
+      "Check tense consistency",
+      "Align bullet points properly",
+      "Avoid ALL CAPS or excessive bold text"
+    ],
+    examples: [
+      "Wrong: Maneged a team of 10\nRight: Managed a team of 10"
+    ],
+    templates: [],
+  ),
+  CVTipItem(
+    title: "Don't Overload with Graphics",
+    subtitle: "ATS might reject complex designs",
+    category: "Don'ts",
+    icon: Icons.warning,
+    description:
+    "While creative CVs look nice, too much design can confuse ATS systems or make them unreadable.",
+    detailedDescription:
+    "Keep a balance — clean, minimal designs are easier to scan for recruiters and safer for online applications.",
+    points: [
+      "Avoid excessive use of colors",
+      "Stick to 1-2 fonts max",
+      "Maintain enough white space"
+    ],
+    detailedPoints: [
+      "Reserve icons for section headers only",
+      "Save creative CVs for in-person networking",
+      "Use standard file format: PDF"
+    ],
+    examples: [],
+    templates: [],
+  ),
+
+  // ------------------ TEMPLATES ------------------
+  CVTipItem(
+    title: "Modern Professional Template",
+    subtitle: "Clean, ATS-friendly design",
+    category: "Templates",
+    icon: Icons.description,
+    description:
+    "A simple one-page CV template with clear headings and plenty of white space.",
+    detailedDescription:
+    "This template focuses on readability and professional aesthetics. Perfect for corporate jobs.",
+    points: ["One-page layout", "Professional font", "Easy to scan"],
+    detailedPoints: [
+      "Header with name, title, and contact info",
+      "Clear sections: Summary, Skills, Work, Education",
+      "Bullet points for achievements"
+    ],
+    examples: [],
+    templates: [
+      "https://resumegenius.com/resume-templates/modern",
+      "https://zety.com/resume-templates"
+    ],
+  ),
+
+  // ------------------ ATS TIPS ------------------
+  CVTipItem(
+    title: "Optimize for ATS",
+    subtitle: "Ensure your CV passes screening bots",
+    category: "ATS Tips",
+    icon: Icons.smart_toy,
+    description:
+    "Use standard formatting, simple fonts, and include relevant keywords to get past Applicant Tracking Systems.",
+    detailedDescription:
+    "ATS scans for keywords from the job description. Missing them may get your CV rejected before a human sees it.",
+    points: [
+      "Use job title in your CV",
+      "Match keywords exactly",
+      "Avoid tables, columns, and images"
+    ],
+    detailedPoints: [
+      "Stick to Word or PDF format",
+      "Use plain text for section headers",
+      "Don't hide keywords in white text (ATS may flag it)"
+    ],
+    examples: [
+      "Job asks for 'React Developer' – use the exact phrase instead of just 'Frontend Developer'"
+    ],
+    templates: [],
   ),
 ];
