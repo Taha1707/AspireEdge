@@ -1,4 +1,4 @@
-import 'package:auth_reset_pass/pages/home_page.dart';
+import 'package:Aspire_Edge/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

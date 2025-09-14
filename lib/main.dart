@@ -1,4 +1,4 @@
-import 'package:auth_reset_pass/pages/launching_page.dart';
+import 'package:Aspire_Edge/pages/launching_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

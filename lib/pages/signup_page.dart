@@ -1,5 +1,5 @@
-import 'package:auth_reset_pass/pages/login_page.dart';
-import 'package:auth_reset_pass/services/auth&role_check_page.dart';
+import 'package:Aspire_Edge/pages/login_page.dart';
+import 'package:Aspire_Edge/services/auth&role_check_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

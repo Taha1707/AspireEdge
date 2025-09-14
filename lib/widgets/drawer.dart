@@ -1,9 +1,9 @@
-import 'package:auth_reset_pass/pages/career_bank.dart';
-import 'package:auth_reset_pass/pages/cv_tips.dart';
-import 'package:auth_reset_pass/pages/interview_preparation.dart';
-import 'package:auth_reset_pass/pages/quiz_intro.dart';
-import 'package:auth_reset_pass/pages/resources_hub.dart';
-import 'package:auth_reset_pass/pages/stream_selector.dart';
+import 'package:Aspire_Edge/pages/career_bank.dart';
+import 'package:Aspire_Edge/pages/cv_tips.dart';
+import 'package:Aspire_Edge/pages/interview_preparation.dart';
+import 'package:Aspire_Edge/pages/quiz_intro.dart';
+import 'package:Aspire_Edge/pages/resources_hub.dart';
+import 'package:Aspire_Edge/pages/stream_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../pages/testimonials.dart';

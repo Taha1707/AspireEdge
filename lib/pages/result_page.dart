@@ -1,5 +1,5 @@
-import 'package:auth_reset_pass/pages/home_page.dart';
-import 'package:auth_reset_pass/pages/quiz_intro.dart';
+import 'package:Aspire_Edge/pages/home_page.dart';
+import 'package:Aspire_Edge/pages/quiz_intro.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'quiz_service.dart';
