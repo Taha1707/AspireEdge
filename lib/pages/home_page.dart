@@ -7,6 +7,7 @@ import 'package:auth_reset_pass/pages/about_us_page.dart';
 import 'package:auth_reset_pass/pages/settings_page.dart';
 import 'package:auth_reset_pass/pages/notifications_page.dart';
 import 'package:auth_reset_pass/pages/login_page.dart';
+import 'package:auth_reset_pass/pages/resources_hub.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -1329,6 +1330,25 @@ class _HomeTabState extends State<_HomeTab> with TickerProviderStateMixin {
               Expanded(
                 child: _buildActionCard(
                   context,
+                  'Resources Hub',
+                  Icons.library_books,
+                  const Color(0xFF4FACFE),
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ResourcesHubPage(),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: _buildActionCard(
+                  context,
                   'About Us',
                   Icons.info,
                   const Color(0xFFD299C2),
@@ -1339,6 +1359,10 @@ class _HomeTabState extends State<_HomeTab> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Container(), // Empty space for symmetry
               ),
             ],
           ),

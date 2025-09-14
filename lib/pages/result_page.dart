@@ -1,6 +1,3 @@
-// ===== FILE 3: result_page.dart =====
-
-
 import 'package:auth_reset_pass/pages/home_page.dart';
 import 'package:auth_reset_pass/pages/quiz_intro.dart';
 import 'package:flutter/material.dart';
@@ -32,73 +29,127 @@ class _StreamRecommendationResultPageState extends State<StreamRecommendationRes
     int totalAnswers = widget.results['totalAnswers'] as int? ?? 0;
 
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF1A1A2E),
-              Color(0xFF16213E),
-              Color(0xFF0F4C75),
-              Color(0xFF3282B8),
-            ],
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF1A1A2E),
+                  Color(0xFF16213E),
+                  Color(0xFF0F4C75),
+                  Color(0xFF3282B8),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: [0.0, 0.3, 0.7, 1.0],
+              ),
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(tier, totalAnswers),
-                const SizedBox(height: 24),
-                if (topRecommendation != null) _buildTopRecommendation(topRecommendation),
-                const SizedBox(height: 24),
-                if (recommendations.length > 1) _buildAllRecommendations(recommendations),
-                const SizedBox(height: 24),
-                _buildNextStepsCard(tier),
-                const SizedBox(height: 24),
-                _buildBackButton(),
+          SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                // Header
+                SliverToBoxAdapter(
+                  child: _buildHeader(tier, totalAnswers),
+                ),
+                
+                // Top Recommendation
+                if (topRecommendation != null)
+                  SliverToBoxAdapter(
+                    child: _buildTopRecommendation(topRecommendation),
+                  ),
+                
+                // All Recommendations
+                if (recommendations.length > 1)
+                  SliverToBoxAdapter(
+                    child: _buildAllRecommendations(recommendations),
+                  ),
+                
+                // Next Steps
+                SliverToBoxAdapter(
+                  child: _buildNextStepsCard(tier),
+                ),
+                
+                // Back Button
+                SliverToBoxAdapter(
+                  child: _buildBackButton(),
+                ),
+                
+                // Bottom spacing
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 50),
+                ),
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }
 
   Widget _buildHeader(String tier, int totalAnswers) {
     return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.06),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.15)),
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         children: [
-          const Icon(Icons.school, color: Colors.white, size: 32),
-          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF43E97B), Color(0xFF38D9A9)],
+              ),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.school,
+              color: Colors.white,
+              size: 40,
+            ),
+          ),
+          const SizedBox(height: 20),
           Text(
             'Your Stream Recommendations',
             style: GoogleFonts.poppins(
-              fontSize: 26,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
-          Text(
-            'Based on $totalAnswers quiz responses for ${tier.toUpperCase()}',
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              color: Colors.white70,
-              fontWeight: FontWeight.w500,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: const Color(0xFF667EEA).withOpacity(0.2),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: const Color(0xFF667EEA).withOpacity(0.3),
+              ),
             ),
-            textAlign: TextAlign.center,
+            child: Text(
+              'Based on $totalAnswers quiz responses for ${tier.toUpperCase()}',
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                color: const Color(0xFF667EEA),
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),
@@ -107,16 +158,19 @@ class _StreamRecommendationResultPageState extends State<StreamRecommendationRes
 
   Widget _buildTopRecommendation(StreamRecommendation recommendation) {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.greenAccent.withOpacity(0.15),
-            Colors.blueAccent.withOpacity(0.15),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.greenAccent.withOpacity(0.3)),
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,14 +178,16 @@ class _StreamRecommendationResultPageState extends State<StreamRecommendationRes
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.greenAccent.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(12),
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF43E97B), Color(0xFF38D9A9)],
+                  ),
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                child: const Icon(Icons.star, color: Colors.greenAccent, size: 24),
+                child: const Icon(Icons.star, color: Colors.white, size: 24),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,18 +195,19 @@ class _StreamRecommendationResultPageState extends State<StreamRecommendationRes
                     Text(
                       'Top Recommendation',
                       style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        color: Colors.greenAccent,
+                        fontSize: 14,
+                        color: const Color(0xFF43E97B),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
                       recommendation.streamName,
                       style: GoogleFonts.poppins(
-                        fontSize: 22,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
@@ -158,15 +215,18 @@ class _StreamRecommendationResultPageState extends State<StreamRecommendationRes
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: Colors.greenAccent.withOpacity(0.2),
+                  color: const Color(0xFF43E97B).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: const Color(0xFF43E97B).withOpacity(0.3),
+                  ),
                 ),
                 child: Text(
                   '${recommendation.percentage.round()}%',
                   style: GoogleFonts.poppins(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.greenAccent,
+                    color: const Color(0xFF43E97B),
                   ),
                 ),
               ),
@@ -176,10 +236,11 @@ class _StreamRecommendationResultPageState extends State<StreamRecommendationRes
           Text(
             recommendation.description,
             style: GoogleFonts.poppins(
-              fontSize: 15,
+              fontSize: 14,
               color: Colors.white70,
               height: 1.5,
             ),
+            overflow: TextOverflow.visible,
           ),
           const SizedBox(height: 16),
           Text(
@@ -219,11 +280,19 @@ class _StreamRecommendationResultPageState extends State<StreamRecommendationRes
 
   Widget _buildAllRecommendations(List<StreamRecommendation> recommendations) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.06),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.15)),
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,19 +414,36 @@ class _StreamRecommendationResultPageState extends State<StreamRecommendationRes
     List<String> nextSteps = _getNextStepsForTier(tier);
 
     return Container(
-      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.06),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.15)),
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(Icons.lightbulb, color: Colors.yellowAccent, size: 24),
-              const SizedBox(width: 12),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFFA709A), Color(0xFFFE9A8B)],
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: const Icon(Icons.lightbulb, color: Colors.white, size: 24),
+              ),
+              const SizedBox(width: 16),
               Text(
                 'What\'s Next?',
                 style: GoogleFonts.poppins(
@@ -397,6 +483,7 @@ class _StreamRecommendationResultPageState extends State<StreamRecommendationRes
                       color: Colors.white70,
                       height: 1.4,
                     ),
+                    overflow: TextOverflow.visible,
                   ),
                 ),
               ],
@@ -434,33 +521,39 @@ class _StreamRecommendationResultPageState extends State<StreamRecommendationRes
 
   Widget _buildBackButton() {
     return Container(
-      width: double.infinity,
-      height: 48,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
-        ),
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+      margin: const EdgeInsets.all(20),
+      child: SizedBox(
+        width: double.infinity,
+        height: 56,
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF667EEA),
+            foregroundColor: Colors.white,
+            elevation: 8,
+            shadowColor: const Color(0xFF667EEA).withOpacity(0.4),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
           ),
-        ),
-        child: Text(
-          'Go To Home Page',
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.home, size: 24),
+              const SizedBox(width: 12),
+              Text(
+                'Go To Home Page',
+                style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ),
       ),

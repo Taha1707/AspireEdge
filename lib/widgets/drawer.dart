@@ -3,6 +3,7 @@ import 'package:auth_reset_pass/pages/cv_tips.dart';
 import 'package:auth_reset_pass/pages/interview_preparation.dart';
 import 'package:auth_reset_pass/pages/quiz_intro.dart';
 import 'package:auth_reset_pass/pages/stream_selector.dart';
+import 'package:auth_reset_pass/pages/resources_hub.dart';
 import 'package:flutter/material.dart';
 import '../pages/testimonials.dart';
 import '../pages/contact_page.dart';
@@ -111,7 +112,12 @@ class UserDrawer extends StatelessWidget {
 
             // 3) Resources Hub
             _sectionHeader("Resources Hub"),
-            _menuItem(context, Icons.folder, "Resources Hub"),
+            _menuItem(
+              context,
+              Icons.folder,
+              "Resources Hub",
+              page: const ResourcesHubPage(),
+            ),
 
             // 4) Career Quiz
             _sectionHeader("Career Quiz"),
