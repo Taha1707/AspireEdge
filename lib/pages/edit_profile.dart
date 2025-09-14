@@ -28,7 +28,6 @@ class _EditProfilePageState extends State<EditProfilePage>
   bool _isLoading = false;
   bool _isUpdating = false;
   bool _hasChanges = false;
-  bool _changingPassword = false;
   bool _obscureOld = true;
   bool _obscureNew = true;
   bool _obscureConfirm = true;
@@ -64,12 +63,9 @@ class _EditProfilePageState extends State<EditProfilePage>
     _loadUserProfile();
     _animationController.forward();
 
-    // Listen for changes
+    // Listen for changes (only profile fields, not password fields)
     _nameController.addListener(_checkForChanges);
     _phoneController.addListener(_checkForChanges);
-    _oldPwdController.addListener(_checkForChanges);
-    _newPwdController.addListener(_checkForChanges);
-    _confirmPwdController.addListener(_checkForChanges);
   }
 
   @override
@@ -89,17 +85,9 @@ class _EditProfilePageState extends State<EditProfilePage>
     final hasPhoneChanged =
         _phoneController.text.trim() != (originalPhone ?? '');
     final hasTierChanged = currentTier != originalTier;
-    final wantsPasswordChange =
-        _oldPwdController.text.isNotEmpty ||
-        _newPwdController.text.isNotEmpty ||
-        _confirmPwdController.text.isNotEmpty;
 
     setState(() {
-      _hasChanges =
-          hasNameChanged ||
-          hasPhoneChanged ||
-          hasTierChanged ||
-          wantsPasswordChange;
+      _hasChanges = hasNameChanged || hasPhoneChanged || hasTierChanged;
     });
   }
 
@@ -146,7 +134,54 @@ class _EditProfilePageState extends State<EditProfilePage>
   }
 
   Future<void> _updateProfile() async {
-    if (!_formKey.currentState!.validate() || !_hasChanges) return;
+    // Only validate profile fields, not password fields
+    if (_nameController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.error, color: Colors.red),
+              SizedBox(width: 8),
+              Text('Please enter your name'),
+            ],
+          ),
+          backgroundColor: Colors.red.withOpacity(0.8),
+        ),
+      );
+      return;
+    }
+
+    if (currentTier == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.error, color: Colors.red),
+              SizedBox(width: 8),
+              Text('Please select your education tier'),
+            ],
+          ),
+          backgroundColor: Colors.red.withOpacity(0.8),
+        ),
+      );
+      return;
+    }
+
+    if (!_hasChanges) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.info, color: Colors.blue),
+              SizedBox(width: 8),
+              Text('No changes to save'),
+            ],
+          ),
+          backgroundColor: Colors.blue.withOpacity(0.8),
+        ),
+      );
+      return;
+    }
 
     setState(() {
       _isUpdating = true;
@@ -155,6 +190,7 @@ class _EditProfilePageState extends State<EditProfilePage>
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
+        // Update profile information only
         await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
@@ -217,6 +253,9 @@ class _EditProfilePageState extends State<EditProfilePage>
   void _resetChanges() {
     _nameController.text = originalName ?? '';
     _phoneController.text = originalPhone ?? '';
+    _oldPwdController.clear();
+    _newPwdController.clear();
+    _confirmPwdController.clear();
     setState(() {
       currentTier = originalTier;
       _hasChanges = false;
@@ -619,8 +658,12 @@ class _EditProfilePageState extends State<EditProfilePage>
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              validator:
-                  (v) => (v == null || v.isEmpty) ? 'Enter old password' : null,
+              validator: (v) {
+                if (v == null || v.isEmpty) {
+                  return 'Please enter your current password';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 12),
             // New password
@@ -653,8 +696,15 @@ class _EditProfilePageState extends State<EditProfilePage>
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              validator:
-                  (v) => (v == null || v.length < 6) ? 'Min 6 chars' : null,
+              validator: (v) {
+                if (v == null || v.isEmpty) {
+                  return 'Please enter a new password';
+                }
+                if (v.length < 6) {
+                  return 'Password must be at least 6 characters';
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 12),
             // Confirm password
@@ -688,14 +738,71 @@ class _EditProfilePageState extends State<EditProfilePage>
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              validator:
-                  (v) =>
-                      (v != _newPwdController.text)
-                          ? 'Passwords do not match'
-                          : null,
+              validator: (v) {
+                if (v == null || v.isEmpty) {
+                  return 'Please confirm your new password';
+                }
+                if (v != _newPwdController.text) {
+                  return 'Passwords do not match';
+                }
+                return null;
+              },
             ),
-            const SizedBox(height: 12),
-            // Password is updated on Save Changes; no separate button
+            const SizedBox(height: 16),
+            // Separate Change Password Button
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: _isUpdating ? null : _changePasswordOnly,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child:
+                        _isUpdating
+                            ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
+                              ),
+                            )
+                            : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.lock_reset, color: Colors.white),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Change Password',
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -888,43 +995,203 @@ class _EditProfilePageState extends State<EditProfilePage>
     );
   }
 
+  Future<void> _changePasswordOnly() async {
+    // Validate password fields first
+    if (_oldPwdController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.error, color: Colors.red),
+              SizedBox(width: 8),
+              Text('Please enter your current password'),
+            ],
+          ),
+          backgroundColor: Colors.red.withOpacity(0.8),
+        ),
+      );
+      return;
+    }
+
+    if (_newPwdController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.error, color: Colors.red),
+              SizedBox(width: 8),
+              Text('Please enter your new password'),
+            ],
+          ),
+          backgroundColor: Colors.red.withOpacity(0.8),
+        ),
+      );
+      return;
+    }
+
+    if (_newPwdController.text.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.error, color: Colors.red),
+              SizedBox(width: 8),
+              Text('Password must be at least 6 characters'),
+            ],
+          ),
+          backgroundColor: Colors.red.withOpacity(0.8),
+        ),
+      );
+      return;
+    }
+
+    if (_newPwdController.text != _confirmPwdController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.error, color: Colors.red),
+              SizedBox(width: 8),
+              Text('New passwords do not match'),
+            ],
+          ),
+          backgroundColor: Colors.red.withOpacity(0.8),
+        ),
+      );
+      return;
+    }
+
+    // Call the main change password function
+    await _changePassword();
+  }
+
   Future<void> _changePassword() async {
-    if (!_formKey.currentState!.validate()) return;
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
+
     final email =
         _emailController.text.trim().isNotEmpty
             ? _emailController.text.trim()
             : (user.email ?? '');
+
     if (email.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Email unavailable for reauthentication')),
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.error, color: Colors.red),
+              SizedBox(width: 8),
+              Text('Email unavailable for reauthentication'),
+            ],
+          ),
+          backgroundColor: Colors.red.withOpacity(0.8),
+        ),
       );
       return;
     }
-    setState(() => _changingPassword = true);
+
+    setState(() => _isUpdating = true);
+
     try {
-      final cred = EmailAuthProvider.credential(
+      // Re-authenticate user with old password
+      final credential = EmailAuthProvider.credential(
         email: email,
         password: _oldPwdController.text.trim(),
       );
-      await user.reauthenticateWithCredential(cred);
+
+      await user.reauthenticateWithCredential(credential);
+
+      // Update password
       await user.updatePassword(_newPwdController.text.trim());
+
+      // Clear password fields
       _oldPwdController.clear();
       _newPwdController.clear();
       _confirmPwdController.clear();
+
+      if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Password updated successfully')),
-      );
+          SnackBar(
+            content: Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.green),
+                SizedBox(width: 8),
+                Text('Password updated successfully!'),
+              ],
+            ),
+            backgroundColor: Colors.green.withOpacity(0.8),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
     } on FirebaseAuthException catch (e) {
-      String msg = e.message ?? 'Password update failed';
-      if (e.code == 'wrong-password') msg = 'Old password is incorrect';
-      if (e.code == 'weak-password') msg = 'New password is too weak';
-      if (e.code == 'requires-recent-login')
-        msg = 'Please log in again and retry';
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      String message = 'Password update failed';
+
+      switch (e.code) {
+        case 'wrong-password':
+          message = 'Old password is incorrect. Please try again.';
+          break;
+        case 'weak-password':
+          message =
+              'New password is too weak. Please choose a stronger password.';
+          break;
+        case 'requires-recent-login':
+          message = 'Please log in again and try changing your password.';
+          break;
+        case 'invalid-credential':
+          message = 'Invalid credentials. Please check your old password.';
+          break;
+        case 'user-mismatch':
+          message = 'User mismatch. Please try again.';
+          break;
+        case 'user-not-found':
+          message = 'User not found. Please try again.';
+          break;
+        case 'invalid-email':
+          message = 'Invalid email address.';
+          break;
+        case 'operation-not-allowed':
+          message = 'Password change is not allowed. Please contact support.';
+          break;
+        default:
+          message = e.message ?? 'Password update failed. Please try again.';
+      }
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                Icon(Icons.error, color: Colors.red),
+                SizedBox(width: 8),
+                Expanded(child: Text(message)),
+              ],
+            ),
+            backgroundColor: Colors.red.withOpacity(0.8),
+            duration: Duration(seconds: 4),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                Icon(Icons.error, color: Colors.red),
+                SizedBox(width: 8),
+                Text('An unexpected error occurred: ${e.toString()}'),
+              ],
+            ),
+            backgroundColor: Colors.red.withOpacity(0.8),
+            duration: Duration(seconds: 4),
+          ),
+        );
+      }
     } finally {
-      if (mounted) setState(() => _changingPassword = false);
+      if (mounted) {
+        setState(() => _isUpdating = false);
+      }
     }
   }
 }

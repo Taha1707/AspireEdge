@@ -1,10 +1,13 @@
 import 'package:auth_reset_pass/pages/career_bank.dart';
 import 'package:auth_reset_pass/pages/cv_tips.dart';
+import 'package:auth_reset_pass/pages/interview_preparation.dart';
 import 'package:auth_reset_pass/pages/quiz_intro.dart';
+import 'package:auth_reset_pass/pages/stream_selector.dart';
 import 'package:flutter/material.dart';
 import '../pages/testimonials.dart';
 import '../pages/contact_page.dart';
 import '../pages/feedback_page.dart';
+import '../pages/about_us_page.dart';
 import '../services/authentication.dart';
 import '../pages/login_page.dart';
 
@@ -72,7 +75,14 @@ class UserDrawer extends StatelessWidget {
 
             // 2) Admission and Coaching Tools
             _sectionHeader("Admission & Coaching"),
-            _subMenuItem(context, Icons.school, "Stream Selector"),
+            _subMenuItem(context, Icons.school, "Stream Selector",
+              onTap: () {
+              Navigator.pop(context); // close the drawer first
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const StreamSelectorPage()),
+              );
+            },),
             _subMenuItem(
               context,
               Icons.article,
@@ -90,6 +100,13 @@ class UserDrawer extends StatelessWidget {
               context,
               Icons.record_voice_over,
               "Interview Preparation",
+              onTap: () {
+                Navigator.pop(context); // close the drawer first
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const InterviewPreparationPage()),
+                );
+              },
             ),
 
             // 3) Resources Hub
@@ -127,7 +144,16 @@ class UserDrawer extends StatelessWidget {
               page: const FeedbackPage(),
             ),
 
-            // 8) Contact
+            // 8) About Us
+            _sectionHeader("About"),
+            _menuItem(
+              context,
+              Icons.info,
+              "About Us",
+              page: const AboutUsPage(),
+            ),
+
+            // 9) Contact
             _sectionHeader("Contact"),
             _menuItem(
               context,
@@ -186,7 +212,7 @@ class UserDrawer extends StatelessWidget {
     Widget? page,
   }) {
     return ListTile(
-      leading: Icon(icon, color: Colors.lightBlueAccent),
+      leading: Icon(icon, color: Colors.lightBlueAccent, size: 22),
       title: Text(
         title,
         style: const TextStyle(color: Colors.white, fontSize: 15),
@@ -203,16 +229,17 @@ class UserDrawer extends StatelessWidget {
       },
       hoverColor: Colors.blueGrey.withOpacity(0.2),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
     );
   }
 
   // Sub menu items (indented)
   Widget _subMenuItem(
-      BuildContext context,
-      IconData icon,
-      String title, {
-        VoidCallback? onTap,
-      }) {
+    BuildContext context,
+    IconData icon,
+    String title, {
+    VoidCallback? onTap,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(left: 30),
       child: ListTile(
@@ -221,6 +248,7 @@ class UserDrawer extends StatelessWidget {
           title,
           style: const TextStyle(color: Colors.white70, fontSize: 14),
         ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
         onTap: () {
           if (onTap != null) {
             // 🔹 If custom action is provided, run it
@@ -236,7 +264,6 @@ class UserDrawer extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class AdminDrawer extends StatelessWidget {
@@ -320,9 +347,8 @@ class AdminDrawer extends StatelessWidget {
 
   Widget _menuItem(BuildContext context, IconData icon, String title) {
     return ListTile(
-      leading: Icon(icon, color: Colors.lightBlueAccent),
-      title: const Text(' ', style: TextStyle(color: Colors.transparent)),
-      subtitle: Text(
+      leading: Icon(icon, color: Colors.lightBlueAccent, size: 22),
+      title: Text(
         title,
         style: const TextStyle(color: Colors.white, fontSize: 15),
       ),
@@ -332,6 +358,7 @@ class AdminDrawer extends StatelessWidget {
       },
       hoverColor: Colors.blueGrey.withOpacity(0.2),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
     );
   }
 }

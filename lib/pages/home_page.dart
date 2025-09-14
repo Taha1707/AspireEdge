@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../services/authentication.dart';
 import '../widgets/auth_guard.dart';
 import '../widgets/drawer.dart';
+import 'bug_report_page.dart';
 import 'login_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -91,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.w500,
                 ),
                 onTap: (index) {
-                  if (index == 3) {
+                  if (index == 1) {
                     // 👇 Navigate to Profile Page
                     Navigator.push(
                       context,
@@ -101,7 +102,17 @@ class _HomePageState extends State<HomePage> {
                     );
                     return;
                   }
-                  if (index == 4) {
+                  if (index == 2) {
+                    // 👇 Navigate to Bug Report Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BugReportPage(),
+                      ),
+                    );
+                    return;
+                  }
+                  if (index == 3) {
                     _scaffoldKey.currentState?.openDrawer();
                     return;
                   }
@@ -115,20 +126,16 @@ class _HomePageState extends State<HomePage> {
                     activeIcon: Icon(Icons.home),
                     label: 'Home',
                   ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.explore_outlined),
-                    activeIcon: Icon(Icons.explore),
-                    label: 'Explore',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.notifications_none),
-                    activeIcon: Icon(Icons.notifications),
-                    label: 'Alerts',
-                  ),
+
                   BottomNavigationBarItem(
                     icon: Icon(Icons.person_outline),
                     activeIcon: Icon(Icons.person),
                     label: 'Profile',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.bug_report_outlined),
+                    activeIcon: Icon(Icons.bug_report),
+                    label: 'Bug Report',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.more_horiz),
@@ -140,6 +147,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+
       ),
     );
   }
