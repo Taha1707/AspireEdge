@@ -6,9 +6,7 @@ import 'admin_home.dart';
 import '../widgets/drawer.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:convert';
-import 'dart:typed_data';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:file_saver/file_saver.dart';
+import 'bug_reports_page.dart';
 
 class AdminTestimonialsListPage extends StatelessWidget {
   const AdminTestimonialsListPage({super.key});
@@ -346,288 +344,211 @@ class _AdminListScaffold extends StatelessWidget {
     required this.itemBuilder,
   });
 
+  String _getSubtitle(String title) {
+    switch (title) {
+      case 'Testimonials':
+        return 'Manage user success stories and testimonials';
+      case 'Feedback':
+        return 'Review and respond to user feedback';
+      case 'Contact Inquiries':
+        return 'Handle contact form submissions';
+      case 'Users':
+        return 'Manage user accounts and permissions';
+      default:
+        return 'Admin management panel';
+    }
+  }
+
+  IconData _getIcon(String title) {
+    switch (title) {
+      case 'Testimonials':
+        return Icons.people;
+      case 'Feedback':
+        return Icons.feedback;
+      case 'Contact Inquiries':
+        return Icons.contact_mail;
+      case 'Users':
+        return Icons.group;
+      default:
+        return Icons.admin_panel_settings;
+    }
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.indigo.shade900, Colors.blueGrey.shade900],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed:
+                () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AdminHomePage()),
+                ),
+            icon: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Colors.white.withOpacity(0.2),
+                  width: 1,
+                ),
+              ),
+              child: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+          ),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
+                ),
+                Text(
+                  _getSubtitle(title),
+                  style: GoogleFonts.poppins(
+                    color: Colors.white70,
+                    fontSize: 14,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+              ),
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF667EEA).withOpacity(0.3),
+                  blurRadius: 15,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Icon(_getIcon(title), color: Colors.white, size: 28),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const AdminHomePage()),
-            );
-          },
-        ),
-        title: Text(
-          title,
-          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-        ),
-        actions: [
-          IconButton(
-            tooltip: 'Export CSV',
-            icon: const Icon(Icons.download_outlined),
-            onPressed: () async {
-              final snap = await query.get();
-              final buffer = StringBuffer();
-              if (title == 'Testimonials') {
-                buffer.writeln('name,story,createdAt');
-                for (final d in snap.docs) {
-                  final m = d.data() as Map<String, dynamic>;
-                  buffer.writeln(
-                    '"${(m['name'] ?? '').toString().replaceAll('"', '""')}","${(m['story'] ?? '').toString().replaceAll('"', '""')}",${(m['createdAt'] is Timestamp) ? (m['createdAt'] as Timestamp).toDate().toIso8601String() : ''}',
-                  );
-                }
-              } else if (title == 'Feedback') {
-                buffer.writeln('name,email,type,message,createdAt');
-                for (final d in snap.docs) {
-                  final m = d.data() as Map<String, dynamic>;
-                  buffer.writeln(
-                    '"${(m['name'] ?? '').toString().replaceAll('"', '""')}","${(m['email'] ?? '').toString().replaceAll('"', '""')}","${(m['type'] ?? '').toString().replaceAll('"', '""')}","${(m['message'] ?? '').toString().replaceAll('"', '""')}",${(m['createdAt'] is Timestamp) ? (m['createdAt'] as Timestamp).toDate().toIso8601String() : ''}',
-                  );
-                }
-              } else {
-                buffer.writeln('name,email,phone,message,createdAt');
-                for (final d in snap.docs) {
-                  final m = d.data() as Map<String, dynamic>;
-                  buffer.writeln(
-                    '"${(m['name'] ?? '').toString().replaceAll('"', '""')}","${(m['email'] ?? '').toString().replaceAll('"', '""')}","${(m['phone'] ?? '').toString().replaceAll('"', '""')}","${(m['message'] ?? '').toString().replaceAll('"', '""')}",${(m['createdAt'] is Timestamp) ? (m['createdAt'] as Timestamp).toDate().toIso8601String() : ''}',
-                  );
-                }
-              }
-              final csv = buffer.toString();
-              await showDialog(
-                context: context,
-                builder:
-                    (ctx) => AlertDialog(
-                      backgroundColor: const Color(0xFF1A1A2E),
-                      title: Text(
-                        'CSV Preview',
-                        style: GoogleFonts.poppins(color: Colors.white),
-                      ),
-                      content: SingleChildScrollView(
-                        child: SelectableText(
-                          csv,
-                          style: GoogleFonts.robotoMono(
-                            color: Colors.white70,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () async {
-                            await Clipboard.setData(ClipboardData(text: csv));
-                            if (Navigator.canPop(ctx)) Navigator.pop(ctx);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('CSV copied to clipboard'),
-                              ),
-                            );
-                          },
-                          child: const Text('Copy'),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(ctx),
-                          child: const Text('Close'),
-                        ),
-                      ],
-                    ),
-              );
-            },
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF1A1A2E),
+                  Color(0xFF16213E),
+                  Color(0xFF0F4C75),
+                  Color(0xFF3282B8),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: [0.0, 0.3, 0.7, 1.0],
+              ),
+            ),
           ),
-          IconButton(
-            tooltip: 'Export PDF',
-            icon: const Icon(Icons.picture_as_pdf_outlined),
-            onPressed: () async {
-              final snap = await query.get();
-              final doc = pw.Document();
-              doc.addPage(
-                pw.MultiPage(
-                  build: (ctx) {
-                    final rows = <pw.Widget>[];
-                    rows.add(
-                      pw.Text(
-                        title,
-                        style: pw.TextStyle(
-                          fontSize: 18,
-                          fontWeight: pw.FontWeight.bold,
-                        ),
-                      ),
-                    );
-                    rows.add(pw.SizedBox(height: 8));
-                    for (final d in snap.docs) {
-                      final m = d.data() as Map<String, dynamic>;
-                      if (title == 'Testimonials') {
-                        rows.add(
-                          pw.Column(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            children: [
-                              pw.Text(
-                                (m['name'] ?? '').toString(),
-                                style: pw.TextStyle(
-                                  fontWeight: pw.FontWeight.bold,
-                                ),
-                              ),
-                              pw.SizedBox(height: 2),
-                              pw.Text((m['story'] ?? '').toString()),
-                              pw.Divider(),
-                            ],
-                          ),
-                        );
-                      } else if (title == 'Feedback') {
-                        rows.add(
-                          pw.Column(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            children: [
-                              pw.Text(
-                                ((m['name'] ?? '').toString() +
-                                        ' • ' +
-                                        (m['email'] ?? '').toString())
-                                    .trim(),
-                              ),
-                              pw.SizedBox(height: 2),
-                              pw.Text(
-                                ((m['type'] ?? '').toString() +
-                                        ' • ' +
-                                        (m['message'] ?? '').toString())
-                                    .trim(),
-                              ),
-                              pw.Divider(),
-                            ],
-                          ),
-                        );
-                      } else {
-                        rows.add(
-                          pw.Column(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            children: [
-                              pw.Text(
-                                ((m['name'] ?? '').toString() +
-                                        ' • ' +
-                                        (m['email'] ?? '').toString())
-                                    .trim(),
-                              ),
-                              pw.SizedBox(height: 2),
-                              pw.Text((m['message'] ?? '').toString()),
-                              pw.Divider(),
-                            ],
+          SafeArea(
+            child: Column(
+              children: [
+                _buildHeader(context),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: stream,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFF667EEA),
                           ),
                         );
                       }
-                    }
-                    return rows;
-                  },
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'No records found',
+                            style: GoogleFonts.poppins(color: Colors.white70),
+                          ),
+                        );
+                      }
+                      final docs = snapshot.data!.docs;
+                      return ListView.separated(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: docs.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 10),
+                        itemBuilder:
+                            (context, index) => itemBuilder(docs[index]),
+                      );
+                    },
+                  ),
                 ),
-              );
-              final bytes = await doc.save();
-              await FileSaver.instance.saveFile(
-                name: '${title.toLowerCase().replaceAll(' ', '_')}.pdf',
-                bytes: Uint8List.fromList(bytes),
-                mimeType: MimeType.pdf,
-              );
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('PDF exported')));
-            },
-          ),
-          IconButton(
-            tooltip: 'Export DOC',
-            icon: const Icon(Icons.description_outlined),
-            onPressed: () async {
-              final snap = await query.get();
-              final buffer = StringBuffer();
-              buffer.writeln(title);
-              buffer.writeln('');
-              for (final d in snap.docs) {
-                final m = d.data() as Map<String, dynamic>;
-                if (title == 'Testimonials') {
-                  buffer.writeln((m['name'] ?? '').toString());
-                  buffer.writeln((m['story'] ?? '').toString());
-                } else if (title == 'Feedback') {
-                  buffer.writeln(
-                    ((m['name'] ?? '').toString() +
-                            ' • ' +
-                            (m['email'] ?? '').toString())
-                        .trim(),
-                  );
-                  buffer.writeln(
-                    ((m['type'] ?? '').toString() +
-                            ' • ' +
-                            (m['message'] ?? '').toString())
-                        .trim(),
-                  );
-                } else {
-                  buffer.writeln(
-                    ((m['name'] ?? '').toString() +
-                            ' • ' +
-                            (m['email'] ?? '').toString())
-                        .trim(),
-                  );
-                  buffer.writeln((m['message'] ?? '').toString());
-                }
-                buffer.writeln('');
-              }
-              final bytes = Uint8List.fromList(buffer.toString().codeUnits);
-              await FileSaver.instance.saveFile(
-                name: '${title.toLowerCase().replaceAll(' ', '_')}.doc',
-                bytes: bytes,
-                mimeType: MimeType.microsoftWord,
-              );
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('DOC exported')));
-            },
+              ],
+            ),
           ),
         ],
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF1A1A2E),
-              Color(0xFF16213E),
-              Color(0xFF0F4C75),
-              Color(0xFF3282B8),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.0, 0.3, 0.7, 1.0],
-          ),
-        ),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: stream,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(color: Color(0xFF667EEA)),
-              );
-            }
-            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return Center(
-                child: Text(
-                  'No records found',
-                  style: GoogleFonts.poppins(color: Colors.white70),
-                ),
-              );
-            }
-            final docs = snapshot.data!.docs;
-            return ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemCount: docs.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 10),
-              itemBuilder: (context, index) => itemBuilder(docs[index]),
-            );
-          },
-        ),
-      ),
-      bottomNavigationBar: _AdminBottomNav(current: title),
       drawer: AdminDrawer(
         onMenuItemSelected: (t) {
-          if (t == 'Feedback Forms') {
+          if (t == 'Careers') {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const AdminHomePage(initialIndex: 1),
+              ),
+            );
+          } else if (t == 'Quizzes') {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const AdminHomePage(initialIndex: 2),
+              ),
+            );
+          } else if (t == 'Testimonials/Success Carousel') {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const AdminTestimonialsListPage(),
+              ),
+            );
+          } else if (t == 'Feedback Forms') {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (_) => const AdminFeedbackListPage()),
@@ -637,26 +558,10 @@ class _AdminListScaffold extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (_) => const AdminInquiriesListPage()),
             );
-          } else if (t == 'Testimonials/Success Carousel') {
+          } else if (t == 'Bug Reports') {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                builder: (_) => const AdminTestimonialsListPage(),
-              ),
-            );
-          } else if (t == 'Resources Hub') {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const AdminHomePage(initialIndex: 3),
-              ),
-            );
-          } else if (t == 'Multimedia Guidance') {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const AdminHomePage(initialIndex: 3),
-              ),
+              MaterialPageRoute(builder: (_) => const BugReportsPage()),
             );
           }
         },
@@ -737,103 +642,6 @@ class _AdminListTile extends StatelessWidget {
               icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AdminBottomNav extends StatelessWidget {
-  final String current;
-  const _AdminBottomNav({required this.current});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.indigo.shade900, Colors.blueGrey.shade900],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            blurRadius: 12,
-            offset: const Offset(0, -4),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false,
-        child: Theme(
-          data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
-          child: BottomNavigationBar(
-            backgroundColor: Colors.transparent,
-            currentIndex: 0,
-            type: BottomNavigationBarType.fixed,
-            showUnselectedLabels: true,
-            selectedItemColor: Colors.cyanAccent.shade200,
-            unselectedItemColor: Colors.white70,
-            onTap: (index) {
-              if (index == 0) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => const AdminHomePage()),
-                );
-              } else if (index == 1) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const AdminHomePage(initialIndex: 1),
-                  ),
-                );
-              } else if (index == 2) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const AdminHomePage(initialIndex: 2),
-                  ),
-                );
-              } else if (index == 3) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const AdminHomePage(initialIndex: 3),
-                  ),
-                );
-              } else if (index == 4) {
-                Scaffold.of(context).openDrawer();
-              }
-            },
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard_outlined),
-                activeIcon: Icon(Icons.dashboard),
-                label: 'Dashboard',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.business_center_outlined),
-                activeIcon: Icon(Icons.business_center),
-                label: 'Careers',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.quiz_outlined),
-                activeIcon: Icon(Icons.quiz),
-                label: 'Quizzes',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.article_outlined),
-                activeIcon: Icon(Icons.article),
-                label: 'Content',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.more_horiz),
-                activeIcon: Icon(Icons.more_horiz),
-                label: 'More',
-              ),
-            ],
-          ),
         ),
       ),
     );

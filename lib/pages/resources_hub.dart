@@ -116,7 +116,7 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
         bookmarkedResources = allResources
             .where((resource) => bookmarkedIds.contains(resource.id))
             .toList();
-        
+
         // Update bookmark status in all resources
         for (var resource in allResources) {
           resource.isBookmarked = bookmarkedIds.contains(resource.id);
@@ -169,8 +169,8 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            resource.isBookmarked 
-                ? 'Added to bookmarks' 
+            resource.isBookmarked
+                ? 'Added to bookmarks'
                 : 'Removed from bookmarks',
           ),
           backgroundColor: resource.isBookmarked ? Colors.green : Colors.orange,
@@ -197,7 +197,7 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
 
     if (searchQuery.isNotEmpty) {
       resources = resources.where((resource) =>
-          resource.title.toLowerCase().contains(searchQuery.toLowerCase()) ||
+      resource.title.toLowerCase().contains(searchQuery.toLowerCase()) ||
           resource.description.toLowerCase().contains(searchQuery.toLowerCase()) ||
           resource.tags.any((tag) => tag.toLowerCase().contains(searchQuery.toLowerCase()))).toList();
     }
@@ -256,34 +256,34 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
             child: isLoading
                 ? _buildLoadingWidget()
                 : FadeTransition(
-                    opacity: _fadeAnimation,
-                    child: CustomScrollView(
-                      slivers: [
-                        // Header
-                        SliverToBoxAdapter(
-                          child: _buildHeader(),
-                        ),
-
-                        // Quick Stats
-                        SliverToBoxAdapter(
-                          child: _buildQuickStats(),
-                        ),
-
-                        // Search Bar
-                        SliverToBoxAdapter(
-                          child: _buildSearchBar(),
-                        ),
-
-                        // Category Filter
-                        SliverToBoxAdapter(
-                          child: _buildCategoryFilter(),
-                        ),
-
-                        // Resources Content
-                        _buildResourcesGrid(),
-                      ],
-                    ),
+              opacity: _fadeAnimation,
+              child: CustomScrollView(
+                slivers: [
+                  // Header
+                  SliverToBoxAdapter(
+                    child: _buildHeader(),
                   ),
+
+                  // Quick Stats
+                  SliverToBoxAdapter(
+                    child: _buildQuickStats(),
+                  ),
+
+                  // Search Bar
+                  SliverToBoxAdapter(
+                    child: _buildSearchBar(),
+                  ),
+
+                  // Category Filter
+                  SliverToBoxAdapter(
+                    child: _buildCategoryFilter(),
+                  ),
+
+                  // Resources Content
+                  _buildResourcesGrid(),
+                ],
+              ),
+            ),
           ),
         ],
       ),
@@ -389,16 +389,16 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
             child: Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                gradient: showBookmarksOnly 
+                gradient: showBookmarksOnly
                     ? const LinearGradient(
-                        colors: [Color(0xFF43E97B), Color(0xFF38D9A9)],
-                      )
+                  colors: [Color(0xFF43E97B), Color(0xFF38D9A9)],
+                )
                     : LinearGradient(
-                        colors: [Colors.white.withOpacity(0.1), Colors.white.withOpacity(0.05)],
-                      ),
+                  colors: [Colors.white.withOpacity(0.1), Colors.white.withOpacity(0.05)],
+                ),
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
-                  color: showBookmarksOnly 
+                  color: showBookmarksOnly
                       ? const Color(0xFF43E97B).withOpacity(0.5)
                       : Colors.white.withOpacity(0.2),
                   width: 1,
@@ -520,14 +520,14 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
           prefixIcon: const Icon(Icons.search, color: Colors.white70),
           suffixIcon: searchQuery.isNotEmpty
               ? IconButton(
-                  icon: const Icon(Icons.clear, color: Colors.white70),
-                  onPressed: () {
-                    _searchController.clear();
-                    setState(() {
-                      searchQuery = "";
-                    });
-                  },
-                )
+            icon: const Icon(Icons.clear, color: Colors.white70),
+            onPressed: () {
+              _searchController.clear();
+              setState(() {
+                searchQuery = "";
+              });
+            },
+          )
               : null,
           border: InputBorder.none,
         ),
@@ -556,8 +556,8 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
               decoration: BoxDecoration(
                 gradient: isSelected
                     ? const LinearGradient(
-                        colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
-                      )
+                  colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+                )
                     : null,
                 color: isSelected ? null : Colors.white.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(25),
@@ -566,12 +566,12 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
                 ),
                 boxShadow: isSelected
                     ? [
-                        BoxShadow(
-                          color: const Color(0xFF667EEA).withOpacity(0.3),
-                          blurRadius: 15,
-                          offset: const Offset(0, 5),
-                        ),
-                      ]
+                  BoxShadow(
+                    color: const Color(0xFF667EEA).withOpacity(0.3),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
+                  ),
+                ]
                     : null,
               ),
               child: Center(
@@ -613,7 +613,7 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
               ),
               const SizedBox(height: 16),
               Text(
-                showBookmarksOnly 
+                showBookmarksOnly
                     ? "No bookmarked resources yet"
                     : "No resources found",
                 style: GoogleFonts.poppins(
@@ -640,16 +640,16 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
     }
 
     return SliverPadding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       sliver: SliverGrid(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 0.75,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
+          childAspectRatio: 0.8,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
         ),
         delegate: SliverChildBuilderDelegate(
-          (context, index) {
+              (context, index) {
             return AnimationConfiguration.staggeredGrid(
               position: index,
               duration: const Duration(milliseconds: 375),
@@ -756,7 +756,7 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -764,29 +764,33 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
                       resource.title,
                       style: GoogleFonts.poppins(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 13,
                         fontWeight: FontWeight.w600,
+                        height: 1.2,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      resource.description,
-                      style: GoogleFonts.poppins(
-                        color: Colors.white70,
-                        fontSize: 11,
+                    const SizedBox(height: 6),
+                    Expanded(
+                      child: Text(
+                        resource.description,
+                        style: GoogleFonts.poppins(
+                          color: Colors.white70,
+                          fontSize: 10,
+                          height: 1.3,
+                        ),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                    const Spacer(),
+                    const SizedBox(height: 8),
                     Row(
                       children: [
                         Icon(
                           Icons.person,
                           color: Colors.white54,
-                          size: 12,
+                          size: 10,
                         ),
                         const SizedBox(width: 4),
                         Expanded(
@@ -794,7 +798,7 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
                             resource.author,
                             style: GoogleFonts.poppins(
                               color: Colors.white54,
-                              fontSize: 10,
+                              fontSize: 9,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -817,151 +821,107 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
       builder: (BuildContext context) {
         return Dialog(
           backgroundColor: Colors.transparent,
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.height * 0.8,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xFF1A1A2E),
-                  Color(0xFF16213E),
-                  Color(0xFF0F4C75),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(25),
-              border: Border.all(color: Colors.white.withOpacity(0.2)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                ),
-              ],
+          insetPadding: const EdgeInsets.all(16),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * 0.95,
+              maxHeight: MediaQuery.of(context).size.height * 0.85,
             ),
-            child: Column(
-              children: [
-                // Header
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25),
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0xFF1A1A2E),
+                    Color(0xFF16213E),
+                    Color(0xFF0F4C75),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(color: Colors.white.withOpacity(0.2)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  // Header
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            gradient: _getCategoryGradient(resource.category),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Icon(
+                            _getCategoryIcon(resource.category),
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                resource.title,
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                resource.category,
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(
+                            Icons.close,
+                            color: Colors.white70,
+                            size: 24,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          gradient: _getCategoryGradient(resource.category),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Icon(
-                          _getCategoryIcon(resource.category),
-                          color: Colors.white,
-                          size: 24,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              resource.title,
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              resource.category,
-                              style: GoogleFonts.poppins(
-                                color: Colors.white70,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.white70,
-                          size: 24,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
 
-                // Content
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Description
-                        Text(
-                          "Description",
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          resource.description,
-                          style: GoogleFonts.poppins(
-                            color: Colors.white70,
-                            fontSize: 14,
-                            height: 1.5,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-
-                        // Author and Date
-                        Row(
-                          children: [
-                            const Icon(Icons.person, color: Colors.white54, size: 16),
-                            const SizedBox(width: 8),
-                            Text(
-                              "Author: ${resource.author}",
-                              style: GoogleFonts.poppins(
-                                color: Colors.white70,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Icons.calendar_today, color: Colors.white54, size: 16),
-                            const SizedBox(width: 8),
-                            Text(
-                              "Published: ${_formatDate(resource.publishDate)}",
-                              style: GoogleFonts.poppins(
-                                color: Colors.white70,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-
-                        // Tags
-                        if (resource.tags.isNotEmpty) ...[
+                  // Content
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Description
                           Text(
-                            "Tags",
+                            "Description",
                             style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 16,
@@ -969,66 +929,120 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
                             ),
                           ),
                           const SizedBox(height: 8),
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: resource.tags.map((tag) {
-                              return Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF43E97B).withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(
-                                    color: const Color(0xFF43E97B).withOpacity(0.3),
-                                  ),
-                                ),
-                                child: Text(
-                                  tag,
-                                  style: GoogleFonts.poppins(
-                                    color: const Color(0xFF43E97B),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
+                          Text(
+                            resource.description,
+                            style: GoogleFonts.poppins(
+                              color: Colors.white70,
+                              fontSize: 14,
+                              height: 1.5,
+                            ),
                           ),
                           const SizedBox(height: 20),
-                        ],
 
-                        // Action Buttons
-                        Row(
-                          children: [
-                            Expanded(
-                              child: _buildActionButton(
-                                resource.isBookmarked ? "Remove Bookmark" : "Add Bookmark",
-                                resource.isBookmarked ? Icons.bookmark_remove : Icons.bookmark_add,
-                                resource.isBookmarked ? Colors.orange : const Color(0xFF43E97B),
-                                () {
-                                  _toggleBookmark(resource);
-                                  Navigator.pop(context);
-                                },
+                          // Author and Date
+                          Row(
+                            children: [
+                              const Icon(Icons.person, color: Colors.white54, size: 16),
+                              const SizedBox(width: 8),
+                              Text(
+                                "Author: ${resource.author}",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              const Icon(Icons.calendar_today, color: Colors.white54, size: 16),
+                              const SizedBox(width: 8),
+                              Text(
+                                "Published: ${_formatDate(resource.publishDate)}",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+
+                          // Tags
+                          if (resource.tags.isNotEmpty) ...[
+                            Text(
+                              "Tags",
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: _buildActionButton(
-                                "Open Resource",
-                                Icons.open_in_new,
-                                const Color(0xFF667EEA),
-                                () {
-                                  Navigator.pop(context);
-                                  _openResource(resource);
-                                },
-                              ),
+                            const SizedBox(height: 8),
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              children: resource.tags.map((tag) {
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF43E97B).withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(
+                                      color: const Color(0xFF43E97B).withOpacity(0.3),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    tag,
+                                    style: GoogleFonts.poppins(
+                                      color: const Color(0xFF43E97B),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
                             ),
+                            const SizedBox(height: 20),
                           ],
-                        ),
-                      ],
+
+                          // Action Buttons
+                          const SizedBox(height: 16),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _buildActionButton(
+                                  resource.isBookmarked ? "Remove" : "Bookmark",
+                                  resource.isBookmarked ? Icons.bookmark_remove : Icons.bookmark_add,
+                                  resource.isBookmarked ? Colors.orange : const Color(0xFF43E97B),
+                                      () {
+                                    _toggleBookmark(resource);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: _buildActionButton(
+                                  "Open",
+                                  Icons.open_in_new,
+                                  const Color(0xFF667EEA),
+                                      () {
+                                    Navigator.pop(context);
+                                    _openResource(resource);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -1040,31 +1054,35 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [color, color.withOpacity(0.7)],
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
               color: color.withOpacity(0.3),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
+              blurRadius: 6,
+              offset: const Offset(0, 3),
             ),
           ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: Colors.white, size: 18),
-            const SizedBox(width: 8),
-            Text(
-              title,
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
+            Icon(icon, color: Colors.white, size: 16),
+            const SizedBox(width: 6),
+            Flexible(
+              child: Text(
+                title,
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
@@ -1075,7 +1093,7 @@ class _ResourcesHubPageState extends State<ResourcesHubPage> with TickerProvider
 
   void _openResource(ResourceItem resource) {
     String url = '';
-    
+
     switch (resource.category) {
       case 'Videos':
         url = resource.videoUrl.isNotEmpty ? resource.videoUrl : resource.contentUrl;

@@ -417,11 +417,11 @@ class _ContactUsPageState extends State<ContactUsPage> {
           }
 
           final items = <Widget>[
-            detail('Email', 'hello@aspireedge.example', Icons.email_outlined),
-            detail('Phone', '+92 300 0000000', Icons.phone_outlined),
+            detail('Email', 'admin@gmail.com', Icons.email_outlined),
+            detail('Phone', '+92 3123 456789 ', Icons.phone_outlined),
             detail(
               'Address',
-              'Office Road, Karachi, Pakistan',
+              'Aptech Computer Education (Garden), Karachi, Pakistan',
               Icons.location_on_outlined,
             ),
           ];

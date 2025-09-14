@@ -5,7 +5,6 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'dart:typed_data';
 import 'dart:convert';
 
 class TestimonialsPage extends StatelessWidget {
@@ -960,7 +959,7 @@ class TestimonialsPage extends StatelessWidget {
                                   "Cancel",
                                   style: GoogleFonts.poppins(
                                     color: Colors.white70,
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -1076,7 +1075,7 @@ class TestimonialsPage extends StatelessWidget {
                                     "Share Story",
                                     style: GoogleFonts.poppins(
                                       color: Colors.white,
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),

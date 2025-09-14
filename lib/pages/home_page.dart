@@ -7,7 +7,6 @@ import 'package:auth_reset_pass/pages/about_us_page.dart';
 import 'package:auth_reset_pass/pages/settings_page.dart';
 import 'package:auth_reset_pass/pages/notifications_page.dart';
 import 'package:auth_reset_pass/pages/login_page.dart';
-import 'package:auth_reset_pass/pages/resources_hub.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +126,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 onTap: (index) {
                   if (index == 1) {
-                    // 👇 Navigate to Profile Page
+                    // Navigate to Profile Page
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -137,7 +136,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     return;
                   }
                   if (index == 2) {
-                    // 👇 Navigate to Bug Report Page
+                    // Navigate to Bug Report Page
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -160,7 +159,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     activeIcon: Icon(Icons.home),
                     label: 'Home',
                   ),
-
                   BottomNavigationBarItem(
                     icon: Icon(Icons.person_outline),
                     activeIcon: Icon(Icons.person),
@@ -181,7 +179,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ),
         ),
-
       ),
     );
   }
@@ -1186,13 +1183,15 @@ class _HomeTabState extends State<_HomeTab> with TickerProviderStateMixin {
                   size: 24,
                 ),
               ),
-              const SizedBox(width: 16),
-              Text(
-                'Start Your Journey',
-                style: GoogleFonts.poppins(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  'Start Your Journey',
+                  style: GoogleFonts.poppins(
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],
@@ -1252,7 +1251,7 @@ class _HomeTabState extends State<_HomeTab> with TickerProviderStateMixin {
                   Text(
                     'Quick Actions',
                     style: GoogleFonts.poppins(
-                      fontSize: 24,
+                      fontSize: 23,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -1330,25 +1329,6 @@ class _HomeTabState extends State<_HomeTab> with TickerProviderStateMixin {
               Expanded(
                 child: _buildActionCard(
                   context,
-                  'Resources Hub',
-                  Icons.library_books,
-                  const Color(0xFF4FACFE),
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ResourcesHubPage(),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                child: _buildActionCard(
-                  context,
                   'About Us',
                   Icons.info,
                   const Color(0xFFD299C2),
@@ -1359,10 +1339,6 @@ class _HomeTabState extends State<_HomeTab> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Container(), // Empty space for symmetry
               ),
             ],
           ),
@@ -1446,34 +1422,38 @@ class _HomeTabState extends State<_HomeTab> with TickerProviderStateMixin {
                 ),
                 child: const Icon(Icons.star, color: Colors.white, size: 24),
               ),
-              const SizedBox(width: 16),
-              Row(
-                children: [
-                  Text(
-                    'Featured Content',
-                    style: GoogleFonts.poppins(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.green.withOpacity(0.5),
-                          blurRadius: 4,
-                          spreadRadius: 1,
+              const SizedBox(width: 12),
+              Expanded(
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        'Featured Content',
+                        style: GoogleFonts.poppins(
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 6),
+                    Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.green.withOpacity(0.5),
+                            blurRadius: 4,
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -1611,7 +1591,7 @@ class _HomeTabState extends State<_HomeTab> with TickerProviderStateMixin {
                   Text(
                     'Your Progress',
                     style: GoogleFonts.poppins(
-                      fontSize: 24,
+                      fontSize: 23,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),

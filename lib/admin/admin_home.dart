@@ -5,11 +5,10 @@ import 'careers_admin_page.dart';
 import 'quizzes_admin_page.dart';
 import 'content_admin_page.dart';
 import '../widgets/drawer.dart';
-import 'content_admin_page.dart' show AdminResourcesPage, AdminMultimediaPage;
-import '_feature_card_tile.dart';
 import '../services/authentication.dart';
 import 'admin_lists.dart';
 import '../pages/login_page.dart';
+import 'bug_reports_page.dart';
 
 class AdminHomePage extends StatefulWidget {
   final int initialIndex;
@@ -34,25 +33,22 @@ class _AdminHomePageState extends State<AdminHomePage> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
       body: _buildBody(),
       bottomNavigationBar: _buildBottomNavBar(context),
       drawer: AdminDrawer(
         onMenuItemSelected: (title) {
-          if (title == 'Resources Hub') {
-            _safePush(const AdminResourcesPage());
-          } else if (title == 'Multimedia Guidance') {
-            _safePush(const AdminMultimediaPage());
+          if (title == 'Careers') {
+            setState(() => _selectedIndex = 1);
+          } else if (title == 'Quizzes') {
+            setState(() => _selectedIndex = 2);
           } else if (title == 'Testimonials/Success Carousel') {
             _safePush(const AdminTestimonialsListPage());
           } else if (title == 'Feedback Forms') {
             _safePush(const AdminFeedbackListPage());
           } else if (title == 'Contact Us') {
             _safePush(const AdminInquiriesListPage());
+          } else if (title == 'Bug Reports') {
+            _safePush(const BugReportsPage());
           } else if (title == 'Logout') {
             AuthenticationHelper().signOut().then((_) {
               if (!mounted) return;
@@ -95,13 +91,13 @@ class _AdminHomePageState extends State<AdminHomePage> {
                   children: [
                     _buildHeader(),
                     const SizedBox(height: 16),
-                    _buildDashboardCard(),
-                    const SizedBox(height: 16),
+                    _buildSectionHeader("Live Data"),
+                    const SizedBox(height: 12),
                     _buildAllStatsGrid(),
                     const SizedBox(height: 20),
+                    _buildSectionHeader("Manage Data"),
+                    const SizedBox(height: 12),
                     _buildFeatureGrid(),
-                    const SizedBox(height: 20),
-                    _buildAnnouncementsCard(),
                   ],
                 ),
               ),
@@ -112,10 +108,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
         return const CareersAdminPage();
       case 2:
         return const QuizzesAdminPage();
-      case 3:
-        return const ContentAdminPage();
-      case 4:
-        return _placeholderTab(title: "Settings");
       default:
         return const SizedBox.shrink();
     }
@@ -129,56 +121,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
         context,
       ).showSnackBar(SnackBar(content: Text('Navigation error: $e')));
     }
-  }
-
-  Widget _placeholderTab({required String title}) {
-    return Stack(
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFF1A1A2E),
-                Color(0xFF16213E),
-                Color(0xFF0F4C75),
-                Color(0xFF3282B8),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [0.0, 0.3, 0.7, 1.0],
-            ),
-          ),
-        ),
-        SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(),
-                const SizedBox(height: 16),
-                _cardWrapper(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 32),
-                    child: Center(
-                      child: Text(
-                        title,
-                        style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
   }
 
   Widget _buildBottomNavBar(BuildContext context) {
@@ -217,10 +159,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
               fontWeight: FontWeight.w500,
             ),
             onTap: (index) {
-              if (index == 4) {
+              if (index == 3) {
                 _scaffoldKey.currentState?.openDrawer();
                 return;
               }
+
               setState(() {
                 _selectedIndex = index;
               });
@@ -241,11 +184,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                 activeIcon: Icon(Icons.quiz),
                 label: 'Quizzes',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.article_outlined),
-                activeIcon: Icon(Icons.article),
-                label: 'Content',
-              ),
+
               BottomNavigationBarItem(
                 icon: Icon(Icons.more_horiz),
                 activeIcon: Icon(Icons.more_horiz),
@@ -259,79 +198,91 @@ class _AdminHomePageState extends State<AdminHomePage> {
   }
 
   Widget _buildHeader() {
-    return Row(
-      children: [
-        IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Container(
-            padding: const EdgeInsets.all(8),
+    final user = AuthenticationHelper().user;
+    final userName = user?.displayName ?? user?.email?.split('@')[0] ?? 'Admin';
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Welcome\n$userName",
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                  ),
+                ),
+                Text(
+                  "Admin Panel - Manage your platform efficiently",
+                  style: GoogleFonts.poppins(
+                    color: Colors.white70,
+                    fontSize: 14,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: Colors.white.withOpacity(0.2),
-                width: 1,
+              gradient: const LinearGradient(
+                colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
               ),
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF667EEA).withOpacity(0.3),
+                  blurRadius: 15,
+                  offset: const Offset(0, 5),
+                ),
+              ],
             ),
             child: const Icon(
-              Icons.arrow_back_ios,
+              Icons.admin_panel_settings,
+              color: Colors.white,
+              size: 28,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(
+              title == "Live Data" ? Icons.analytics : Icons.settings,
               color: Colors.white,
               size: 20,
             ),
           ),
-        ),
-        const SizedBox(width: 12),
-        Text(
-          "Admin Panel",
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _cardWrapper({required Widget child}) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(16),
-      child: child,
-    );
-  }
-
-  Widget _buildDashboardCard() {
-    return _cardWrapper(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+          const SizedBox(width: 12),
           Text(
-            "Welcome Admin 🛠",
+            title,
             style: GoogleFonts.poppins(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
               color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.5,
             ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            "Manage your platform efficiently from one place.",
-            style: GoogleFonts.poppins(fontSize: 15, color: Colors.white70),
           ),
         ],
       ),
@@ -370,11 +321,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
         "title": "Inquiries",
         "onTap": () => _safePush(const AdminInquiriesListPage()),
       },
-      {
-        "icon": Icons.folder,
-        "title": "Resources",
-        "onTap": () => _safePush(const AdminResourcesPage()),
-      },
+
     ];
 
     return LayoutBuilder(
@@ -391,12 +338,12 @@ class _AdminHomePageState extends State<AdminHomePage> {
             mainAxisSpacing: 12,
             childAspectRatio:
                 width >= 900
-                    ? 3.8
+                    ? 1.4
                     : width >= 700
-                    ? 3.4
+                    ? 1.3
                     : width >= 500
-                    ? 3.0
-                    : 2.4,
+                    ? 1.2
+                    : 1.1,
           ),
           itemCount: features.length,
           itemBuilder: (context, index) {
@@ -416,7 +363,132 @@ class _AdminHomePageState extends State<AdminHomePage> {
     required String title,
     required VoidCallback onTap,
   }) {
-    return FeatureCardTile(icon: icon, title: title, onTap: onTap);
+    final gradients = [
+      [const Color(0xFF667EEA), const Color(0xFF764BA2)],
+      [const Color(0xFF4FACFE), const Color(0xFF00F2FE)],
+      [const Color(0xFF43E97B), const Color(0xFF38F9D7)],
+      [const Color(0xFFFA709A), const Color(0xFFFE9A8B)],
+      [const Color(0xFFA8EDEA), const Color(0xFFFED6E3)],
+      [const Color(0xFFD299C2), const Color(0xFFFEF9D7)],
+    ];
+
+    final gradient = gradients[title.hashCode % gradients.length];
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header with gradient
+            Container(
+              height: 50,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: gradient,
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+              child: Stack(
+                children: [
+                  // Icon
+                  Positioned(
+                    top: 10,
+                    left: 12,
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(icon, color: Colors.white, size: 18),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Content
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Title
+                    Flexible(
+                      child: Text(
+                        title,
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    // View details button
+                    Container(
+                      width: double.infinity,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: gradient,
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: onTap,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          padding: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          "Manage",
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   // Removed old separate stats rows; consolidated into _buildAllStatsGrid
@@ -450,25 +522,23 @@ class _AdminHomePageState extends State<AdminHomePage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final double width = constraints.maxWidth;
-        final int cols = width < 360 ? 1 : 2;
-        double aspect;
-        if (cols == 1) {
-          aspect = 5.2; // wider tile, more height on very narrow screens
-        } else if (width < 420) {
-          aspect = 2.4;
-        } else {
-          aspect = 2.8;
-        }
+        const int crossAxisCount = 2; // Always show 2 items per row
 
         return GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: cols,
+            crossAxisCount: crossAxisCount,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
-            childAspectRatio: aspect,
+            childAspectRatio:
+                width >= 900
+                    ? 3.8
+                    : width >= 700
+                    ? 3.4
+                    : width >= 500
+                    ? 3.0
+                    : 2.4,
           ),
           itemCount: tiles.length,
           itemBuilder: (context, index) => tiles[index],
@@ -478,68 +548,78 @@ class _AdminHomePageState extends State<AdminHomePage> {
   }
 
   Widget _statTile(String title, IconData icon, String collection) {
-    return _cardWrapper(
+    final gradients = [
+      [const Color(0xFF667EEA), const Color(0xFF764BA2)],
+      [const Color(0xFF4FACFE), const Color(0xFF00F2FE)],
+      [const Color(0xFF43E97B), const Color(0xFF38F9D7)],
+      [const Color(0xFFFA709A), const Color(0xFFFE9A8B)],
+      [const Color(0xFFA8EDEA), const Color(0xFFFED6E3)],
+      [const Color(0xFFD299C2), const Color(0xFFFEF9D7)],
+    ];
+
+    final gradient = gradients[title.hashCode % gradients.length];
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection(collection).snapshots(),
         builder: (context, snapshot) {
           final count = snapshot.hasData ? snapshot.data!.docs.length : 0;
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              final bool tight =
-                  constraints.maxHeight <= 56 || constraints.maxWidth <= 180;
-              final double iconSize = tight ? 16 : 20;
-              final double pad = tight ? 8 : 10;
-              final double titleSize = tight ? 11 : 12;
-              final double valueSize = tight ? 18 : 20;
-              final double gap = tight ? 8 : 12;
-
-              return Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(pad),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+          return Padding(
+            padding: const EdgeInsets.all(6),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: gradient),
+                    borderRadius: BorderRadius.circular(7),
+                    boxShadow: [
+                      BoxShadow(
+                        color: gradient[0].withOpacity(0.3),
+                        blurRadius: 5,
+                        offset: const Offset(0, 1),
                       ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(icon, color: Colors.white, size: iconSize),
+                    ],
                   ),
-                  SizedBox(width: gap),
-                  Expanded(
-                    child: FittedBox(
-                      alignment: Alignment.centerLeft,
-                      fit: BoxFit.scaleDown,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.poppins(
-                              color: Colors.white70,
-                              fontSize: titleSize,
-                            ),
-                          ),
-                          Text(
-                            '$count',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: valueSize,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  child: Icon(icon, color: Colors.white, size: 15),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  '$count',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              );
-            },
+                ),
+                Flexible(
+                  child: Text(
+                    title,
+                    style: GoogleFonts.poppins(
+                      color: Colors.white70,
+                      fontSize: 8,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
           );
         },
       ),
@@ -547,110 +627,80 @@ class _AdminHomePageState extends State<AdminHomePage> {
   }
 
   Widget _userStatTile(String title, IconData icon, Query query) {
-    return _cardWrapper(
+    final gradients = [
+      [const Color(0xFF667EEA), const Color(0xFF764BA2)],
+      [const Color(0xFF4FACFE), const Color(0xFF00F2FE)],
+      [const Color(0xFF43E97B), const Color(0xFF38F9D7)],
+      [const Color(0xFFFA709A), const Color(0xFFFE9A8B)],
+      [const Color(0xFFA8EDEA), const Color(0xFFFED6E3)],
+      [const Color(0xFFD299C2), const Color(0xFFFEF9D7)],
+    ];
+
+    final gradient = gradients[title.hashCode % gradients.length];
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
       child: StreamBuilder<QuerySnapshot>(
         stream: query.snapshots(),
         builder: (context, snapshot) {
           final count = snapshot.hasData ? snapshot.data!.docs.length : 0;
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              final bool tight =
-                  constraints.maxHeight <= 56 || constraints.maxWidth <= 180;
-              final double iconSize = tight ? 16 : 20;
-              final double pad = tight ? 8 : 10;
-              final double titleSize = tight ? 11 : 12;
-              final double valueSize = tight ? 18 : 20;
-              final double gap = tight ? 8 : 12;
-
-              return Row(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(pad),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
+          return Padding(
+            padding: const EdgeInsets.all(6),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: gradient),
+                    borderRadius: BorderRadius.circular(7),
+                    boxShadow: [
+                      BoxShadow(
+                        color: gradient[0].withOpacity(0.3),
+                        blurRadius: 5,
+                        offset: const Offset(0, 1),
                       ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(icon, color: Colors.white, size: iconSize),
+                    ],
                   ),
-                  SizedBox(width: gap),
-                  Expanded(
-                    child: FittedBox(
-                      alignment: Alignment.centerLeft,
-                      fit: BoxFit.scaleDown,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.poppins(
-                              color: Colors.white70,
-                              fontSize: titleSize,
-                            ),
-                          ),
-                          Text(
-                            '$count',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: valueSize,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  child: Icon(icon, color: Colors.white, size: 15),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  '$count',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-              );
-            },
+                ),
+                Flexible(
+                  child: Text(
+                    title,
+                    style: GoogleFonts.poppins(
+                      color: Colors.white70,
+                      fontSize: 8,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildAnnouncementsCard() {
-    return _cardWrapper(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "📢 Admin Announcements",
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Text(
-              "No new updates at the moment",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
